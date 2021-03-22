@@ -1,1 +1,5 @@
-# Backend built with Django
+# Backend
+
+## Built with
+- Django
+- Django REST Framework
