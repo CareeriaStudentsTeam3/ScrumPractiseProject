@@ -13,4 +13,4 @@ Clone the repository and modify .env using .env.example:
 5.  py manage.py migrate
 6.  py manage.py runserver
 7.  py manage.py createsuperuser
-8.  Open server: http://127.0.0.1:8000/
+8.  Open server: http://127.0.0.1:8000/api/
