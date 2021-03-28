@@ -1,7 +1,7 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
-
 class Appointment(models.Model):
     first_name = models.CharField("first_name", max_length=30)
     last_name = models.CharField("last_name", max_length=50)
@@ -39,8 +39,10 @@ class Hairmodel(models.Model):
     gender = models.CharField("gender", max_length=10)
     hair_length = models.CharField("hair_length", max_length=20)
     hair_procedures = models.CharField("hair_procedures", max_length=20)
-    image = models.ImageField("image", null=True)
+    image = models.ImageField("image", null=True, upload_to="images/")
 
+class User(AbstractUser):
+    pass
 
 
 
