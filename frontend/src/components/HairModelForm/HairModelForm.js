@@ -18,14 +18,39 @@ import hairModelService from '../../services/hairmodel'
 
 const validationSchema = yup.object({
   // TODO: All validations
+  first_name: yup
+    .string('Anna etunimi')
+    .max(30, 'Etunimi saa olla enintään 30 merkkiä pitkä')
+    .required('Anna etunimi'),
+  last_name: yup
+    .string('Anna sukunimi')
+    .max(50, 'Sukunimi saa olla enintään 50 merkkiä pitkä')
+    .required('Anna sukunimi'),
+  city: yup
+    .string('Anna kaupunki')
+    .max(50, 'Kaupunki saa olla enintään 50 merkkiä pitkä')
+    .required('Anna kaupunki'),
+  phone: yup
+    .string('Anna puhelinnumero')
+    .max(13, 'Puhelinnumero saa olla enintään 13 merkkiä pitkä')
+    .required('Anna puhelinnumero'),
   email: yup
-    .string('Enter your email')
-    .email('Enter a valid email')
-    .required('Email is required'),
+    .string('Anna sähköpostiosoite')
+    .max(50, 'Sähköposti saa olla enintään 50 merkkiä pitkä')
+    .email('Tarkista sähköposti')
+    .required('Anna sähköposti'),
+  age: yup
+    .number()
+    .positive('Anna positiivinen luku')
+    .integer('Anna kokoluku')
+    .required('Anna ikä'),
+  hair_procedures: yup
+    .string('Kerro edellisistä käsittelyistä')
+    .max(200, 'Enintään 200 merkkiä')
+    .required('Kerro edellisistä käsittelyistä'),
 })
 
 const HairModelForm = () => {
-  // TODO: Check that image upload works
   const formik = useFormik({
     initialValues: {
       first_name: '',
@@ -40,10 +65,23 @@ const HairModelForm = () => {
       image: null,
     },
     validationSchema: validationSchema,
-    onSubmit: (values, { resetForm }) => {
-      alert(JSON.stringify(values, null, 2))
+    onSubmit: async (values, { resetForm }) => {
+      let formData = new FormData()
+      formData.append('first_name', values.first_name)
+      formData.append('last_name', values.last_name)
+      formData.append('city', values.city)
+      formData.append('phone', values.phone)
+      formData.append('email', values.email)
+      formData.append('age', values.age)
+      formData.append('gender', values.gender)
+      formData.append('hair_length', values.hair_length)
+      formData.append('hair_procedures', values.hair_procedures)
+      formData.append('image', values.image)
+
+      // alert(JSON.stringify(values, null, 2))
       console.log(values)
-      hairModelService.create(values).then(resetForm())
+      console.log(formData.get('image'))
+      await hairModelService.create(formData).then(resetForm())
     },
   })
 
@@ -210,8 +248,9 @@ const HairModelForm = () => {
                 name="image"
                 label="Kuva"
                 type="file"
+                accept="image/*"
                 onChange={(event) => {
-                  formik.setFieldValue('image', event.target.files[0])
+                  formik.setFieldValue('image', event.currentTarget.files[0])
                 }}
               />
             </Box>
