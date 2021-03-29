@@ -12,6 +12,9 @@ import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
 import InputLabel from '@material-ui/core/InputLabel'
 import Box from '@material-ui/core/Box'
+import Typography from '@material-ui/core/Typography'
+
+import Input from '@material-ui/core/Input'
 
 // Service import
 import hairModelService from '../../services/hairmodel'
@@ -44,10 +47,23 @@ const validationSchema = yup.object({
     .positive('Anna positiivinen luku')
     .integer('Anna kokoluku')
     .required('Anna ikä'),
+  gender: yup.string('Valitse sukupuoli').required('Valitse sukupuoli'),
+  hair_length: yup
+    .string('Valitse hiustenpituus')
+    .required('Valitse hiustenpituus'),
   hair_procedures: yup
     .string('Kerro edellisistä käsittelyistä')
     .max(200, 'Enintään 200 merkkiä')
     .required('Kerro edellisistä käsittelyistä'),
+  image: yup
+    .mixed()
+    .nullable()
+    .notRequired()
+    .test(
+      'FILE_SIZE',
+      'Kuvatiedosto on liian iso',
+      (value) => !value || (value && value.size <= 2000000)
+    ),
 })
 
 const HairModelForm = () => {
@@ -76,12 +92,17 @@ const HairModelForm = () => {
       formData.append('gender', values.gender)
       formData.append('hair_length', values.hair_length)
       formData.append('hair_procedures', values.hair_procedures)
-      formData.append('image', values.image)
+      if (values.image) {
+        formData.append('image', values.image)
+      }
 
       // alert(JSON.stringify(values, null, 2))
       console.log(values)
       console.log(formData.get('image'))
-      await hairModelService.create(formData).then(resetForm())
+      await hairModelService
+        .create(formData)
+        .catch((e) => console.log(e))
+        .then(resetForm())
     },
   })
 
@@ -193,6 +214,7 @@ const HairModelForm = () => {
                 label="Sukupuoli"
                 value={formik.values.gender}
                 onChange={formik.handleChange}
+                error={formik.touched.gender && Boolean(formik.errors.gender)}
               >
                 <MenuItem value={'mies'}>Mies</MenuItem>
                 <MenuItem value={'nainen'}>Nainen</MenuItem>
@@ -211,6 +233,10 @@ const HairModelForm = () => {
                 label="Hiusten pituus"
                 value={formik.values.hair_length}
                 onChange={formik.handleChange}
+                error={
+                  formik.touched.hair_length &&
+                  Boolean(formik.errors.hair_length)
+                }
               >
                 <MenuItem value={'lyhyet'}>Lyhyet</MenuItem>
                 <MenuItem value={'keskipitkät'}>Keskipitkät</MenuItem>
@@ -243,7 +269,7 @@ const HairModelForm = () => {
               <InputLabel shrink id="image">
                 Lisää kuva
               </InputLabel>
-              <input
+              <Input
                 id="image"
                 name="image"
                 label="Kuva"
@@ -252,7 +278,13 @@ const HairModelForm = () => {
                 onChange={(event) => {
                   formik.setFieldValue('image', event.currentTarget.files[0])
                 }}
+                error={formik.touched.image && Boolean(formik.errors.image)}
               />
+              {formik.errors.image && formik.touched.image ? (
+                <Typography paragraph color="error">
+                  {formik.errors.image}
+                </Typography>
+              ) : null}
             </Box>
             <Box mb={2}>
               <Button
