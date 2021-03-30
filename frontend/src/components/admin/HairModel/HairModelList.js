@@ -1,6 +1,9 @@
 /* eslint-disable indent */
 import React, { useState } from 'react'
 
+// React-router-dom imports
+import { useHistory } from 'react-router-dom'
+
 // Material UI imports
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -15,6 +18,8 @@ import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 
 const HairModelList = ({ hairModels }) => {
+  let history = useHistory()
+
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
 
@@ -25,6 +30,10 @@ const HairModelList = ({ hairModels }) => {
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10))
     setPage(0)
+  }
+
+  const handleHairModelInfo = (id) => {
+    history.push(`/admin/hairmodel/${id}`)
   }
 
   return (
@@ -51,7 +60,11 @@ const HairModelList = ({ hairModels }) => {
                 <TableRow hover key={item.id}>
                   <TableCell>{`${item.first_name} ${item.last_name}`}</TableCell>
                   <TableCell align="right">
-                    <Button variant="contained" color="primary">
+                    <Button
+                      onClick={() => handleHairModelInfo(item.id)}
+                      variant="contained"
+                      color="primary"
+                    >
                       Tiedot
                     </Button>
                   </TableCell>

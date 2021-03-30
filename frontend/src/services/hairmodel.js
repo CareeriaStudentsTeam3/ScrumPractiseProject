@@ -7,9 +7,24 @@ const getAll = async () => {
   return response.data
 }
 
+const getOne = async (id) => {
+  const response = await axios.get(`${baseUrl}${id}/`)
+  return response.data
+}
+
 const create = async (newHairModel) => {
   const response = await axios.post(baseUrl, newHairModel)
   return response.data
 }
 
-export default { getAll, create }
+const update = async (updatedHairModel, id) => {
+  const response = await axios.put(`${baseUrl}${id}/`, updatedHairModel)
+  return response.data
+}
+
+const del = async (id) => {
+  const response = await axios.delete(`${baseUrl}${id}/`)
+  return response.data
+}
+
+export default { getAll, getOne, create, update, del }
