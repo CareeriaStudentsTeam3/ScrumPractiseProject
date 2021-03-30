@@ -1,22 +1,24 @@
 import React from 'react'
 
-// Material UI imports
-import Grid from '@material-ui/core/Grid'
+// React-router-dom imports
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 // Component imports
-import HairdModelForm from './components/HairModelForm/HairModelForm'
-import HairModelInfo from './components/HairModelForm/HairModelInfo'
+import HairModel from './routes/HairModel'
+import HairModelAdmin from './routes/HairModelAdmin'
+import HairdModelInfoAdmin from './routes/HairdModelInfoAdmin'
 
 function App() {
   return (
-    <Grid container spacing={0} alignItems="center" justify="center">
-      <Grid container item xs={12} md={6}>
-        <HairModelInfo />
-      </Grid>
-      <Grid item xs={12} md={6}>
-        <HairdModelForm />
-      </Grid>
-    </Grid>
+    <Router>
+      <Route exact path="/hairmodel" component={HairModel} />
+      <Route exact path="/admin/hairmodel" component={HairModelAdmin} />
+      <Route
+        exact
+        path="/admin/hairmodel/:id"
+        component={HairdModelInfoAdmin}
+      />
+    </Router>
   )
 }
 
