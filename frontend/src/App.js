@@ -4,12 +4,14 @@ import React from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 // Component imports
-import Hairmodel from './routes/Hairmodel'
+import HairModel from './routes/HairModel'
+import HairModelAdmin from './routes/HairModelAdmin'
 
 function App() {
   return (
     <Router>
-      <Route exact path="/hairmodel" component={Hairmodel} />
+      <Route exact path="/hairmodel" component={HairModel} />
+      <Route exact path="/admin/hairmodel" component={HairModelAdmin} />
     </Router>
   )
 }
