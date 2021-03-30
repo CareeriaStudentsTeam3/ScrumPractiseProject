@@ -7,7 +7,7 @@ import Grid from '@material-ui/core/Grid'
 import HairdModelForm from '../components/HairModelForm/HairModelForm'
 import HairModelInfo from '../components/HairModelForm/HairModelInfo'
 
-const Hairmodel = () => {
+const HairModel = () => {
   return (
     <Grid container spacing={0} alignItems="center" justify="center">
       <Grid container item xs={12} md={6}>
@@ -20,4 +20,4 @@ const Hairmodel = () => {
   )
 }
 
-export default Hairmodel
+export default HairModel
