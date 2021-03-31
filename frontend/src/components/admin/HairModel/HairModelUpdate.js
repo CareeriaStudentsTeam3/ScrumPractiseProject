@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { useFormik } from 'formik'
 
 // React-router-dom imports
-import { useHistory } from 'react-router-dom'
+import { useHistory, Redirect } from 'react-router-dom'
 
 // Material UI imports
 import Button from '@material-ui/core/Button'
@@ -12,18 +12,26 @@ import TextField from '@material-ui/core/TextField'
 import InputLabel from '@material-ui/core/InputLabel'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 import Input from '@material-ui/core/Input'
 
 // Service import
 import hairmodelService from '../../../services/hairmodel'
+import Notification from '../../Notification/Notification'
 
 const HairModelUpdate = ({ hairModel }) => {
   // console.log(hairModel)
 
-  const [model, setModel] = useState([])
+  const [model, setModel] = useState(hairModel)
   const [disable, setDisable] = useState(true)
   const [edit, setEdit] = useState(false)
+
+  const [redirect, setRedirect] = useState(false)
+
+  // Notifications
+  const [open, setOpen] = useState(false)
+  const [notificationMsg, setNotificationMsg] = useState('')
 
   let history = useHistory()
 
@@ -31,15 +39,22 @@ const HairModelUpdate = ({ hairModel }) => {
     setModel(hairModel)
   }, [hairModel])
 
-  const handleDelete = (id) => {
+  const handleDelete = async (id) => {
     console.log(id)
     if (window.confirm('Haluatko varmasti poistaa tämän hiusmallin?')) {
-      hairmodelService.del(id).then(
-        history.push({
-          pathname: '/admin/hairmodel',
-          id: id,
-        })
-      )
+      try {
+        await hairmodelService.del(id)
+        handleNotification('Hiusmallin poisto onnistui!')
+        setTimeout(() => {
+          setRedirect(true)
+        }, 2000)
+      } catch (err) {
+        console.log('delerror', err.name)
+        handleNotification('Hiusmallin poisto epäonnistui!')
+        setTimeout(() => {
+          setRedirect(true)
+        }, 3000)
+      }
     }
   }
 
@@ -51,8 +66,23 @@ const HairModelUpdate = ({ hairModel }) => {
 
   const handleCancel = (e) => {
     e.preventDefault()
+    // console.log('cancel', hairModel)
+    // console.log('cancel', model)
     setEdit(false)
     setDisable(true)
+    formik.handleReset()
+  }
+
+  const handleBackButton = (e) => {
+    e.preventDefault()
+    history.push({
+      pathname: '/admin/hairmodel',
+    })
+  }
+
+  const handleNotification = (msg) => {
+    setOpen(true)
+    setNotificationMsg(msg)
   }
 
   const formik = useFormik({
@@ -88,17 +118,31 @@ const HairModelUpdate = ({ hairModel }) => {
       // alert(JSON.stringify(values, null, 2))
       console.log(values)
       // console.log(formData.get('image'))
-      await hairmodelService
-        .update(formData, values.id)
-        .catch((e) => console.log(e))
-        .then(
+
+      try {
+        const response = await hairmodelService.update(formData, values.id)
+        console.log('res', response)
+        handleNotification('Muokkaus onnistui!')
+        setTimeout(() => {
           history.push({
             pathname: '/admin/hairmodel',
-            id: values.id,
           })
-        )
+        }, 2000)
+      } catch (err) {
+        console.log('error', err.name)
+        handleNotification('On tapahtunut virhe! Palataan edelliselle sivulle.')
+        setTimeout(() => {
+          history.push({
+            pathname: '/admin/hairmodel',
+          })
+        }, 3000)
+      }
     },
   })
+
+  if (redirect) {
+    return <Redirect to="/admin/hairmodel" />
+  }
 
   if (model.length !== 0) {
     return (
@@ -107,6 +151,7 @@ const HairModelUpdate = ({ hairModel }) => {
           <Box width={'75%'}>
             <form onSubmit={formik.handleSubmit}>
               <Box my={2}>
+                <Notification message={notificationMsg} open={open} />
                 <TextField
                   disabled={disable}
                   fullWidth
@@ -288,7 +333,7 @@ const HairModelUpdate = ({ hairModel }) => {
                       Muokkaa
                     </Button>
                   </Box>
-                  <Box>
+                  <Box mr={3}>
                     <Button
                       onClick={() => handleDelete(formik.values.id)}
                       color="secondary"
@@ -298,12 +343,22 @@ const HairModelUpdate = ({ hairModel }) => {
                       Poista
                     </Button>
                   </Box>
+                  <Box>
+                    <Button
+                      onClick={(e) => handleBackButton(e)}
+                      color="default"
+                      variant="contained"
+                      type="button"
+                    >
+                      Palaa takaisin listaan
+                    </Button>
+                  </Box>
                 </Box>
               ) : (
                 <Box mb={2} display="flex">
                   <Box mr={2}>
                     <Button color="primary" variant="contained" type="submit">
-                      Muokkaa
+                      Tallenna
                     </Button>
                   </Box>
                   <Box>
@@ -324,7 +379,7 @@ const HairModelUpdate = ({ hairModel }) => {
       </div>
     )
   }
-  return <h1>Loading...</h1>
+  return <CircularProgress />
 }
 
 export default HairModelUpdate

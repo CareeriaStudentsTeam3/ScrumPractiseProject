@@ -1,5 +1,5 @@
 /* eslint-disable indent */
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 // React-router-dom imports
 import { useHistory } from 'react-router-dom'
@@ -20,8 +20,13 @@ import Typography from '@material-ui/core/Typography'
 const HairModelList = ({ hairModels }) => {
   let history = useHistory()
 
+  const [models, setModels] = useState(hairModels)
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
+
+  useEffect(() => {
+    setModels(hairModels)
+  }, [hairModels])
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
@@ -51,11 +56,11 @@ const HairModelList = ({ hairModels }) => {
             </TableHead>
             <TableBody>
               {(rowsPerPage > 0
-                ? hairModels.slice(
+                ? models.slice(
                     page * rowsPerPage,
                     page * rowsPerPage + rowsPerPage
                   )
-                : hairModels
+                : models
               ).map((item) => (
                 <TableRow hover key={item.id}>
                   <TableCell>{`${item.first_name} ${item.last_name}`}</TableCell>
@@ -76,7 +81,7 @@ const HairModelList = ({ hairModels }) => {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={hairModels.length}
+          count={models.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onChangePage={handleChangePage}
