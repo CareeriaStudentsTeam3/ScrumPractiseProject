@@ -12,6 +12,7 @@ import TextField from '@material-ui/core/TextField'
 import InputLabel from '@material-ui/core/InputLabel'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 import Input from '@material-ui/core/Input'
 
@@ -70,6 +71,13 @@ const HairModelUpdate = ({ hairModel }) => {
     setEdit(false)
     setDisable(true)
     formik.handleReset()
+  }
+
+  const handleBackButton = (e) => {
+    e.preventDefault()
+    history.push({
+      pathname: '/admin/hairmodel',
+    })
   }
 
   const handleNotification = (msg) => {
@@ -325,7 +333,7 @@ const HairModelUpdate = ({ hairModel }) => {
                       Muokkaa
                     </Button>
                   </Box>
-                  <Box>
+                  <Box mr={3}>
                     <Button
                       onClick={() => handleDelete(formik.values.id)}
                       color="secondary"
@@ -333,6 +341,16 @@ const HairModelUpdate = ({ hairModel }) => {
                       type="button"
                     >
                       Poista
+                    </Button>
+                  </Box>
+                  <Box>
+                    <Button
+                      onClick={(e) => handleBackButton(e)}
+                      color="default"
+                      variant="contained"
+                      type="button"
+                    >
+                      Palaa takaisin listaan
                     </Button>
                   </Box>
                 </Box>
@@ -361,7 +379,7 @@ const HairModelUpdate = ({ hairModel }) => {
       </div>
     )
   }
-  return <h1>Loading...</h1>
+  return <CircularProgress />
 }
 
 export default HairModelUpdate

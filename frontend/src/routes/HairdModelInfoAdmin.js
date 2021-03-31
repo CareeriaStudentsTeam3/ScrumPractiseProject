@@ -12,6 +12,7 @@ import HairModelPhoto from '../components/admin/HairModel/HairModelPhoto'
 
 // Material UI imports
 import Grid from '@material-ui/core/Grid'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 const HairdModelInfoAdmin = () => {
   const { id } = useParams()
@@ -20,7 +21,16 @@ const HairdModelInfoAdmin = () => {
 
   useEffect(() => {
     hairmodelService.getOne(id).then((data) => setHairModel(data))
+    console.log(hairModel)
   }, [])
+
+  if (hairModel.length === 0) {
+    return (
+      <Grid container alignItems="center" justify="center">
+        <CircularProgress />
+      </Grid>
+    )
+  }
 
   return (
     <Grid container spacing={0} alignItems="center" justify="center">
