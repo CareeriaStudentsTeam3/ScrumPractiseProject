@@ -358,7 +358,7 @@ const HairModelUpdate = ({ hairModel }) => {
                 <Box mb={2} display="flex">
                   <Box mr={2}>
                     <Button color="primary" variant="contained" type="submit">
-                      Muokkaa
+                      Tallenna
                     </Button>
                   </Box>
                   <Box>

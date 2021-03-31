@@ -66,7 +66,7 @@ const validationSchema = yup.object({
     ),
 })
 
-const HairModelForm = () => {
+const HairModelForm = ({ setConfirm, setName }) => {
   const formik = useFormik({
     initialValues: {
       first_name: '',
@@ -102,7 +102,9 @@ const HairModelForm = () => {
       await hairModelService
         .create(formData)
         .catch((e) => console.log(e))
+        .then(setName(`${values.first_name} ${values.last_name}`))
         .then(resetForm())
+        .then(setConfirm(true))
     },
   })
 
