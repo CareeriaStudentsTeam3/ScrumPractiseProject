@@ -31,7 +31,7 @@ const HairModelUpdate = ({ hairModel }) => {
 
   // Notifications
   const [open, setOpen] = useState(false)
-  const [notificationMsg, setNotificationMsg] = useState('')
+  const [notificationMsg, setNotificationMsg] = useState(null)
 
   let history = useHistory()
 
