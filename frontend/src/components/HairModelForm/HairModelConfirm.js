@@ -5,8 +5,9 @@ import Box from '@material-ui/core/Box'
 import Card from '@material-ui/core/Card'
 import Typography from '@material-ui/core/Typography'
 import CardContent from '@material-ui/core/CardContent'
+import Button from '@material-ui/core/Button'
 
-const HairModelConfirm = ({ name }) => {
+const HairModelConfirm = ({ name, handleBackToMainPage }) => {
   console.log('name', name)
   return (
     <Box display="flex" justifyContent="center" mt={4}>
@@ -35,6 +36,17 @@ const HairModelConfirm = ({ name }) => {
               vaporware, raclette tbh kickstarter you probably heard of them meh
               organic messenger bag marfa semiotics.
             </Typography>
+            <Box mt={2}>
+              <Button
+                onClick={() => handleBackToMainPage()}
+                color="default"
+                variant="contained"
+                fullWidth
+                type="submit"
+              >
+                Palaa takaisin etusivulle
+              </Button>
+            </Box>
           </CardContent>
         </Card>
       </Box>

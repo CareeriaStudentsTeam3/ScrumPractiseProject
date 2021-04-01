@@ -66,7 +66,7 @@ const validationSchema = yup.object({
     ),
 })
 
-const HairModelForm = ({ setConfirm, setName }) => {
+const HairModelForm = ({ setConfirm, setName, setError, setErrorMsg }) => {
   const formik = useFormik({
     initialValues: {
       first_name: '',
@@ -99,12 +99,24 @@ const HairModelForm = ({ setConfirm, setName }) => {
       // alert(JSON.stringify(values, null, 2))
       console.log(values)
       console.log(formData.get('image'))
-      await hairModelService
-        .create(formData)
-        .catch((e) => console.log(e))
-        .then(setName(`${values.first_name} ${values.last_name}`))
-        .then(resetForm())
-        .then(setConfirm(true))
+      try {
+        const response = await hairModelService.create(formData)
+        console.log('res', response)
+        setName(`${values.first_name} ${values.last_name}`)
+        resetForm()
+        setConfirm(true)
+      } catch (err) {
+        console.log('error', err.name)
+        setErrorMsg(err.message)
+        setError(true)
+      }
+
+      // await hairModelService
+      //   .create(formData)
+      //   .catch((e) => console.log(e))
+      //   .then(setName(`${values.first_name} ${values.last_name}`))
+      //   .then(resetForm())
+      //   .then(setConfirm(true))
     },
   })
 
