@@ -44,7 +44,7 @@ const HairModelUpdate = ({ hairModel }) => {
     if (window.confirm('Haluatko varmasti poistaa tämän hiusmallin?')) {
       try {
         await hairmodelService.del(id)
-        handleNotification('Hiusmallin poisto onnistui!')
+        handleNotification('Poistetaan...')
         setTimeout(() => {
           setRedirect(true)
         }, 2000)
@@ -122,7 +122,7 @@ const HairModelUpdate = ({ hairModel }) => {
       try {
         const response = await hairmodelService.update(formData, values.id)
         console.log('res', response)
-        handleNotification('Muokkaus onnistui!')
+        handleNotification('Tallennetaan...')
         setTimeout(() => {
           history.push({
             pathname: '/admin/hairmodel',
