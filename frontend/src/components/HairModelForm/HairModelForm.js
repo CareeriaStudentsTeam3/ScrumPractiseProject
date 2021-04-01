@@ -62,7 +62,7 @@ const validationSchema = yup.object({
     .test(
       'FILE_SIZE',
       'Kuvatiedosto on liian iso',
-      (value) => !value || (value && value.size <= 2000000)
+      (value) => !value || (value && value.size <= 10000000)
     ),
 })
 
