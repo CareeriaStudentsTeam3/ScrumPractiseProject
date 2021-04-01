@@ -122,7 +122,7 @@ const HairModelUpdate = ({ hairModel }) => {
       try {
         const response = await hairmodelService.update(formData, values.id)
         console.log('res', response)
-        handleNotification('Muokkaus onnistui!')
+        handleNotification('Tallennetaan...')
         setTimeout(() => {
           history.push({
             pathname: '/admin/hairmodel',
