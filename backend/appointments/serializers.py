@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Hairmodel, Appointment_timespan
+from .models import Hairmodel, Appointment_timespan, Appointment, Category, Service
 
 class HairModelSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
@@ -9,4 +9,19 @@ class HairModelSerializer(serializers.HyperlinkedModelSerializer):
 class AppointmentTimeSpanSerializer(serializers.ModelSerializer):
     class Meta:
         model = Appointment_timespan
-        fields = ["beginning", "end", "max_group_size"]
+        fields = ["id","beginning", "end", "max_group_size"]
+
+class AppointmentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Appointment
+        fields = ["id", "first_name", "last_name", "email", "phone", "group_size", "service", "appointment_date", "place", "info", "confirmed"]
+
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ["id", "category_name"]
+
+class ServiceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Service
+        fields = ["id", "service_name", "duration", "price", "max_group_size", "category"]
