@@ -21,7 +21,7 @@ class Appointment(models.Model):
 class Service(models.Model):
     service_name = models.CharField("service_name", max_length=50)
     duration = models.IntegerField("duration") #DurationField?
-    price = models.DecimalField("price", decimal_places=1,max_digits=4)
+    price = models.DecimalField("price", decimal_places=2,max_digits=4)
     max_group_size = models.IntegerField("max_group_size")
     category = models.ForeignKey("Category",verbose_name="category", on_delete=models.SET_NULL, null=True)
 
