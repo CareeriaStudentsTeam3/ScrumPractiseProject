@@ -22,8 +22,10 @@ const Appointment = () => {
   const [services, setServices] = useState([])
 
   useEffect(() => {
-    serviceService.getAll().then((data) => setServices(data))
-  }, [])
+    if (groupSize !== null) {
+      serviceService.getFilter(groupSize).then((data) => setServices(data))
+    }
+  }, [groupSize])
 
   const handleGroupSize = (grpSize) => {
     setGroupSize(grpSize)

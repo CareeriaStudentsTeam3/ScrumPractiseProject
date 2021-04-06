@@ -19,6 +19,25 @@ const TimeSelect = ({ grpSize, duration, handleTime }) => {
       .then((data) => setTimes(data))
   }, [])
 
+  if (times.length === 0) {
+    return (
+      <Box display="flex" justifyContent="center" textAlign="center">
+        <CardContent>
+          <Typography variant="h4" color="textSecondary" gutterBottom>
+            Vapaa-aika
+          </Typography>
+          <Typography variant="h5" component="h2"></Typography>
+          <Typography color="textSecondary" gutterBottom>
+            Valitse päivämäärä ja kellonaika
+          </Typography>
+          <Typography variant="body2" component="p">
+            Valitettavasti vapaita-aikoja ei ole...
+          </Typography>
+        </CardContent>
+      </Box>
+    )
+  }
+
   return (
     <Box display="flex" justifyContent="center" textAlign="center">
       <CardContent>
