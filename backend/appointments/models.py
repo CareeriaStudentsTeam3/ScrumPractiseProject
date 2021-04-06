@@ -9,25 +9,41 @@ class Appointment(models.Model):
     phone = models.CharField("phone", max_length=10)
     group_size = models.IntegerField("group_size")
     service = models.ForeignKey("Service", verbose_name="service", on_delete=models.SET_NULL, null=True)
-    appointment_date = models.DateTimeField("appointment")
+    appointment_date = models.ForeignKey("Appointment_timespan", verbose_name="appointment_date", on_delete=models.SET_NULL, null=True)
     place = models.CharField("place", max_length=50)
     info = models.CharField("info", max_length=200)
     confirmed = models.BooleanField("confirmed")
+
+    def __str__(self):
+        return self.last_name
+    
 
 class Service(models.Model):
     service_name = models.CharField("service_name", max_length=50)
     duration = models.IntegerField("duration") #DurationField?
     price = models.DecimalField("price", decimal_places=1,max_digits=4)
-    max_group_size = models.IntegerField()
+    max_group_size = models.IntegerField("max_group_size")
     category = models.ForeignKey("Category",verbose_name="category", on_delete=models.SET_NULL, null=True)
+
+    def __str__(self):
+        return self.service_name
+    
 
 class Category(models.Model):
     category_name = models.CharField("category", max_length=50)
+
+    def __str__(self):
+        return self.category_name
+    
 
 class Appointment_timespan(models.Model):
     beginning = models.DateTimeField("beginning")
     end = models.DateTimeField("end")
     max_group_size = models.IntegerField("max_group_size")
+
+    def __str__(self):
+        return f"{self.beginning}/{self.end}"
+    
 
 class Hairmodel(models.Model):
     first_name = models.CharField("first_name", max_length=30)
@@ -40,6 +56,10 @@ class Hairmodel(models.Model):
     hair_length = models.CharField("hair_length", max_length=20)
     hair_procedures = models.CharField("hair_procedures", max_length=20)
     image = models.ImageField("image", null=True, upload_to="images/")
+
+    def __str__(self):
+        return self.last_name
+    
 
 class User(AbstractUser):
     pass
