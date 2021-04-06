@@ -23,7 +23,7 @@ class AppointmentTimeSpanViewSet(viewsets.ModelViewSet):
         duration = self.request.query_params.get("duration")
         if group_size and duration is not None:
             group_size = int(group_size)
-            queryset = Appointment_timespan.objects.annotate(timediff=ExpressionWrapper(F("end")-F("beginning"), output_field=DurationField())).filter(max_group_size__gte=group_size, timediff=timedelta(hours=int(duration)))
+            queryset = Appointment_timespan.objects.annotate(timediff=ExpressionWrapper(F("end")-F("beginning"), output_field=DurationField())).filter(max_group_size__gte=group_size, timediff=timedelta(minutes=int(duration)))
         return queryset
 
 class CategoryViewSet(viewsets.ModelViewSet):
