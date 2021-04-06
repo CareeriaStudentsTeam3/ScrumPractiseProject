@@ -54,7 +54,7 @@ class Hairmodel(models.Model):
     age = models.IntegerField("age")
     gender = models.CharField("gender", max_length=10)
     hair_length = models.CharField("hair_length", max_length=20)
-    hair_procedures = models.CharField("hair_procedures", max_length=20)
+    hair_procedures = models.CharField("hair_procedures", max_length=200)
     image = models.ImageField("image", null=True, upload_to="images/")
 
     def __str__(self):
