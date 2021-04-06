@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom'
 import HairModel from './routes/HairModel'
 import HairModelAdmin from './routes/HairModelAdmin'
 import HairdModelInfoAdmin from './routes/HairdModelInfoAdmin'
+import Appointment from './routes/Appointment'
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         path="/admin/hairmodel/:id"
         component={HairdModelInfoAdmin}
       />
+      <Route exact path="/appointment" component={Appointment} />
     </Router>
   )
 }
