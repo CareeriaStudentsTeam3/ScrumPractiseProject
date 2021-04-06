@@ -98,7 +98,7 @@ const HairModelUpdate = ({ hairModel }) => {
       gender: model.gender || '',
       hair_length: model.hair_length || '',
       hair_procedures: model.hair_procedures || '',
-      image: model.image || '',
+      image: model.image || null,
     },
     onSubmit: async (values) => {
       let formData = new FormData()
@@ -111,13 +111,17 @@ const HairModelUpdate = ({ hairModel }) => {
       formData.append('gender', values.gender)
       formData.append('hair_length', values.hair_length)
       formData.append('hair_procedures', values.hair_procedures)
-      if (values.image) {
+      if (values.image === null) {
+        console.log('inside formdata', values.image)
+        // formData.append('image', values.image)
+      }
+      if (values.image !== null && model.image === null) {
         formData.append('image', values.image)
       }
 
       // alert(JSON.stringify(values, null, 2))
       console.log(values)
-      // console.log(formData.get('image'))
+      console.log(formData.get('image'))
 
       try {
         const response = await hairmodelService.update(formData, values.id)
@@ -299,28 +303,33 @@ const HairModelUpdate = ({ hairModel }) => {
                   }
                 />
               </Box>
-              <Box mb={2}>
-                <InputLabel shrink id="image">
-                  Lisää kuva
-                </InputLabel>
-                <Input
-                  disabled={disable}
-                  id="image"
-                  name="image"
-                  label="Kuva"
-                  type="file"
-                  accept="image/*"
-                  onChange={(event) => {
-                    formik.setFieldValue('image', event.currentTarget.files[0])
-                  }}
-                  error={formik.touched.image && Boolean(formik.errors.image)}
-                />
-                {formik.errors.image && formik.touched.image ? (
-                  <Typography paragraph color="error">
-                    {formik.errors.image}
-                  </Typography>
-                ) : null}
-              </Box>
+              {model.image === null ? (
+                <Box mb={2}>
+                  <InputLabel shrink id="image">
+                    Lisää kuva
+                  </InputLabel>
+                  <Input
+                    disabled={disable}
+                    id="image"
+                    name="image"
+                    label="Kuva"
+                    type="file"
+                    accept="image/*"
+                    onChange={(event) => {
+                      formik.setFieldValue(
+                        'image',
+                        event.currentTarget.files[0]
+                      )
+                    }}
+                    error={formik.touched.image && Boolean(formik.errors.image)}
+                  />
+                  {formik.errors.image && formik.touched.image ? (
+                    <Typography paragraph color="error">
+                      {formik.errors.image}
+                    </Typography>
+                  ) : null}
+                </Box>
+              ) : null}
               {!edit && disable ? (
                 <Box mb={2} display="flex">
                   <Box mr={2}>
