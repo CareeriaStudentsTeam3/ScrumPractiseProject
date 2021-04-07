@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import React, { useState, useEffect } from 'react'
 
 // Material UI Imports
@@ -10,8 +11,25 @@ import ButtonGroup from '@material-ui/core/ButtonGroup'
 // Service imports
 import timespanService from '../../services/timespan'
 
-const TimeSelect = ({ grpSize, duration, handleTime }) => {
+const TimeSelect = ({ grpSize, duration, handleTime, handleNavClick }) => {
   const [times, setTimes] = useState([])
+
+  const formatStartDate = (date) => {
+    const d = new Date(date).toLocaleDateString('fi-FI')
+    const t = new Date(date).toLocaleTimeString('fi-FI', {
+      hour: 'numeric',
+      minute: 'numeric',
+    })
+    return `${d} ${t}`
+  }
+
+  const formatEndDate = (date) => {
+    const t = new Date(date).toLocaleTimeString('fi-FI', {
+      hour: 'numeric',
+      minute: 'numeric',
+    })
+    return t
+  }
 
   useEffect(() => {
     timespanService
@@ -30,9 +48,16 @@ const TimeSelect = ({ grpSize, duration, handleTime }) => {
           <Typography color="textSecondary" gutterBottom>
             Valitse päivämäärä ja kellonaika
           </Typography>
-          <Typography variant="body2" component="p">
+          <Typography variant="body2" component="p" gutterBottom>
             Valitettavasti vapaita-aikoja ei ole...
           </Typography>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => handleNavClick('service')}
+          >
+            Edellinen
+          </Button>
         </CardContent>
       </Box>
     )
@@ -42,7 +67,7 @@ const TimeSelect = ({ grpSize, duration, handleTime }) => {
     <Box display="flex" justifyContent="center" textAlign="center">
       <CardContent>
         <Typography variant="h4" color="textSecondary" gutterBottom>
-          Vapaa-aika
+          Vapaat ajat
         </Typography>
         <Typography variant="h5" component="h2"></Typography>
         <Typography color="textSecondary" gutterBottom>
@@ -56,9 +81,18 @@ const TimeSelect = ({ grpSize, duration, handleTime }) => {
         >
           {times.map((item) => (
             <Button
-              onClick={() => handleTime(item.id)}
+              onClick={() =>
+                handleTime(
+                  item.id,
+                  `${formatStartDate(item.beginning)} - ${formatEndDate(
+                    item.end
+                  )}`
+                )
+              }
               key={item.id}
-            >{`${item.beginning} - ${item.end}`}</Button>
+            >{`${formatStartDate(item.beginning)} - ${formatEndDate(
+              item.end
+            )}`}</Button>
           ))}
         </ButtonGroup>
       </CardContent>

@@ -20,6 +20,7 @@ const Appointment = () => {
   const [service, setService] = useState(null)
   const [serviceName, setServiceName] = useState(null)
   const [duration, setDuration] = useState(null)
+  const [timeId, setTimeId] = useState(null)
   const [time, setTime] = useState(null)
 
   const [services, setServices] = useState([])
@@ -40,18 +41,20 @@ const Appointment = () => {
     setServiceName(name)
   }
 
-  const handleTime = (timeId) => {
-    setTime(timeId)
+  const handleTime = (timeId, date) => {
+    console.log('funcTime', date)
+    setTimeId(timeId)
+    setTime(date)
   }
 
   const handleNavClick = (item) => {
-    if (groupSize !== null && serviceName === null && time === null) {
+    if (groupSize !== null && serviceName === null && timeId === null) {
       setGroupSize(null)
     }
     if (
       groupSize !== null &&
       serviceName !== null &&
-      time === null &&
+      timeId === null &&
       item === 'group'
     ) {
       setGroupSize(null)
@@ -61,7 +64,7 @@ const Appointment = () => {
     if (
       groupSize !== null &&
       serviceName !== null &&
-      time === null &&
+      timeId === null &&
       item === 'service'
     ) {
       setServiceName(null)
@@ -70,30 +73,33 @@ const Appointment = () => {
     if (
       groupSize !== null &&
       serviceName !== null &&
-      time !== null &&
+      timeId !== null &&
       item === 'group'
     ) {
       setGroupSize(null)
       setServiceName(null)
       setService(null)
+      setTimeId(null)
       setTime(null)
     }
     if (
       groupSize !== null &&
       serviceName !== null &&
-      time !== null &&
+      timeId !== null &&
       item === 'service'
     ) {
       setServiceName(null)
       setService(null)
+      setTimeId(null)
       setTime(null)
     }
     if (
       groupSize !== null &&
       serviceName !== null &&
-      time !== null &&
+      timeId !== null &&
       item === 'time'
     ) {
+      setTimeId(null)
       setTime(null)
     }
   }
@@ -132,7 +138,11 @@ const Appointment = () => {
                 handleNavClick={handleNavClick}
               />
             </Box>
-            <ServiceSelect services={services} handleService={handleService} />
+            <ServiceSelect
+              services={services}
+              handleService={handleService}
+              handleNavClick={handleNavClick}
+            />
             {console.log('service', service)}
           </Card>
         </Grid>
@@ -140,7 +150,7 @@ const Appointment = () => {
     )
   }
 
-  if (groupSize !== null && service !== null && time === null) {
+  if (groupSize !== null && service !== null && timeId === null) {
     return (
       <Grid container spacing={0} alignItems="center" justify="center">
         <Grid item xs={12} md={6}>
@@ -157,16 +167,17 @@ const Appointment = () => {
               grpSize={groupSize}
               duration={duration}
               handleTime={handleTime}
+              handleNavClick={handleNavClick}
             />
-            {console.log('time', time)}
-            {console.log('everything', groupSize, service, time)}
+            {console.log('time', timeId)}
+            {console.log('everything', groupSize, service, timeId)}
           </Card>
         </Grid>
       </Grid>
     )
   }
 
-  if (groupSize !== null && service !== null && time !== null) {
+  if (groupSize !== null && service !== null && timeId !== null) {
     return (
       <Grid container spacing={0} alignItems="center" justify="center">
         <Grid item xs={12} md={6}>
@@ -182,7 +193,7 @@ const Appointment = () => {
             <AppointmentForm
               groupSize={groupSize}
               service={service}
-              date={time}
+              date={timeId}
             />
           </Card>
         </Grid>
