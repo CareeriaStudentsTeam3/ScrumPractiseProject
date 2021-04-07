@@ -39,7 +39,9 @@ const ServiceSelect = ({ services, handleService }) => {
                   </Typography>
                   <Button
                     variant="contained"
-                    onClick={() => handleService(item.id, item.duration)}
+                    onClick={() =>
+                      handleService(item.id, item.duration, item.service_name)
+                    }
                   >
                     Valitse
                   </Button>
