@@ -6,7 +6,6 @@ import Breadcrumbs from '@material-ui/core/Breadcrumbs'
 import Link from '@material-ui/core/Link'
 
 const BreadcrumbsNav = ({ groupSize, service, time, handleNavClick }) => {
-  console.log('time', time)
   if (groupSize !== null && service === null && time === null) {
     return (
       <Breadcrumbs>

@@ -15,6 +15,7 @@ const TimeSelect = ({ grpSize, duration, handleTime, handleNavClick }) => {
   const [times, setTimes] = useState([])
 
   const formatStartDate = (date) => {
+    // TODO: Check that dates matches what comes from db
     const d = new Date(date).toLocaleDateString('fi-FI')
     const t = new Date(date).toLocaleTimeString('fi-FI', {
       hour: 'numeric',

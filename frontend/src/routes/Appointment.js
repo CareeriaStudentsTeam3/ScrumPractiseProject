@@ -11,6 +11,7 @@ import GroupSizeSelect from '../components/AppointmentForm/GroupSizeSelect'
 import ServiceSelect from '../components/AppointmentForm/ServiceSelect'
 import TimeSelect from '../components/AppointmentForm/TimeSelect'
 import AppointmentForm from '../components/AppointmentForm/AppointmentForm'
+import AppointmentConfirm from '../components/AppointmentForm/AppointmentConfirm'
 
 // Service imports
 import serviceService from '../services/service'
@@ -24,6 +25,8 @@ const Appointment = () => {
   const [time, setTime] = useState(null)
 
   const [services, setServices] = useState([])
+
+  const [confirm, setConfirm] = useState(null)
 
   useEffect(() => {
     if (groupSize !== null) {
@@ -42,7 +45,6 @@ const Appointment = () => {
   }
 
   const handleTime = (timeId, date) => {
-    console.log('funcTime', date)
     setTimeId(timeId)
     setTime(date)
   }
@@ -102,6 +104,18 @@ const Appointment = () => {
       setTimeId(null)
       setTime(null)
     }
+  }
+
+  if (confirm !== null) {
+    return (
+      <Grid container spacing={0} alignItems="center" justify="center">
+        <Grid item xs={12} md={6}>
+          <Card>
+            <AppointmentConfirm appointment={confirm} />
+          </Card>
+        </Grid>
+      </Grid>
+    )
   }
 
   if (groupSize === null && service === null) {
@@ -194,6 +208,7 @@ const Appointment = () => {
               groupSize={groupSize}
               service={service}
               date={timeId}
+              setConfirm={setConfirm}
             />
           </Card>
         </Grid>

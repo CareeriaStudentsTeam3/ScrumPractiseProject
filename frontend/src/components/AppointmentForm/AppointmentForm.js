@@ -3,7 +3,7 @@ import React from 'react'
 // Form library
 import { useFormik } from 'formik'
 // Validation for forms
-// import * as yup from 'yup'
+import * as yup from 'yup'
 
 // Material UI imports
 import Button from '@material-ui/core/Button'
@@ -18,7 +18,34 @@ import CardContent from '@material-ui/core/CardContent'
 // Service import
 import appointmentService from '../../services/appointment'
 
-const AppointmentForm = ({ groupSize, service, date }) => {
+const validationSchema = yup.object({
+  first_name: yup
+    .string('Anna etunimi')
+    .max(30, 'Etunimi saa olla enintään 30 merkkiä pitkä')
+    .required('Anna etunimi'),
+  last_name: yup
+    .string('Anna sukunimi')
+    .max(50, 'Sukunimi saa olla enintään 50 merkkiä pitkä')
+    .required('Anna sukunimi'),
+  email: yup
+    .string('Anna sähköpostiosoite')
+    .max(50, 'Sähköpostiosoite saa olla enintään 50 merkkiä pitkä')
+    .email('Tarkistä sähköpostiosoite')
+    .required('Anna sähköpostiosoite'),
+  phone: yup
+    .string('Anna puhelinnumero')
+    .max(13, 'Puhelinnumero saa olla enintään 13 merkkiä pitkä')
+    .required('Anna puhelinnumero'),
+  place: yup
+    .string('Anna paikka')
+    .required('Ilmoita haluttu paikka palvelulle'),
+  info: yup
+    .string('Anna lisätietoja')
+    .max(200, 'Enintään 200 merkkiä')
+    .required('Anna lisätietoja'),
+})
+
+const AppointmentForm = ({ groupSize, service, date, setConfirm }) => {
   const formik = useFormik({
     initialValues: {
       first_name: '',
@@ -32,12 +59,15 @@ const AppointmentForm = ({ groupSize, service, date }) => {
       appointment_date: date,
       confirmed: false,
     },
-    // validationSchema: validationSchema,
-    onSubmit: async (values) => {
+    validationSchema: validationSchema,
+    onSubmit: async (values, { resetForm }) => {
       // alert(JSON.stringify(values, null, 2))
       console.log(values)
       try {
-        await appointmentService.create(values)
+        const response = await appointmentService.create(values)
+        console.log('response', response)
+        resetForm()
+        setConfirm(response)
       } catch (err) {
         console.log('error', err.message)
       }
