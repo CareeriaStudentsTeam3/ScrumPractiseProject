@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 // Form library
 import { useFormik } from 'formik'
@@ -14,6 +14,7 @@ import InputLabel from '@material-ui/core/InputLabel'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import CardContent from '@material-ui/core/CardContent'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 // Service import
 import appointmentService from '../../services/appointment'
@@ -45,7 +46,15 @@ const validationSchema = yup.object({
     .required('Anna lisätietoja'),
 })
 
-const AppointmentForm = ({ groupSize, service, date, setConfirm }) => {
+const AppointmentForm = ({
+  groupSize,
+  service,
+  date,
+  setConfirm,
+  setError,
+}) => {
+  const [isLoading, setIsLoading] = useState(false)
+
   const formik = useFormik({
     initialValues: {
       first_name: '',
@@ -64,15 +73,31 @@ const AppointmentForm = ({ groupSize, service, date, setConfirm }) => {
       // alert(JSON.stringify(values, null, 2))
       console.log(values)
       try {
+        setIsLoading(true)
         const response = await appointmentService.create(values)
         console.log('response', response)
         resetForm()
         setConfirm(response)
+        setIsLoading(false)
       } catch (err) {
         console.log('error', err.message)
+        setError(true)
+        setIsLoading(false)
       }
     },
   })
+
+  if (isLoading) {
+    return (
+      <Box justifyContent="center">
+        <CardContent>
+          <Box textAlign="center">
+            <CircularProgress />
+          </Box>
+        </CardContent>
+      </Box>
+    )
+  }
 
   return (
     <Box justifyContent="center">

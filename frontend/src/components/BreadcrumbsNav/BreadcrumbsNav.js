@@ -14,7 +14,7 @@ const BreadcrumbsNav = ({ groupSize, service, time, handleNavClick }) => {
           component="button"
           onClick={() => handleNavClick('group')}
         >
-          Ryhmä koko: {groupSize}
+          Ryhmän koko: {groupSize}
         </Link>
         <Typography color="textSecondary">Valitse palvelu</Typography>
       </Breadcrumbs>
@@ -29,7 +29,7 @@ const BreadcrumbsNav = ({ groupSize, service, time, handleNavClick }) => {
           component="button"
           onClick={() => handleNavClick('group')}
         >
-          Ryhmä koko: {groupSize}
+          Ryhmän koko: {groupSize}
         </Link>
         <Link
           color="inherit"
@@ -51,7 +51,7 @@ const BreadcrumbsNav = ({ groupSize, service, time, handleNavClick }) => {
           component="button"
           onClick={() => handleNavClick('group')}
         >
-          Ryhmä koko: {groupSize}
+          Ryhmän koko: {groupSize}
         </Link>
         <Link
           color="inherit"
@@ -74,7 +74,7 @@ const BreadcrumbsNav = ({ groupSize, service, time, handleNavClick }) => {
 
   return (
     <Breadcrumbs aria-label="breadcrumb">
-      <Typography color="textSecondary">Valitse ryhmä koko</Typography>
+      <Typography color="textSecondary">Valitse ryhmän koko</Typography>
     </Breadcrumbs>
   )
 }

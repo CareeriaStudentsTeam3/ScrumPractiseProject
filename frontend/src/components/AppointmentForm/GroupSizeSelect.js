@@ -12,11 +12,11 @@ const GroupSizeSelect = ({ handleGroupSize }) => {
     <Box display="flex" justifyContent="center" textAlign="center">
       <CardContent>
         <Typography variant="h4" color="textSecondary" gutterBottom>
-          Ryhmäkoko
+          Ryhmän koko
         </Typography>
         <Typography variant="h5" component="h2"></Typography>
         <Typography color="textSecondary" gutterBottom>
-          Valitse ryhmäkoko
+          Valitse ryhmän koko
         </Typography>
         <ButtonGroup size="large">
           <Button onClick={() => handleGroupSize(3)}>3</Button>

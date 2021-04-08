@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
 
 // Material UI imports
 import Grid from '@material-ui/core/Grid'
@@ -12,11 +13,14 @@ import ServiceSelect from '../components/AppointmentForm/ServiceSelect'
 import TimeSelect from '../components/AppointmentForm/TimeSelect'
 import AppointmentForm from '../components/AppointmentForm/AppointmentForm'
 import AppointmentConfirm from '../components/AppointmentForm/AppointmentConfirm'
+import AppointmentError from '../components/AppointmentForm/AppointmentError'
 
 // Service imports
 import serviceService from '../services/service'
 
 const Appointment = () => {
+  let history = useHistory()
+
   const [groupSize, setGroupSize] = useState(null)
   const [service, setService] = useState(null)
   const [serviceName, setServiceName] = useState(null)
@@ -27,10 +31,26 @@ const Appointment = () => {
   const [services, setServices] = useState([])
 
   const [confirm, setConfirm] = useState(null)
+  const [error, setError] = useState(false)
+
+  const [isLoading, setIsLoading] = useState(false)
+
+  const getServices = async () => {
+    try {
+      setIsLoading(true)
+      const response = await serviceService.getFilter(groupSize)
+      setServices(response)
+      setIsLoading(false)
+    } catch (err) {
+      console.log('error getSerice func', err)
+      setError(true)
+    }
+  }
 
   useEffect(() => {
     if (groupSize !== null) {
-      serviceService.getFilter(groupSize).then((data) => setServices(data))
+      getServices()
+      // serviceService.getFilter(groupSize).then((data) => setServices(data))
     }
   }, [groupSize])
 
@@ -47,6 +67,12 @@ const Appointment = () => {
   const handleTime = (timeId, date) => {
     setTimeId(timeId)
     setTime(date)
+  }
+
+  const handleBackToMainPage = () => {
+    history.push({
+      pathname: '/',
+    })
   }
 
   const handleNavClick = (item) => {
@@ -111,7 +137,22 @@ const Appointment = () => {
       <Grid container spacing={0} alignItems="center" justify="center">
         <Grid item xs={12} md={6}>
           <Card>
-            <AppointmentConfirm appointment={confirm} />
+            <AppointmentConfirm
+              appointment={confirm}
+              handleBackToMainPage={handleBackToMainPage}
+            />
+          </Card>
+        </Grid>
+      </Grid>
+    )
+  }
+
+  if (error) {
+    return (
+      <Grid container spacing={0} alignItems="center" justify="center">
+        <Grid item xs={12} md={6}>
+          <Card>
+            <AppointmentError error={'Virhe viesti!'} />
           </Card>
         </Grid>
       </Grid>
@@ -156,6 +197,7 @@ const Appointment = () => {
               services={services}
               handleService={handleService}
               handleNavClick={handleNavClick}
+              isLoading={isLoading}
             />
             {console.log('service', service)}
           </Card>
@@ -182,6 +224,7 @@ const Appointment = () => {
               duration={duration}
               handleTime={handleTime}
               handleNavClick={handleNavClick}
+              setError={setError}
             />
             {console.log('time', timeId)}
             {console.log('everything', groupSize, service, timeId)}
@@ -209,6 +252,7 @@ const Appointment = () => {
               service={service}
               date={timeId}
               setConfirm={setConfirm}
+              setError={setError}
             />
           </Card>
         </Grid>

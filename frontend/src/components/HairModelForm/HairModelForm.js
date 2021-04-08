@@ -66,7 +66,13 @@ const validationSchema = yup.object({
     ),
 })
 
-const HairModelForm = ({ setConfirm, setName, setError, setErrorMsg }) => {
+const HairModelForm = ({
+  setConfirm,
+  setHairModel,
+  setError,
+  setErrorMsg,
+  setIsLoading,
+}) => {
   const formik = useFormik({
     initialValues: {
       first_name: '',
@@ -100,10 +106,12 @@ const HairModelForm = ({ setConfirm, setName, setError, setErrorMsg }) => {
       console.log(values)
       console.log(formData.get('image'))
       try {
+        setIsLoading(true)
         const response = await hairModelService.create(formData)
         console.log('res', response)
-        setName(`${values.first_name} ${values.last_name}`)
+        setHairModel(response)
         resetForm()
+        setIsLoading(false)
         setConfirm(true)
       } catch (err) {
         console.log('error', err.name)

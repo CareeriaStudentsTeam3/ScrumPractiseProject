@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import React from 'react'
 
 // Material UI Imports
@@ -7,9 +8,25 @@ import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
-const ServiceSelect = ({ services, handleService, handleNavClick }) => {
-  if (services.length === 0) {
+const ServiceSelect = ({
+  services,
+  handleService,
+  handleNavClick,
+  isLoading,
+}) => {
+  if (isLoading) {
+    return (
+      <Box display="flex" justifyContent="center" textAlign="center">
+        <CardContent>
+          <CircularProgress />
+        </CardContent>
+      </Box>
+    )
+  }
+
+  if (services.length === 0 && !isLoading) {
     return (
       <Box display="flex" justifyContent="center" textAlign="center">
         <CardContent>
@@ -45,36 +62,82 @@ const ServiceSelect = ({ services, handleService, handleNavClick }) => {
         <Typography color="textSecondary" gutterBottom>
           Valitse palvelu
         </Typography>
-        <Grid container item spacing={2} xs={12}>
-          {services.map((item) => (
-            <Grid key={item.id} item xs={6}>
-              <Card>
-                <CardContent>
-                  <Typography variant="h5" color="textSecondary" gutterBottom>
-                    {item.service_name}
-                  </Typography>
-                  <Typography variant="h5" component="h2"></Typography>
-                  <Typography color="textSecondary" gutterBottom>
-                    Jotai infoo?
-                  </Typography>
-                  <Typography variant="body2" component="p">
-                    Kesto: {item.duration} min
-                  </Typography>
-                  <Typography variant="body2" component="p">
-                    Hinta: {item.price}€
-                  </Typography>
-                  <Button
-                    variant="contained"
-                    onClick={() =>
-                      handleService(item.id, item.duration, item.service_name)
-                    }
-                  >
-                    Valitse
-                  </Button>
-                </CardContent>
-              </Card>
-            </Grid>
-          ))}
+        <Grid container spacing={2}>
+          {services.length === 1
+            ? services.map((item) => (
+                <Grid key={item.id} item xs={12}>
+                  <Card>
+                    <CardContent>
+                      <Typography
+                        variant="h5"
+                        color="textSecondary"
+                        gutterBottom
+                      >
+                        {item.service_name}
+                      </Typography>
+                      <Typography variant="h5" component="h2"></Typography>
+                      <Typography color="textSecondary" gutterBottom>
+                        Jotai infoo?
+                      </Typography>
+                      <Typography variant="body2" component="p">
+                        Kesto: {item.duration} min
+                      </Typography>
+                      <Typography variant="body2" component="p">
+                        Hinta: {item.price}€/hlö
+                      </Typography>
+                      <Button
+                        variant="contained"
+                        onClick={() =>
+                          handleService(
+                            item.id,
+                            item.duration,
+                            item.service_name
+                          )
+                        }
+                      >
+                        Valitse
+                      </Button>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              ))
+            : services.map((item) => (
+                <Grid key={item.id} item xs={6}>
+                  <Card>
+                    <CardContent>
+                      <Typography
+                        variant="h5"
+                        color="textSecondary"
+                        gutterBottom
+                      >
+                        {item.service_name}
+                      </Typography>
+                      <Typography variant="h5" component="h2"></Typography>
+                      <Typography color="textSecondary" gutterBottom>
+                        Jotai infoo?
+                      </Typography>
+                      <Typography variant="body2" component="p">
+                        Kesto: {item.duration} min
+                      </Typography>
+                      <Typography variant="body2" component="p">
+                        Hinta: {item.price}€/hlö
+                      </Typography>
+                      <Button
+                        variant="contained"
+                        onClick={() =>
+                          handleService(
+                            item.id,
+                            item.duration,
+                            item.service_name
+                          )
+                        }
+                      >
+                        Valitse
+                      </Button>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              ))}
         </Grid>
       </CardContent>
     </Box>
