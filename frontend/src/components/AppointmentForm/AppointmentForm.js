@@ -45,7 +45,13 @@ const validationSchema = yup.object({
     .required('Anna lisätietoja'),
 })
 
-const AppointmentForm = ({ groupSize, service, date, setConfirm }) => {
+const AppointmentForm = ({
+  groupSize,
+  service,
+  date,
+  setConfirm,
+  setError,
+}) => {
   const formik = useFormik({
     initialValues: {
       first_name: '',
@@ -70,6 +76,7 @@ const AppointmentForm = ({ groupSize, service, date, setConfirm }) => {
         setConfirm(response)
       } catch (err) {
         console.log('error', err.message)
+        setError(true)
       }
     },
   })

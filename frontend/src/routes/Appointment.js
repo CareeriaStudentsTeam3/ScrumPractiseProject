@@ -12,6 +12,7 @@ import ServiceSelect from '../components/AppointmentForm/ServiceSelect'
 import TimeSelect from '../components/AppointmentForm/TimeSelect'
 import AppointmentForm from '../components/AppointmentForm/AppointmentForm'
 import AppointmentConfirm from '../components/AppointmentForm/AppointmentConfirm'
+import AppointmentError from '../components/AppointmentForm/AppointmentError'
 
 // Service imports
 import serviceService from '../services/service'
@@ -27,6 +28,7 @@ const Appointment = () => {
   const [services, setServices] = useState([])
 
   const [confirm, setConfirm] = useState(null)
+  const [error, setError] = useState(false)
 
   useEffect(() => {
     if (groupSize !== null) {
@@ -112,6 +114,18 @@ const Appointment = () => {
         <Grid item xs={12} md={6}>
           <Card>
             <AppointmentConfirm appointment={confirm} />
+          </Card>
+        </Grid>
+      </Grid>
+    )
+  }
+
+  if (error) {
+    return (
+      <Grid container spacing={0} alignItems="center" justify="center">
+        <Grid item xs={12} md={6}>
+          <Card>
+            <AppointmentError error={'Virhe viesti!'} />
           </Card>
         </Grid>
       </Grid>
@@ -209,6 +223,7 @@ const Appointment = () => {
               service={service}
               date={timeId}
               setConfirm={setConfirm}
+              setError={setError}
             />
           </Card>
         </Grid>
