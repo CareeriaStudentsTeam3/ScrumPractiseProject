@@ -13,7 +13,7 @@ const AppointmentConfirm = ({ appointment }) => {
         <Box textAlign="center">
           <Typography variant="h4" color="textPrimary" gutterBottom>
             Kiitos varauksestanne{' '}
-            {`${appointment.first_name} ${appointment.last_name}`}
+            {`${appointment.first_name} ${appointment.last_name}`}!
           </Typography>
           <Typography variant="h5" component="h2"></Typography>
           <Typography color="textSecondary" gutterBottom>

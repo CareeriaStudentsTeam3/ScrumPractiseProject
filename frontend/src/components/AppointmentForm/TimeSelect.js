@@ -16,18 +16,29 @@ const TimeSelect = ({ grpSize, duration, handleTime, handleNavClick }) => {
 
   const formatStartDate = (date) => {
     // TODO: Check that dates matches what comes from db
-    const d = new Date(date).toLocaleDateString('fi-FI')
+    // from server time comes as UTC format
+    console.log('dbDate', date)
+    const wd = new Date(date).toLocaleDateString('fi-FI', {
+      timeZone: 'UTC',
+      weekday: 'short',
+    })
+    const d = new Date(date).toLocaleDateString('fi-FI', {
+      timeZone: 'UTC',
+    })
     const t = new Date(date).toLocaleTimeString('fi-FI', {
       hour: 'numeric',
       minute: 'numeric',
+      timeZone: 'UTC',
     })
-    return `${d} ${t}`
+    return `${wd} ${d} ${t}`
   }
 
   const formatEndDate = (date) => {
+    console.log('dbDate', date)
     const t = new Date(date).toLocaleTimeString('fi-FI', {
       hour: 'numeric',
       minute: 'numeric',
+      timeZone: 'UTC',
     })
     return t
   }
@@ -43,14 +54,14 @@ const TimeSelect = ({ grpSize, duration, handleTime, handleNavClick }) => {
       <Box display="flex" justifyContent="center" textAlign="center">
         <CardContent>
           <Typography variant="h4" color="textSecondary" gutterBottom>
-            Vapaa-aika
+            Vapaat ajat
           </Typography>
           <Typography variant="h5" component="h2"></Typography>
           <Typography color="textSecondary" gutterBottom>
             Valitse päivämäärä ja kellonaika
           </Typography>
           <Typography variant="body2" component="p" gutterBottom>
-            Valitettavasti vapaita-aikoja ei ole...
+            Valitettavasti vapaita aikoja ei ole...
           </Typography>
           <Button
             variant="contained"
