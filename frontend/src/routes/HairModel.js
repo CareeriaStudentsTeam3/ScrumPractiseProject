@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 // React-router-dom imports
-// import { useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 // Material UI imports
 import Grid from '@material-ui/core/Grid'
@@ -14,7 +14,7 @@ import HairModelConfirm from '../components/HairModelForm/HairModelConfirm'
 import HairModelError from '../components/HairModelForm/HairModelError'
 
 const HairModel = () => {
-  // let history = useHistory()
+  let history = useHistory()
 
   const [confirm, setConfirm] = useState(false)
   const [error, setError] = useState(false)
@@ -27,9 +27,9 @@ const HairModel = () => {
   const handleBackToMainPage = () => {
     setError(false)
     setConfirm(false)
-    // history.push({
-    //   pathname: '/',
-    // })
+    history.push({
+      pathname: '/',
+    })
   }
 
   if (confirm) {

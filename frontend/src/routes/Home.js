@@ -33,10 +33,10 @@ const Home = () => {
         alignItems="center"
         direction="column"
       >
-        <Grid container item xs={12}>
+        <Grid container item xs={12} xl={6}>
           <HomeInfo />
         </Grid>
-        <Grid container item xs={12}>
+        <Grid container item xs={12} xl={6}>
           <HomeNavigation handleNavigation={handleNavigation} />
         </Grid>
       </Grid>
