@@ -33,10 +33,15 @@ const Appointment = () => {
   const [isLoading, setIsLoading] = useState(false)
 
   const getServices = async () => {
-    setIsLoading(true)
-    const response = await serviceService.getFilter(groupSize)
-    setServices(response)
-    setIsLoading(false)
+    try {
+      setIsLoading(true)
+      const response = await serviceService.getFilter(groupSize)
+      setServices(response)
+      setIsLoading(false)
+    } catch (err) {
+      console.log('error getSerice func', err)
+      setError(true)
+    }
   }
 
   useEffect(() => {
@@ -207,6 +212,7 @@ const Appointment = () => {
               duration={duration}
               handleTime={handleTime}
               handleNavClick={handleNavClick}
+              setError={setError}
             />
             {console.log('time', timeId)}
             {console.log('everything', groupSize, service, timeId)}

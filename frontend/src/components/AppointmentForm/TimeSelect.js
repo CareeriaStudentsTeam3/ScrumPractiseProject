@@ -12,7 +12,13 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 // Service imports
 import timespanService from '../../services/timespan'
 
-const TimeSelect = ({ grpSize, duration, handleTime, handleNavClick }) => {
+const TimeSelect = ({
+  grpSize,
+  duration,
+  handleTime,
+  handleNavClick,
+  setError,
+}) => {
   const [times, setTimes] = useState([])
   const [isLoading, setIsLoading] = useState(false)
 
@@ -46,10 +52,15 @@ const TimeSelect = ({ grpSize, duration, handleTime, handleNavClick }) => {
   }
 
   const getFreeTimes = async () => {
-    setIsLoading(true)
-    const response = await timespanService.getFreeTimes(grpSize, duration)
-    setTimes(response)
-    setIsLoading(false)
+    try {
+      setIsLoading(true)
+      const response = await timespanService.getFreeTimes(grpSize, duration)
+      setTimes(response)
+      setIsLoading(false)
+    } catch (err) {
+      setError(true)
+      console.log('error getFreeTimes func', err)
+    }
   }
 
   useEffect(() => {
