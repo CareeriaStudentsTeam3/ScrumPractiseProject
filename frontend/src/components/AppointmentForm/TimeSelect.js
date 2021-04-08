@@ -7,12 +7,14 @@ import Typography from '@material-ui/core/Typography'
 import CardContent from '@material-ui/core/CardContent'
 import Button from '@material-ui/core/Button'
 import ButtonGroup from '@material-ui/core/ButtonGroup'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 // Service imports
 import timespanService from '../../services/timespan'
 
 const TimeSelect = ({ grpSize, duration, handleTime, handleNavClick }) => {
   const [times, setTimes] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
 
   const formatStartDate = (date) => {
     // TODO: Check that dates matches what comes from db
@@ -43,13 +45,31 @@ const TimeSelect = ({ grpSize, duration, handleTime, handleNavClick }) => {
     return t
   }
 
+  const getFreeTimes = async () => {
+    setIsLoading(true)
+    const response = await timespanService.getFreeTimes(grpSize, duration)
+    setTimes(response)
+    setIsLoading(false)
+  }
+
   useEffect(() => {
-    timespanService
-      .getFreeTimes(grpSize, duration)
-      .then((data) => setTimes(data))
+    getFreeTimes()
+    // timespanService
+    //   .getFreeTimes(grpSize, duration)
+    //   .then((data) => setTimes(data))
   }, [])
 
-  if (times.length === 0) {
+  if (isLoading) {
+    return (
+      <Box display="flex" justifyContent="center" textAlign="center">
+        <CardContent>
+          <CircularProgress />
+        </CardContent>
+      </Box>
+    )
+  }
+
+  if (times.length === 0 && !isLoading) {
     return (
       <Box display="flex" justifyContent="center" textAlign="center">
         <CardContent>

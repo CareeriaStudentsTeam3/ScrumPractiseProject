@@ -30,9 +30,19 @@ const Appointment = () => {
   const [confirm, setConfirm] = useState(null)
   const [error, setError] = useState(false)
 
+  const [isLoading, setIsLoading] = useState(false)
+
+  const getServices = async () => {
+    setIsLoading(true)
+    const response = await serviceService.getFilter(groupSize)
+    setServices(response)
+    setIsLoading(false)
+  }
+
   useEffect(() => {
     if (groupSize !== null) {
-      serviceService.getFilter(groupSize).then((data) => setServices(data))
+      getServices()
+      // serviceService.getFilter(groupSize).then((data) => setServices(data))
     }
   }, [groupSize])
 
@@ -170,6 +180,7 @@ const Appointment = () => {
               services={services}
               handleService={handleService}
               handleNavClick={handleNavClick}
+              isLoading={isLoading}
             />
             {console.log('service', service)}
           </Card>
