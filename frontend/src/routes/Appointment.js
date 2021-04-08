@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
 
 // Material UI imports
 import Grid from '@material-ui/core/Grid'
@@ -18,6 +19,8 @@ import AppointmentError from '../components/AppointmentForm/AppointmentError'
 import serviceService from '../services/service'
 
 const Appointment = () => {
+  let history = useHistory()
+
   const [groupSize, setGroupSize] = useState(null)
   const [service, setService] = useState(null)
   const [serviceName, setServiceName] = useState(null)
@@ -64,6 +67,12 @@ const Appointment = () => {
   const handleTime = (timeId, date) => {
     setTimeId(timeId)
     setTime(date)
+  }
+
+  const handleBackToMainPage = () => {
+    history.push({
+      pathname: '/',
+    })
   }
 
   const handleNavClick = (item) => {
@@ -128,7 +137,10 @@ const Appointment = () => {
       <Grid container spacing={0} alignItems="center" justify="center">
         <Grid item xs={12} md={6}>
           <Card>
-            <AppointmentConfirm appointment={confirm} />
+            <AppointmentConfirm
+              appointment={confirm}
+              handleBackToMainPage={handleBackToMainPage}
+            />
           </Card>
         </Grid>
       </Grid>

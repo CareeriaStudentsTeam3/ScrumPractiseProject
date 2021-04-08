@@ -4,9 +4,9 @@ import React from 'react'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import CardContent from '@material-ui/core/CardContent'
-// import Button from '@material-ui/core/Button'
+import Button from '@material-ui/core/Button'
 
-const AppointmentConfirm = ({ appointment }) => {
+const AppointmentConfirm = ({ appointment, handleBackToMainPage }) => {
   return (
     <Box justifyContent="center">
       <CardContent>
@@ -26,6 +26,17 @@ const AppointmentConfirm = ({ appointment }) => {
           <Typography color="textSecondary" gutterBottom>
             Olemme teihin yhteydessä tarvittaessa puhelimitse tai sähköpostilla.
           </Typography>
+          <Box mt={2}>
+            <Button
+              onClick={() => handleBackToMainPage()}
+              color="default"
+              variant="contained"
+              fullWidth
+              type="submit"
+            >
+              Palaa takaisin etusivulle
+            </Button>
+          </Box>
         </Box>
       </CardContent>
     </Box>
