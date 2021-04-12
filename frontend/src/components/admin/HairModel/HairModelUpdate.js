@@ -37,6 +37,7 @@ const HairModelUpdate = ({ hairModel }) => {
 
   useEffect(() => {
     setModel(hairModel)
+    hairmodelService.setToken(document.cookie)
   }, [hairModel])
 
   const handleDelete = async (id) => {
