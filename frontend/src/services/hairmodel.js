@@ -3,7 +3,7 @@ import axios from 'axios'
 const baseUrl = 'http://localhost:8000/api/hairmodel/'
 
 const getAll = async () => {
-  const response = await axios.get(baseUrl)
+  const response = await axios.get(baseUrl, { withCredentials: true })
   return response.data
 }
 
