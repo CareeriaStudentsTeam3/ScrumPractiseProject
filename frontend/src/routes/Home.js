@@ -22,6 +22,11 @@ const Home = () => {
         pathname: '/hairmodel',
       })
     }
+    if (navTo === 'admin') {
+      history.push({
+        pathname: '/admin/login',
+      })
+    }
   }
 
   return (

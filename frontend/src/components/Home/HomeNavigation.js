@@ -25,14 +25,25 @@ const HomeNavigation = ({ handleNavigation }) => {
               Varaa aika ryhmälle
             </Button>
           </Box>
+          <Box mb={2}>
+            <Button
+              onClick={() => handleNavigation('hairmodel')}
+              fullWidth
+              size="large"
+              variant="contained"
+              color="primary"
+            >
+              Rekisteröidy hiusmalliksi
+            </Button>
+          </Box>
           <Button
-            onClick={() => handleNavigation('hairmodel')}
+            onClick={() => handleNavigation('admin')}
             fullWidth
             size="large"
             variant="contained"
             color="primary"
           >
-            Rekisteröidy hiusmalliksi
+            Kirjaudu ylläpitoon
           </Button>
         </Box>
       </Grid>

@@ -9,6 +9,7 @@ import logoutService from '../services/logout'
 
 // Component imports
 import HairModelList from '../components/admin/HairModel/HairModelList'
+import LogoutButton from '../components/admin/LogoutButton/LogoutButton'
 
 const HairModelAdmin = () => {
   let location = useLocation()
@@ -45,10 +46,13 @@ const HairModelAdmin = () => {
       if (user.login_success === true) {
         setUser(user.username)
         getHairModels()
+        setRedirect(false)
       }
-      return null
     }
-    if (!loggedUserJSON) {
+    if (
+      JSON.parse(loggedUserJSON) === null ||
+      !JSON.parse(loggedUserJSON).login_success
+    ) {
       logoutService.logout()
       setRedirect(true)
     }
@@ -58,7 +62,12 @@ const HairModelAdmin = () => {
     return <Redirect to="/admin/login" />
   }
 
-  return <HairModelList hairModels={hairModels} />
+  return (
+    <div>
+      <LogoutButton />
+      <HairModelList hairModels={hairModels} />
+    </div>
+  )
 }
 
 export default HairModelAdmin

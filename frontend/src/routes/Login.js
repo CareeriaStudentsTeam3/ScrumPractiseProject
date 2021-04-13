@@ -34,7 +34,10 @@ const Login = () => {
         setRedirect(true)
       }
     }
-    if (JSON.parse(loggedUserJSON) === null) {
+    if (
+      JSON.parse(loggedUserJSON) === null ||
+      !JSON.parse(loggedUserJSON).login_success
+    ) {
       logoutService.logout()
       setRedirect(false)
     }
