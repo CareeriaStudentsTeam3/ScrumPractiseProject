@@ -5,6 +5,7 @@ import { useParams, Redirect } from 'react-router-dom'
 
 // Service import
 import hairmodelService from '../services/hairmodel'
+import logoutService from '../services/logout'
 
 // Component imports
 import HairModelUpdate from '../components/admin/HairModel/HairModelUpdate'
@@ -21,23 +22,31 @@ const HairdModelInfoAdmin = () => {
   const [user, setUser] = useState(null)
   const [redirect, setRedirect] = useState(false)
 
-  const fetchHairModel = async () => {
+  const getHairModel = async () => {
+    setRedirect(false)
     const response = await hairmodelService.getOne(id)
-    setHairModel(response)
+    if (!response.error) {
+      setHairModel(response)
+    }
+    if (response.error) {
+      setHairModel([])
+      setRedirect(true)
+    }
   }
 
   useEffect(() => {
-    //hairmodelService.getOne(id).then((data) => setHairModel(data))
-    fetchHairModel()
     console.log('hairmodel', hairModel)
     const loggedUserJSON = window.localStorage.getItem('user')
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
-      console.log('user', user.username)
-      setUser(user.username)
-      setRedirect(false)
+      if (user.login_success === true) {
+        console.log('user', user.username)
+        setUser(user.username)
+        getHairModel()
+      }
     }
-    if (!loggedUserJSON) {
+    if (JSON.parse(loggedUserJSON) === null) {
+      logoutService.logout()
       setRedirect(true)
     }
   }, [])
@@ -57,7 +66,7 @@ const HairdModelInfoAdmin = () => {
   return (
     <Grid container spacing={0} alignItems="center" justify="center">
       <Grid container item xs={12} md={6}>
-        {console.log('useUser', user)}
+        {console.log(user)}
         <HairModelPhoto photo={hairModel.image} />
       </Grid>
       <Grid item xs={12} md={6}>

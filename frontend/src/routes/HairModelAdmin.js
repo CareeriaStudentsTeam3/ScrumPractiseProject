@@ -5,6 +5,7 @@ import { useLocation, Redirect } from 'react-router-dom'
 
 // Service import
 import hairmodelService from '../services/hairmodel'
+import logoutService from '../services/logout'
 
 // Component imports
 import HairModelList from '../components/admin/HairModel/HairModelList'
@@ -18,25 +19,37 @@ const HairModelAdmin = () => {
   const [hairModels, setHairModels] = useState([])
   const [refresh, setRefresh] = useState(false)
 
+  const getHairModels = async () => {
+    setRedirect(false)
+    const response = await hairmodelService.getAll()
+    if (!response.error) {
+      setHairModels(response)
+      setRefresh(false)
+    }
+    if (response.error) {
+      setHairModels([])
+      setRedirect(true)
+    }
+  }
+
   useEffect(() => {
     // console.log('location', location.id)
     setRefresh(true)
-    console.log('useruser', user)
+    console.log(user)
   }, [location.id])
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('user')
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
-      setUser(user.username)
-      setRedirect(false)
-      hairmodelService
-        .getAll()
-        .then((data) => setHairModels(data))
-        .then(setRefresh(false))
+      if (user.login_success === true) {
+        setUser(user.username)
+        getHairModels()
+      }
+      return null
     }
     if (!loggedUserJSON) {
-      setUser(null)
+      logoutService.logout()
       setRedirect(true)
     }
   }, [refresh])

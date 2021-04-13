@@ -1,23 +1,24 @@
 import axios from 'axios'
+import ownAxios from '../axiosConfig'
 
 const baseUrl = 'http://localhost:8000/api/hairmodel/'
 
-let token = null
-
-const setToken = (newToken) => {
-  token = newToken.substr(10)
-}
-
 const getAll = async () => {
-  const response = await axios.get(baseUrl, { withCredentials: true })
-  return response.data
+  try {
+    const response = await ownAxios.get(baseUrl)
+    return response.data
+  } catch (error) {
+    return { error: true, error_message: error.message }
+  }
 }
 
 const getOne = async (id) => {
-  const response = await axios.get(`${baseUrl}${id}/`, {
-    withCredentials: true,
-  })
-  return response.data
+  try {
+    const response = await ownAxios.get(`${baseUrl}${id}/`)
+    return response.data
+  } catch (error) {
+    return { error: true, error_message: error.message }
+  }
 }
 
 const create = async (newHairModel) => {
@@ -26,20 +27,13 @@ const create = async (newHairModel) => {
 }
 
 const update = async (updatedHairModel, id) => {
-  console.log('token', token)
-  const response = await axios.put(`${baseUrl}${id}/`, updatedHairModel, {
-    withCredentials: true,
-    headers: { 'X-CSRFToken': token },
-  })
+  const response = await ownAxios.put(`${baseUrl}${id}/`, updatedHairModel)
   return response.data
 }
 
 const del = async (id) => {
-  const response = await axios.delete(`${baseUrl}${id}/`, {
-    withCredentials: true,
-    headers: { 'X-CSRFToken': token },
-  })
+  const response = await ownAxios.delete(`${baseUrl}${id}/`)
   return response.data
 }
 
-export default { getAll, getOne, create, update, del, setToken }
+export default { getAll, getOne, create, update, del }

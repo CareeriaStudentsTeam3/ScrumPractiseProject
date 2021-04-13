@@ -3,6 +3,9 @@ import React, { useState, useEffect } from 'react'
 // React-router-dom imports
 import { Redirect } from 'react-router-dom'
 
+// Service imports
+import logoutService from '../services/logout'
+
 // Component imports
 import LoginForm from '../components/admin/LoginForm/LoginForm'
 
@@ -25,21 +28,25 @@ const Login = () => {
     const loggedUserJSON = window.localStorage.getItem('user')
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
-      console.log('user', user.username)
-      setUser(user.username)
-      setRedirect(true)
+      if (user.login_success === true) {
+        console.log('user', user.username)
+        setUser(user.username)
+        setRedirect(true)
+      }
     }
-    if (!loggedUserJSON) {
+    if (JSON.parse(loggedUserJSON) === null) {
+      logoutService.logout()
       setRedirect(false)
     }
   }, [])
 
-  if (redirect || user) {
+  if (redirect) {
     return <Redirect to="/admin/hairmodel" />
   }
 
   return (
     <Grid container justify="center" alignItems="center">
+      {console.log(user)}
       <LoginForm saveLogginInfo={saveLogginInfo} setRedirect={setRedirect} />
     </Grid>
   )
