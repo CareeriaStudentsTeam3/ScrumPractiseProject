@@ -9,6 +9,7 @@ import HairModel from './routes/HairModel'
 import HairModelAdmin from './routes/HairModelAdmin'
 import HairdModelInfoAdmin from './routes/HairdModelInfoAdmin'
 import Appointment from './routes/Appointment'
+import ServiceAdmin from './routes/ServiceAdmin'
 import Login from './routes/Login'
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
         component={HairdModelInfoAdmin}
       />
       <Route exact path="/appointment" component={Appointment} />
+      <Route exact path="/admin/service" component={ServiceAdmin} />
       <Route exact path="/admin/login" component={Login} />
     </Router>
   )
