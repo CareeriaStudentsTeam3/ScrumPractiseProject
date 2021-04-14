@@ -25,8 +25,8 @@ const HairModel = () => {
   const [errorMsg, setErrorMsg] = useState(null)
 
   const handleBackToMainPage = () => {
-    setError(false)
-    setConfirm(false)
+    // setError(false)
+    // setConfirm(false)
     history.push({
       pathname: '/',
     })

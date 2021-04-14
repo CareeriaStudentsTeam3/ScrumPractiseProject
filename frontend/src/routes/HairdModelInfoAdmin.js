@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 
 // React-router-dom imports
-import { useParams } from 'react-router-dom'
+import { useParams, Redirect } from 'react-router-dom'
 
 // Service import
 import hairmodelService from '../services/hairmodel'
+import logoutService from '../services/logout'
 
 // Component imports
 import HairModelUpdate from '../components/admin/HairModel/HairModelUpdate'
@@ -18,11 +19,44 @@ const HairdModelInfoAdmin = () => {
   const { id } = useParams()
 
   const [hairModel, setHairModel] = useState([])
+  const [user, setUser] = useState(null)
+  const [redirect, setRedirect] = useState(false)
+
+  const getHairModel = async () => {
+    setRedirect(false)
+    const response = await hairmodelService.getOne(id)
+    if (!response.error) {
+      setHairModel(response)
+    }
+    if (response.error) {
+      setHairModel([])
+      setRedirect(true)
+    }
+  }
 
   useEffect(() => {
-    hairmodelService.getOne(id).then((data) => setHairModel(data))
-    console.log(hairModel)
+    console.log('hairmodel', hairModel)
+    const loggedUserJSON = window.localStorage.getItem('user')
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
+      if (user.login_success === true) {
+        console.log('user', user.username)
+        setUser(user.username)
+        getHairModel()
+      }
+    }
+    if (
+      JSON.parse(loggedUserJSON) === null ||
+      !JSON.parse(loggedUserJSON).login_success
+    ) {
+      logoutService.logout()
+      setRedirect(true)
+    }
   }, [])
+
+  if (redirect) {
+    return <Redirect to="/admin/login" />
+  }
 
   if (hairModel.length === 0) {
     return (
@@ -35,6 +69,7 @@ const HairdModelInfoAdmin = () => {
   return (
     <Grid container spacing={0} alignItems="center" justify="center">
       <Grid container item xs={12} md={6}>
+        {console.log(user)}
         <HairModelPhoto photo={hairModel.image} />
       </Grid>
       <Grid item xs={12} md={6}>

@@ -1,33 +1,73 @@
 import React, { useEffect, useState } from 'react'
 
 // React-router-dom imports
-import { useLocation } from 'react-router-dom'
+import { useLocation, Redirect } from 'react-router-dom'
 
 // Service import
 import hairmodelService from '../services/hairmodel'
+import logoutService from '../services/logout'
 
 // Component imports
-import HairModeList from '../components/admin/HairModel/HairModelList'
+import HairModelList from '../components/admin/HairModel/HairModelList'
+import LogoutButton from '../components/admin/LogoutButton/LogoutButton'
 
 const HairModelAdmin = () => {
   let location = useLocation()
 
+  const [user, setUser] = useState(null)
+  const [redirect, setRedirect] = useState(false)
+
   const [hairModels, setHairModels] = useState([])
   const [refresh, setRefresh] = useState(false)
+
+  const getHairModels = async () => {
+    setRedirect(false)
+    const response = await hairmodelService.getAll()
+    if (!response.error) {
+      setHairModels(response)
+      setRefresh(false)
+    }
+    if (response.error) {
+      setHairModels([])
+      setRedirect(true)
+    }
+  }
 
   useEffect(() => {
     // console.log('location', location.id)
     setRefresh(true)
+    console.log(user)
   }, [location.id])
 
   useEffect(() => {
-    hairmodelService
-      .getAll()
-      .then((data) => setHairModels(data))
-      .then(setRefresh(false))
+    const loggedUserJSON = window.localStorage.getItem('user')
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
+      if (user.login_success === true) {
+        setUser(user.username)
+        getHairModels()
+        setRedirect(false)
+      }
+    }
+    if (
+      JSON.parse(loggedUserJSON) === null ||
+      !JSON.parse(loggedUserJSON).login_success
+    ) {
+      logoutService.logout()
+      setRedirect(true)
+    }
   }, [refresh])
 
-  return <HairModeList hairModels={hairModels} />
+  if (redirect) {
+    return <Redirect to="/admin/login" />
+  }
+
+  return (
+    <div>
+      <LogoutButton />
+      <HairModelList hairModels={hairModels} />
+    </div>
+  )
 }
 
 export default HairModelAdmin

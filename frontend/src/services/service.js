@@ -1,4 +1,5 @@
 import axios from 'axios'
+import ownAxios from '../axiosConfig'
 
 const serviceUrl = 'http://localhost:8000/api/service/'
 
@@ -17,4 +18,14 @@ const getOne = async (id) => {
   return response.data
 }
 
-export default { getFilter, getAll, getOne }
+const create = async (newService) => {
+  const response = await ownAxios.post(serviceUrl, newService)
+  return response.data
+}
+
+const del = async (id) => {
+  const response = await ownAxios.delete(`${serviceUrl}${id}/`)
+  return response.data
+}
+
+export default { getFilter, getAll, getOne, create, del }

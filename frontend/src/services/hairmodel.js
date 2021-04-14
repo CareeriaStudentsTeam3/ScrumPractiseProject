@@ -1,15 +1,24 @@
 import axios from 'axios'
+import ownAxios from '../axiosConfig'
 
 const baseUrl = 'http://localhost:8000/api/hairmodel/'
 
 const getAll = async () => {
-  const response = await axios.get(baseUrl)
-  return response.data
+  try {
+    const response = await ownAxios.get(baseUrl)
+    return response.data
+  } catch (error) {
+    return { error: true, error_message: error.message }
+  }
 }
 
 const getOne = async (id) => {
-  const response = await axios.get(`${baseUrl}${id}/`)
-  return response.data
+  try {
+    const response = await ownAxios.get(`${baseUrl}${id}/`)
+    return response.data
+  } catch (error) {
+    return { error: true, error_message: error.message }
+  }
 }
 
 const create = async (newHairModel) => {
@@ -18,12 +27,12 @@ const create = async (newHairModel) => {
 }
 
 const update = async (updatedHairModel, id) => {
-  const response = await axios.put(`${baseUrl}${id}/`, updatedHairModel)
+  const response = await ownAxios.put(`${baseUrl}${id}/`, updatedHairModel)
   return response.data
 }
 
 const del = async (id) => {
-  const response = await axios.delete(`${baseUrl}${id}/`)
+  const response = await ownAxios.delete(`${baseUrl}${id}/`)
   return response.data
 }
 
