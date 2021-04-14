@@ -14,7 +14,7 @@ import Button from '@material-ui/core/Button'
 import Box from '@material-ui/core/Box'
 // import Typography from '@material-ui/core/Typography'
 
-const ServiceList = ({ services, setCreateService }) => {
+const ServiceList = ({ services, setCreateService, handleDelete }) => {
   console.log('services', services)
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
@@ -82,7 +82,7 @@ const ServiceList = ({ services, setCreateService }) => {
                   </TableCell>
                   <TableCell align="left">
                     <Button
-                      onClick={() => handleServicelInfo(item.id)}
+                      onClick={() => handleDelete(item.id)}
                       variant="contained"
                       color="secondary"
                     >

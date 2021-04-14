@@ -24,6 +24,13 @@ const ServiceAdmin = () => {
     setCreateService(false)
   }
 
+  const handleDelete = async (id) => {
+    if (window.confirm('Haluatko varmasti poistaa tämän palvelun?')) {
+      await serviceService.del(id)
+      setRefresh(true)
+    }
+  }
+
   const getServices = async () => {
     const response = await serviceService.getAll()
     setServices(response)
@@ -45,7 +52,11 @@ const ServiceAdmin = () => {
 
   return (
     <div>
-      <ServiceList services={services} setCreateService={setCreateService} />
+      <ServiceList
+        services={services}
+        setCreateService={setCreateService}
+        handleDelete={handleDelete}
+      />
     </div>
   )
 }

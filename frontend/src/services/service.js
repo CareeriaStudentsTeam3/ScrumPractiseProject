@@ -23,4 +23,9 @@ const create = async (newService) => {
   return response.data
 }
 
-export default { getFilter, getAll, getOne, create }
+const del = async (id) => {
+  const response = await ownAxios.delete(`${serviceUrl}${id}/`)
+  return response.data
+}
+
+export default { getFilter, getAll, getOne, create, del }
