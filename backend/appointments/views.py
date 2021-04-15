@@ -62,7 +62,7 @@ class UserLoginView(APIView):
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data["user"]
         login(request, user)
-        return Response({"username": user.username, "login_success": True})
+        return Response({"username": user.username, "user_group": user.groups.values_list("name",flat=True), "login_success": True})
 
 class UserLogoutView(APIView):
     def post(self, request):
