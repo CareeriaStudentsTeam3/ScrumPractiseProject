@@ -14,7 +14,7 @@ const getAll = async () => {
 }
 
 const getOne = async (id) => {
-  const response = await axios.get(`${serviceUrl}${id}/`)
+  const response = await ownAxios.get(`${serviceUrl}${id}/`)
   return response.data
 }
 
@@ -23,9 +23,14 @@ const create = async (newService) => {
   return response.data
 }
 
+const update = async (id, updatedService) => {
+  const response = await ownAxios.put(`${serviceUrl}${id}/`, updatedService)
+  return response.data
+}
+
 const del = async (id) => {
   const response = await ownAxios.delete(`${serviceUrl}${id}/`)
   return response.data
 }
 
-export default { getFilter, getAll, getOne, create, del }
+export default { getFilter, getAll, getOne, create, update, del }
