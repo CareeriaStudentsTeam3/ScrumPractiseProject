@@ -1,6 +1,9 @@
 /* eslint-disable indent */
 import React, { useState } from 'react'
 
+// Service import
+import serviceService from '../../../services/service'
+
 // Material UI imports
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -14,8 +17,13 @@ import Button from '@material-ui/core/Button'
 import Box from '@material-ui/core/Box'
 // import Typography from '@material-ui/core/Typography'
 
-const ServiceList = ({ services, setCreateService, handleDelete }) => {
-  console.log('services', services)
+const ServiceList = ({
+  services,
+  setCreateService,
+  handleDelete,
+  setEditService,
+  setService,
+}) => {
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
 
@@ -32,8 +40,10 @@ const ServiceList = ({ services, setCreateService, handleDelete }) => {
     setCreateService(true)
   }
 
-  const handleServicelInfo = (id) => {
-    history.push(`/admin/service/${id}`)
+  const handleServiceEdit = async (id) => {
+    setEditService(true)
+    const response = await serviceService.getOne(id)
+    setService(response)
   }
 
   return (
@@ -73,7 +83,7 @@ const ServiceList = ({ services, setCreateService, handleDelete }) => {
                   <TableCell align="center">{`${item.max_group_size} henkilöä`}</TableCell>
                   <TableCell align="right">
                     <Button
-                      onClick={() => handleServicelInfo(item.id)}
+                      onClick={() => handleServiceEdit(item.id)}
                       variant="contained"
                       color="primary"
                     >

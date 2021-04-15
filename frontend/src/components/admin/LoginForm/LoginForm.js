@@ -35,6 +35,7 @@ const LoginForm = ({ saveLogginInfo, setRedirect }) => {
         saveLogginInfo(user)
         setRedirect(true)
       } catch (error) {
+        setRedirect(false)
         setErrors({
           username: 'Väärä käyttäjätunnus tai salasana',
           password: 'Väärä käyttäjätunnus tai salasana',
