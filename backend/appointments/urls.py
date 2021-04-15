@@ -10,7 +10,7 @@ router.register(r"category", views.CategoryViewSet)
 router.register(r"service", views.ServiceViewSet, "service")
 
 urlpatterns = [
-    path("api/", include((router.urls, "appointment_app"))),
+    path("api/", include((router.urls, "appointments"))),
     path("api/login/", views.UserLoginView.as_view(), name="login"),
     path("api/logout/", views.UserLogoutView.as_view(), name="logout"),
 ]
