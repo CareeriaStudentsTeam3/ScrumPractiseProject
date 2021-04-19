@@ -9,9 +9,24 @@ const getFreeTimes = async (groupSize, duration) => {
   return response.data
 }
 
+const getAll = async () => {
+  const response = await axios.get(timeSpanUrl)
+  return response.data
+}
+
 const getOne = async (id) => {
   const response = await axios.get(`${timeSpanUrl}${id}/`)
   return response.data
 }
 
-export default { getFreeTimes, getOne }
+const create = async (newTime) => {
+  const response = await axios.post(timeSpanUrl, newTime)
+  return response.data
+}
+
+const del = async (id) => {
+  const response = await axios.delete(`${timeSpanUrl}${id}/`)
+  return response.data
+}
+
+export default { getFreeTimes, getAll, getOne, create, del }
