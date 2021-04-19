@@ -36,7 +36,7 @@ const ServiceAdmin = () => {
     try {
       const response = await serviceService.create(newService)
       console.log(response)
-      setRefresh(true)
+      setRefresh(!refresh)
       handleNotification('Luodaan palvelua...', true)
       setTimeout(() => {
         setCreateService(false)
@@ -51,7 +51,7 @@ const ServiceAdmin = () => {
     try {
       const response = await serviceService.update(service.id, updatedService)
       console.log('updateed', response)
-      setRefresh(true)
+      setRefresh(!refresh)
       handleNotification('Muokataan...', true)
       setTimeout(() => {
         setEditService(false)
@@ -72,14 +72,14 @@ const ServiceAdmin = () => {
   const handleDelete = async (id) => {
     if (window.confirm('Haluatko varmasti poistaa tämän palvelun?')) {
       await serviceService.del(id)
-      setRefresh(true)
+      setRefresh(!refresh)
     }
   }
 
   const getServices = async () => {
     const response = await serviceService.getAll()
     setServices(response)
-    setRefresh(false)
+    setRefresh(!refresh)
   }
 
   useEffect(() => {
