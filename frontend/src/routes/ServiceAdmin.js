@@ -36,10 +36,10 @@ const ServiceAdmin = () => {
     try {
       const response = await serviceService.create(newService)
       console.log(response)
-      setRefresh(!refresh)
       handleNotification('Luodaan palvelua...', true)
       setTimeout(() => {
         setCreateService(false)
+        setRefresh(!refresh)
       }, 2000)
     } catch (error) {
       console.log('adderror', error)
@@ -51,9 +51,9 @@ const ServiceAdmin = () => {
     try {
       const response = await serviceService.update(service.id, updatedService)
       console.log('updateed', response)
-      setRefresh(!refresh)
       handleNotification('Muokataan...', true)
       setTimeout(() => {
+        setRefresh(!refresh)
         setEditService(false)
       }, 2000)
     } catch (error) {
@@ -79,7 +79,7 @@ const ServiceAdmin = () => {
   const getServices = async () => {
     const response = await serviceService.getAll()
     setServices(response)
-    setRefresh(!refresh)
+    // setRefresh(!refresh)
   }
 
   useEffect(() => {
