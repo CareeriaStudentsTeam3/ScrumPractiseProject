@@ -2,6 +2,11 @@ import React, { useState } from 'react'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
 
+// Import React datepicker
+import DatePicker from 'react-datepicker'
+
+import 'react-datepicker/dist/react-datepicker.css'
+
 // Import service
 import timespanService from '../../../services/timespan'
 
@@ -94,8 +99,8 @@ const AddDates = ({ setCreateDate, setRefresh, refresh }) => {
 
   const formik = useFormik({
     initialValues: {
-      beginning: '',
-      end: '',
+      beginning: new Date() || '',
+      end: new Date() || '',
       max_group_size: null || '',
     },
     validationSchema: validationSchema,
@@ -129,38 +134,27 @@ const AddDates = ({ setCreateDate, setRefresh, refresh }) => {
         <Grid item xs={10} md={8}>
           <Box my={3}>
             <form onSubmit={formik.handleSubmit}>
-              <Box mb={2}>
-                <TextField
-                  fullWidth
-                  id="beginning"
-                  label="Aloitus päivä ja aika"
-                  type="datetime-local"
-                  InputLabelProps={{
-                    shrink: true,
+              <Box display="flex" justifyContent="center" mb={2}>
+                <DatePicker
+                  showTimeSelect
+                  dateFormat="dd.MM.yyyy, hh:mm aa"
+                  timeFormat="p"
+                  selected={formik.values.beginning}
+                  onChange={(date) => {
+                    formik.setFieldValue('beginning', date)
+                    formik.setFieldValue('end', date)
                   }}
-                  value={formik.values.beginning}
-                  onChange={formik.handleChange}
-                  error={
-                    formik.touched.beginning && Boolean(formik.errors.beginning)
-                  }
-                  helperText={
-                    formik.touched.beginning && formik.errors.beginning
-                  }
                 />
-              </Box>
-              <Box mb={2}>
-                <TextField
-                  fullWidth
-                  id="end"
-                  label="Lopetus aika"
-                  type="datetime-local"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  value={formik.values.end}
-                  onChange={formik.handleChange}
-                  error={formik.touched.end && Boolean(formik.errors.end)}
-                  helperText={formik.touched.end && formik.errors.end}
+                <DatePicker
+                  selected={formik.values.end}
+                  onChange={(date) => formik.setFieldValue('end', date)}
+                  minDate={formik.values.beginning}
+                  showTimeSelect
+                  showTimeSelectOnly
+                  timeIntervals={15}
+                  timeCaption="Time"
+                  timeFormat="hh:mm aa"
+                  dateFormat="dd.MM.yyyy, hh:mm aa"
                 />
               </Box>
               <TextField

@@ -25,13 +25,10 @@ const HairdModelInfoAdmin = () => {
   const getHairModel = async () => {
     setRedirect(false)
     const response = await hairmodelService.getOne(id)
-    if (!response.error) {
-      setHairModel(response)
+    if (response.error && response.status === 403) {
+      return setRedirect(true)
     }
-    if (response.error) {
-      setHairModel([])
-      setRedirect(true)
-    }
+    setHairModel(response)
   }
 
   useEffect(() => {

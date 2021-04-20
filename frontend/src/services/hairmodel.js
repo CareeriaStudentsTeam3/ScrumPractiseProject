@@ -1,23 +1,31 @@
-import axios from 'axios'
-import ownAxios from '../axiosConfig'
+import axios from '../axiosConfig'
+import logoutService from './logout'
 
 const baseUrl = 'http://localhost:8000/api/hairmodel/'
 
 const getAll = async () => {
   try {
-    const response = await ownAxios.get(baseUrl)
+    const response = await axios.get(baseUrl)
     return response.data
-  } catch (error) {
-    return { error: true, error_message: error.message }
+  } catch (err) {
+    if (err.response.status === 403) {
+      window.localStorage.clear()
+      logoutService.logout()
+      return { error: true, status: err.response.status }
+    }
   }
 }
 
 const getOne = async (id) => {
   try {
-    const response = await ownAxios.get(`${baseUrl}${id}/`)
+    const response = await axios.get(`${baseUrl}${id}/`)
     return response.data
-  } catch (error) {
-    return { error: true, error_message: error.message }
+  } catch (err) {
+    if (err.response.status === 403) {
+      window.localStorage.clear()
+      logoutService.logout()
+      return { error: true, status: err.response.status }
+    }
   }
 }
 
@@ -27,13 +35,27 @@ const create = async (newHairModel) => {
 }
 
 const update = async (updatedHairModel, id) => {
-  const response = await ownAxios.put(`${baseUrl}${id}/`, updatedHairModel)
-  return response.data
+  try {
+    const response = await axios.put(`${baseUrl}${id}/`, updatedHairModel)
+    return response.data
+  } catch (err) {
+    if (err.response.status === 403) {
+      window.localStorage.clear()
+      logoutService.logout()
+    }
+  }
 }
 
 const del = async (id) => {
-  const response = await ownAxios.delete(`${baseUrl}${id}/`)
-  return response.data
+  try {
+    const response = await axios.delete(`${baseUrl}${id}/`)
+    return response.data
+  } catch (err) {
+    if (err.response.status === 403) {
+      window.localStorage.clear()
+      logoutService.logout()
+    }
+  }
 }
 
 export default { getAll, getOne, create, update, del }

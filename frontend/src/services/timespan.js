@@ -1,4 +1,5 @@
-import axios from 'axios'
+import axios from '../axiosConfig'
+import logoutService from './logout'
 
 const timeSpanUrl = 'http://localhost:8000/api/appointment_timespan/'
 
@@ -10,23 +11,55 @@ const getFreeTimes = async (groupSize, duration) => {
 }
 
 const getAll = async () => {
-  const response = await axios.get(timeSpanUrl)
-  return response.data
+  try {
+    const response = await axios.get(timeSpanUrl)
+    return response.data
+  } catch (err) {
+    if (err.response.status === 403) {
+      window.localStorage.clear()
+      logoutService.logout()
+      return { error: true, status: err.response.status }
+    }
+  }
 }
 
 const getOne = async (id) => {
-  const response = await axios.get(`${timeSpanUrl}${id}/`)
-  return response.data
+  try {
+    const response = await axios.get(`${timeSpanUrl}${id}/`)
+    return response.data
+  } catch (err) {
+    if (err.response.status === 403) {
+      window.localStorage.clear()
+      logoutService.logout()
+      return { error: true, status: err.response.status }
+    }
+  }
 }
 
 const create = async (newTime) => {
-  const response = await axios.post(timeSpanUrl, newTime)
-  return response.data
+  try {
+    const response = await axios.post(timeSpanUrl, newTime)
+    return response.data
+  } catch (err) {
+    if (err.response.status === 403) {
+      window.localStorage.clear()
+      logoutService.logout()
+      return { error: true, status: err.response.status }
+    }
+  }
 }
 
 const del = async (id) => {
-  const response = await axios.delete(`${timeSpanUrl}${id}/`)
-  return response.data
+  try {
+    const response = await axios.delete(`${timeSpanUrl}${id}/`)
+    return response.data
+  } catch (err) {
+    if (err.response.status === 403) {
+      window.localStorage.clear()
+      logoutService.logout()
+      return { error: true, status: err.response.status }
+    }
+  }
 }
 
 export default { getFreeTimes, getAll, getOne, create, del }

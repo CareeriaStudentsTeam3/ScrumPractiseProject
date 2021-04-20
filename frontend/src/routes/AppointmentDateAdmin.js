@@ -20,6 +20,9 @@ const AppointmentDateAdmin = () => {
   const getDates = async () => {
     try {
       const response = await timespanService.getAll()
+      if (response.error && response.status === 403) {
+        return setRedirect(true)
+      }
       const sortedResponse = response.sort((a, b) => {
         return new Date(a.beginning) - new Date(b.beginning)
       })
@@ -32,7 +35,10 @@ const AppointmentDateAdmin = () => {
 
   const handleDelete = async (id) => {
     if (window.confirm('Haluatko varmasti poistaa tämän ajan?')) {
-      await timespanService.del(id)
+      const response = await timespanService.del(id)
+      if (response.error && response.status === 403) {
+        return setRedirect(true)
+      }
       setRefresh(!refresh)
     }
   }

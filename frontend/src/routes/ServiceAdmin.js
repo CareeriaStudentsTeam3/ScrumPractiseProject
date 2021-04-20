@@ -36,6 +36,9 @@ const ServiceAdmin = () => {
     try {
       const response = await serviceService.create(newService)
       console.log(response)
+      if (response.error && response.status === 403) {
+        return setRedirect(true)
+      }
       handleNotification('Luodaan palvelua...', true)
       setTimeout(() => {
         setCreateService(false)
@@ -51,6 +54,9 @@ const ServiceAdmin = () => {
     try {
       const response = await serviceService.update(service.id, updatedService)
       console.log('updateed', response)
+      if (response.error && response.status === 403) {
+        return setRedirect(true)
+      }
       handleNotification('Muokataan...', true)
       setTimeout(() => {
         setRefresh(!refresh)
@@ -71,13 +77,19 @@ const ServiceAdmin = () => {
 
   const handleDelete = async (id) => {
     if (window.confirm('Haluatko varmasti poistaa tämän palvelun?')) {
-      await serviceService.del(id)
+      const response = await serviceService.del(id)
+      if (response.error && response.status === 403) {
+        return setRedirect(true)
+      }
       setRefresh(!refresh)
     }
   }
 
   const getServices = async () => {
     const response = await serviceService.getAll()
+    if (response.error && response.status === 403) {
+      return setRedirect(true)
+    }
     setServices(response)
     // setRefresh(!refresh)
   }
