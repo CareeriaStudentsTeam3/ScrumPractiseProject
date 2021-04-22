@@ -10,12 +10,25 @@ import logoutService from '../services/logout'
 // Component import
 import AddDates from '../components/admin/AppointmentDate/AddDates'
 import DateList from '../components/admin/AppointmentDate/DateList'
+import EditDates from '../components/admin/AppointmentDate/EditDates'
+import Notification from '../components/Notification/Notification'
 
 const AppointmentDateAdmin = () => {
   const [dates, setDates] = useState([])
+  const [date, setDate] = useState(null)
   const [refresh, setRefresh] = useState(false)
   const [redirect, setRedirect] = useState(false)
   const [createDate, setCreateDate] = useState(false)
+  const [editDate, setEditDate] = useState(false)
+
+  // Notification
+  const [notificationMsg, setNotificationMsg] = useState(null)
+  const [openNotification, setOpenNotification] = useState(false)
+
+  const handleNotification = (msg, isOpen) => {
+    setNotificationMsg(msg)
+    setOpenNotification(isOpen)
+  }
 
   const getDates = async () => {
     try {
@@ -43,25 +56,33 @@ const AppointmentDateAdmin = () => {
     }
   }
 
-  //   const formatStartDate = (date) => {
-  //     const wd = new Date(date).toLocaleDateString('fi-FI', {
-  //       weekday: 'short',
-  //     })
-  //     const d = new Date(date).toLocaleDateString('fi-FI')
-  //     const t = new Date(date).toLocaleTimeString('fi-FI', {
-  //       hour: 'numeric',
-  //       minute: 'numeric',
-  //     })
-  //     return `${wd} ${d} ${t}`
-  //   }
+  const updateDate = async (updatedService) => {
+    try {
+      const response = await timespanService.update(date.id, updatedService)
+      console.log('updateed', response)
+      if (response.error && response.status === 403) {
+        return setRedirect(true)
+      }
+      handleNotification('Muokataan...', true)
+      setTimeout(() => {
+        setRefresh(!refresh)
+        setEditDate(false)
+        setDate(null)
+      }, 2000)
+    } catch (error) {
+      console.log('delerror', error)
+      handleNotification('Muokkaus epäonnistui!', true)
+      setTimeout(() => {
+        setEditDate(false)
+        setDate(null)
+      }, 2000)
+    }
+  }
 
-  //   const formatEndDate = (date) => {
-  //     const t = new Date(date).toLocaleTimeString('fi-FI', {
-  //       hour: 'numeric',
-  //       minute: 'numeric',
-  //     })
-  //     return t
-  //   }
+  const handleBackButton = () => {
+    setEditDate(false)
+    setDate(null)
+  }
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('user')
@@ -96,11 +117,26 @@ const AppointmentDateAdmin = () => {
     )
   }
 
+  if (editDate && date !== null) {
+    return (
+      <div>
+        <EditDates
+          date={date}
+          handleBackButton={handleBackButton}
+          updateDate={updateDate}
+        />
+        <Notification message={notificationMsg} open={openNotification} />
+      </div>
+    )
+  }
+
   return (
     <DateList
       dates={dates}
       setCreateDate={setCreateDate}
       handleDelete={handleDelete}
+      setEditDate={setEditDate}
+      setDate={setDate}
     />
   )
 }
