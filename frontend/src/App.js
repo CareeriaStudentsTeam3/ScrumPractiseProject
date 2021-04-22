@@ -11,6 +11,7 @@ import HairdModelInfoAdmin from './routes/HairdModelInfoAdmin'
 import Appointment from './routes/Appointment'
 import ServiceAdmin from './routes/ServiceAdmin'
 import AppointmentDateAdmin from './routes/AppointmentDateAdmin'
+import AppointmentAdmin from './routes/AppointmentAdmin'
 import Login from './routes/Login'
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
         path="/admin/appointment/date"
         component={AppointmentDateAdmin}
       />
+      <Route exact path="/admin/appointment" component={AppointmentAdmin} />
       <Route exact path="/admin/login" component={Login} />
     </Router>
   )
