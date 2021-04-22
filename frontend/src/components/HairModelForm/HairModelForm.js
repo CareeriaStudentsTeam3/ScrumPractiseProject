@@ -2,8 +2,9 @@ import React from 'react'
 
 // Form library
 import { useFormik } from 'formik'
-// Validation for forms
-import * as yup from 'yup'
+
+// Import form validation schema
+import { hairModelValidationSchema } from '../../validationSchemas/validationSchemas'
 
 // Material UI imports
 import Button from '@material-ui/core/Button'
@@ -18,53 +19,6 @@ import Input from '@material-ui/core/Input'
 
 // Service import
 import hairModelService from '../../services/hairmodel'
-
-const validationSchema = yup.object({
-  // TODO: All validations
-  first_name: yup
-    .string('Anna etunimi')
-    .max(30, 'Etunimi saa olla enintään 30 merkkiä pitkä')
-    .required('Anna etunimi'),
-  last_name: yup
-    .string('Anna sukunimi')
-    .max(50, 'Sukunimi saa olla enintään 50 merkkiä pitkä')
-    .required('Anna sukunimi'),
-  city: yup
-    .string('Anna kaupunki')
-    .max(50, 'Kaupunki saa olla enintään 50 merkkiä pitkä')
-    .required('Anna kaupunki'),
-  phone: yup
-    .string('Anna puhelinnumero')
-    .max(13, 'Puhelinnumero saa olla enintään 13 merkkiä pitkä')
-    .required('Anna puhelinnumero'),
-  email: yup
-    .string('Anna sähköpostiosoite')
-    .max(50, 'Sähköposti saa olla enintään 50 merkkiä pitkä')
-    .email('Tarkista sähköposti')
-    .required('Anna sähköposti'),
-  age: yup
-    .number()
-    .positive('Anna positiivinen luku')
-    .integer('Anna kokoluku')
-    .required('Anna ikä'),
-  gender: yup.string('Valitse sukupuoli').required('Valitse sukupuoli'),
-  hair_length: yup
-    .string('Valitse hiustenpituus')
-    .required('Valitse hiustenpituus'),
-  hair_procedures: yup
-    .string('Kerro edellisistä käsittelyistä')
-    .max(200, 'Enintään 200 merkkiä')
-    .required('Kerro edellisistä käsittelyistä'),
-  image: yup
-    .mixed()
-    .nullable()
-    .notRequired()
-    .test(
-      'FILE_SIZE',
-      'Kuvatiedosto on liian iso',
-      (value) => !value || (value && value.size <= 10000000)
-    ),
-})
 
 const HairModelForm = ({
   setConfirm,
@@ -86,7 +40,7 @@ const HairModelForm = ({
       hair_procedures: '',
       image: null,
     },
-    validationSchema: validationSchema,
+    validationSchema: hairModelValidationSchema,
     onSubmit: async (values, { resetForm }) => {
       let formData = new FormData()
       formData.append('first_name', values.first_name)

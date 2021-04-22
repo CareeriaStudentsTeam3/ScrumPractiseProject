@@ -1,11 +1,13 @@
 import React from 'react'
 import { useFormik } from 'formik'
-import * as yup from 'yup'
 
 // Import React datepicker
 import DatePicker from 'react-datepicker'
 
 import 'react-datepicker/dist/react-datepicker.css'
+
+// Import form validation schema
+import { appointmentDateValidationSchema } from '../../../validationSchemas/validationSchemas'
 
 // Material UI imports
 import Paper from '@material-ui/core/Paper'
@@ -13,17 +15,6 @@ import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import Box from '@material-ui/core/Box'
-
-const validationSchema = yup.object({
-  beginning: yup.string().required('Pakollinen'),
-  end: yup.string().required('Pakollinen'),
-  max_group_size: yup
-    .number()
-    .positive()
-    .min(3, 'Pienin ryhmäkoko on 3')
-    .max(8, 'Isoin ryhmäkoko on 8')
-    .required('Pakollinen'),
-})
 
 const EditDates = ({ date, handleBackButton, updateDate }) => {
   console.log('date', date)
@@ -33,7 +24,7 @@ const EditDates = ({ date, handleBackButton, updateDate }) => {
       end: new Date(date.end) || '',
       max_group_size: date.max_group_size || '',
     },
-    validationSchema: validationSchema,
+    validationSchema: appointmentDateValidationSchema,
     onSubmit: async (values) => {
       console.log('values', values)
       updateDate(values)

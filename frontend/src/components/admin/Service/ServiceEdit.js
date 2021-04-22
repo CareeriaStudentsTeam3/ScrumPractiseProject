@@ -1,8 +1,8 @@
 import React from 'react'
 import { useFormik } from 'formik'
-import * as yup from 'yup'
 
-// Service import
+// Import form validation schema
+import { serviceValidationSchema } from '../../../validationSchemas/validationSchemas'
 
 // Material UI imports
 import Paper from '@material-ui/core/Paper'
@@ -10,17 +10,6 @@ import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import Box from '@material-ui/core/Box'
-
-const validationSchema = yup.object({
-  service_name: yup.string().max(20, 'Liian pitkä').required('Pakollinen'),
-  duration: yup.number().integer().positive().required('Pakollinen'),
-  price: yup.number().positive().required('Pakollinen'),
-  max_group_size: yup
-    .number()
-    .positive()
-    .min(3, 'Pienin ryhmäkoko on 3')
-    .max(8, 'Isoin ryhmäkoko on 8'),
-})
 
 const ServiceEdit = ({ handleBackButton, service, updateService }) => {
   const formik = useFormik({
@@ -31,7 +20,7 @@ const ServiceEdit = ({ handleBackButton, service, updateService }) => {
       price: service.price || null,
       max_group_size: service.max_group_size || null,
     },
-    validationSchema: validationSchema,
+    validationSchema: serviceValidationSchema,
     onSubmit: async (values) => {
       console.log('values', values)
       updateService(values)
