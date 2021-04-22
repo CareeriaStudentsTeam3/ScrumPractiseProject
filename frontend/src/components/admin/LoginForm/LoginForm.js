@@ -1,9 +1,11 @@
 import React from 'react'
 import { useFormik } from 'formik'
-import * as yup from 'yup'
 
 // Service import
 import loginService from '../../../services/login'
+
+// Import form validation schema
+import { loginValidationSchema } from '../../../validationSchemas/validationSchemas'
 
 // Material UI imports
 import Paper from '@material-ui/core/Paper'
@@ -12,18 +14,13 @@ import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import Box from '@material-ui/core/Box'
 
-const validationSchema = yup.object({
-  username: yup.string().max(20, 'Liian pitkä').required('Pakollinen'),
-  password: yup.string().required('Pakollinen'),
-})
-
 const LoginForm = ({ saveLogginInfo, setRedirect }) => {
   const formik = useFormik({
     initialValues: {
       username: '',
       password: '',
     },
-    validationSchema: validationSchema,
+    validationSchema: loginValidationSchema,
     onSubmit: async (values, { resetForm, setErrors }) => {
       try {
         const user = await loginService.logIn({

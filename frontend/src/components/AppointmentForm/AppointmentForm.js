@@ -2,8 +2,9 @@ import React, { useState } from 'react'
 
 // Form library
 import { useFormik } from 'formik'
-// Validation for forms
-import * as yup from 'yup'
+
+// Import form validation schema
+import { appointmentValidationSchema } from '../../validationSchemas/validationSchemas'
 
 // Material UI imports
 import Button from '@material-ui/core/Button'
@@ -18,33 +19,6 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 
 // Service import
 import appointmentService from '../../services/appointment'
-
-const validationSchema = yup.object({
-  first_name: yup
-    .string('Anna etunimi')
-    .max(30, 'Etunimi saa olla enintään 30 merkkiä pitkä')
-    .required('Anna etunimi'),
-  last_name: yup
-    .string('Anna sukunimi')
-    .max(50, 'Sukunimi saa olla enintään 50 merkkiä pitkä')
-    .required('Anna sukunimi'),
-  email: yup
-    .string('Anna sähköpostiosoite')
-    .max(50, 'Sähköpostiosoite saa olla enintään 50 merkkiä pitkä')
-    .email('Tarkistä sähköpostiosoite')
-    .required('Anna sähköpostiosoite'),
-  phone: yup
-    .string('Anna puhelinnumero')
-    .max(13, 'Puhelinnumero saa olla enintään 13 merkkiä pitkä')
-    .required('Anna puhelinnumero'),
-  place: yup
-    .string('Anna paikka')
-    .required('Ilmoita haluttu paikka palvelulle'),
-  info: yup
-    .string('Anna lisätietoja')
-    .max(200, 'Enintään 200 merkkiä')
-    .required('Anna lisätietoja'),
-})
 
 const AppointmentForm = ({
   groupSize,
@@ -68,7 +42,7 @@ const AppointmentForm = ({
       appointment_date: date,
       confirmed: false,
     },
-    validationSchema: validationSchema,
+    validationSchema: appointmentValidationSchema,
     onSubmit: async (values, { resetForm }) => {
       // alert(JSON.stringify(values, null, 2))
       console.log(values)

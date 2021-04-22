@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { useFormik } from 'formik'
-import * as yup from 'yup'
 
 // Import React datepicker
 import DatePicker from 'react-datepicker'
@@ -9,6 +8,9 @@ import 'react-datepicker/dist/react-datepicker.css'
 
 // Import service
 import timespanService from '../../../services/timespan'
+
+// Import form validation schema
+import { appointmentDateValidationSchema } from '../../../validationSchemas/validationSchemas'
 
 // Import components
 import Notification from '../../Notification/Notification'
@@ -20,17 +22,6 @@ import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import Box from '@material-ui/core/Box'
 import ButtonGroup from '@material-ui/core/ButtonGroup'
-
-const validationSchema = yup.object({
-  beginning: yup.string().required('Pakollinen'),
-  end: yup.string().required('Pakollinen'),
-  max_group_size: yup
-    .number()
-    .positive()
-    .min(3, 'Pienin ryhmäkoko on 3')
-    .max(8, 'Isoin ryhmäkoko on 8')
-    .required('Pakollinen'),
-})
 
 const AddDates = ({ setCreateDate, setRefresh, refresh }) => {
   const [date, setDate] = useState([])
@@ -103,7 +94,7 @@ const AddDates = ({ setCreateDate, setRefresh, refresh }) => {
       end: new Date() || '',
       max_group_size: null || '',
     },
-    validationSchema: validationSchema,
+    validationSchema: appointmentDateValidationSchema,
     onSubmit: async (values) => {
       if (
         date.some(

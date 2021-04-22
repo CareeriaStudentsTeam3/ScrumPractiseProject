@@ -1,6 +1,9 @@
 /* eslint-disable indent */
 import React, { useState } from 'react'
 
+// Service import
+import timespanService from '../../../services/timespan'
+
 // Material UI imports
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -14,7 +17,13 @@ import Button from '@material-ui/core/Button'
 import Box from '@material-ui/core/Box'
 // import Typography from '@material-ui/core/Typography'
 
-const DateList = ({ dates, setCreateDate, handleDelete }) => {
+const DateList = ({
+  dates,
+  setCreateDate,
+  handleDelete,
+  setEditDate,
+  setDate,
+}) => {
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
 
@@ -54,6 +63,14 @@ const DateList = ({ dates, setCreateDate, handleDelete }) => {
     return t
   }
 
+  const handleDateEdit = async (id) => {
+    console.log('id', id)
+    setEditDate(true)
+    const response = await timespanService.getOne(id)
+    console.log('editRes', response)
+    setDate(response)
+  }
+
   return (
     <Box display="flex" justifyContent="center" justifyItems="center">
       <Box minWidth="60%">
@@ -88,7 +105,11 @@ const DateList = ({ dates, setCreateDate, handleDelete }) => {
                   )} - ${formatEndDate(item.end)}`}</TableCell>
                   <TableCell align="center">{`${item.max_group_size} henkilöä`}</TableCell>
                   <TableCell align="right">
-                    <Button variant="contained" color="primary">
+                    <Button
+                      onClick={() => handleDateEdit(item.id)}
+                      variant="contained"
+                      color="primary"
+                    >
                       Muokkaa
                     </Button>
                   </TableCell>

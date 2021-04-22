@@ -49,6 +49,19 @@ const create = async (newTime) => {
   }
 }
 
+const update = async (id, updatedDate) => {
+  try {
+    const response = await axios.put(`${timeSpanUrl}${id}/`, updatedDate)
+    return response.data
+  } catch (err) {
+    if (err.response.status === 403) {
+      window.localStorage.clear()
+      logoutService.logout()
+      return { error: true, status: err.response.status }
+    }
+  }
+}
+
 const del = async (id) => {
   try {
     const response = await axios.delete(`${timeSpanUrl}${id}/`)
@@ -62,4 +75,4 @@ const del = async (id) => {
   }
 }
 
-export default { getFreeTimes, getAll, getOne, create, del }
+export default { getFreeTimes, getAll, getOne, create, update, del }
