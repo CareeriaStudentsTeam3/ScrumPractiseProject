@@ -48,7 +48,7 @@ const HomeNavigation = ({ handleNavigation }) => {
         </Box>
       </Grid>
       <Grid container item xs={12} md={6}>
-        <Box m="auto">
+        <Box m="auto" border={5} borderColor="primary.main">
           <Card>
             <List dense>
               <ListItem>
