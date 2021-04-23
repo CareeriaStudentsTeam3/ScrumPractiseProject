@@ -31,7 +31,7 @@ const AppointmentList = ({ appointments }) => {
     const filteredAppointments = appointments.filter((item) => {
       return item.confirmed !== true
     })
-    console.log(filteredAppointments)
+    console.log('filtered', filteredAppointments)
     setFilteredAppointments(filteredAppointments)
   }
 
