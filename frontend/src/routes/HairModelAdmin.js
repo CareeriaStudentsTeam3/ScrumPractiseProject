@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 // React-router-dom imports
-import { useLocation, Redirect } from 'react-router-dom'
+import { useHistory, useLocation, Redirect } from 'react-router-dom'
 
 // Service import
 import hairmodelService from '../services/hairmodel'
@@ -10,6 +10,10 @@ import logoutService from '../services/logout'
 // Component imports
 import HairModelList from '../components/admin/HairModel/HairModelList'
 import LogoutButton from '../components/admin/LogoutButton/LogoutButton'
+
+// Material UI imports
+import Button from '@material-ui/core/Button'
+
 
 const HairModelAdmin = () => {
   let location = useLocation()
@@ -58,9 +62,24 @@ const HairModelAdmin = () => {
     return <Redirect to="/admin/login" />
   }
 
+  var history = useHistory()
+  const handleBackButton = (e) => {
+    e.preventDefault()
+    history.push({
+      pathname: '/',
+    })
+  }
   return (
     <div>
       <LogoutButton />
+      <Button
+        onClick={e => handleBackButton(e)}
+        color="primary"
+        variant="contained"
+        type="button"
+      >
+        Palaa etusivulle
+      </Button>
       <HairModelList hairModels={hairModels} />
     </div>
   )
