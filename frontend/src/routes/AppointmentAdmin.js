@@ -20,8 +20,8 @@ const AppointmentAdmin = () => {
     if (response.error && response.status === 403) {
       return setRedirect(true)
     }
-
-    return `${response.beginning} ${response.end}`
+    return { time: response }
+    // return `${response.beginning} ${response.end}`
   }
 
   const getAppointments = async () => {
@@ -40,9 +40,18 @@ const AppointmentAdmin = () => {
       }
     })
 
-    Promise.all(newArr).then((result) => setAppointments(result))
-    // setAppointments(response)
-    // setRefresh(!refresh)
+    Promise.all(newArr).then((result) => {
+      console.log('sorted', result)
+      const sorted = result.sort((a, b) => {
+        console.log(a, b)
+        if (a.time !== undefined && b.time !== undefined) {
+          return (
+            new Date(a.time.time.beginning) - new Date(b.time.time.beginning)
+          )
+        }
+      })
+      setAppointments(sorted)
+    })
   }
   useEffect(() => {
     getAppointments()

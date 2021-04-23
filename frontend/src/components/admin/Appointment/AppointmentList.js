@@ -1,5 +1,5 @@
 /* eslint-disable indent */
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 // Material UI imports
 import Table from '@material-ui/core/Table'
@@ -12,13 +12,28 @@ import TablePagination from '@material-ui/core/TablePagination'
 import Paper from '@material-ui/core/Paper'
 import Button from '@material-ui/core/Button'
 import Box from '@material-ui/core/Box'
+
+import Switch from '@material-ui/core/Switch'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
 import { useHistory } from 'react-router'
 
 const AppointmentList = ({ appointments }) => {
   let history = useHistory()
   console.log(appointments)
+  const [filteredAppointments, setFilteredAppointments] = useState([])
+
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
+
+  const [filterNotConfirmed, setFilterNotConfirmed] = useState(false)
+
+  const filterWithConfirmed = async () => {
+    const filteredAppointments = appointments.filter((item) => {
+      return item.confirmed !== true
+    })
+    console.log(filteredAppointments)
+    setFilteredAppointments(filteredAppointments)
+  }
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
@@ -32,9 +47,34 @@ const AppointmentList = ({ appointments }) => {
     history.push(`/admin/appointment/${id}`)
   }
 
+  const handleChange = (event) => {
+    setFilterNotConfirmed(event.target.checked)
+  }
+
+  useEffect(() => {
+    filterWithConfirmed()
+  }, [filterNotConfirmed])
+
   return (
     <Box display="flex" justifyContent="center" justifyItems="center">
       <Box minWidth="60%">
+        <Box my={2}>
+          <FormControlLabel
+            label={
+              filterNotConfirmed === false
+                ? 'Näytä vahvistamattomat'
+                : 'Näytä kaikki'
+            }
+            control={
+              <Switch
+                checked={filterNotConfirmed}
+                onChange={handleChange}
+                name="confirmed"
+                inputProps={{ 'aria-label': 'secondary checkbox' }}
+              />
+            }
+          />
+        </Box>
         <TableContainer component={Paper}>
           <Table size="small">
             <TableHead>
@@ -46,34 +86,67 @@ const AppointmentList = ({ appointments }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {(rowsPerPage > 0
-                ? appointments.slice(
-                    page * rowsPerPage,
-                    page * rowsPerPage + rowsPerPage
-                  )
-                : appointments
-              ).map((item) => (
-                <TableRow hover key={item.id}>
-                  <TableCell>{`${item.first_name} ${item.last_name}`}</TableCell>
-                  <TableCell>
-                    {item.appointment_date !== null ? item.time : 'lol'}
-                  </TableCell>
-                  {item.confirmed ? (
-                    <TableCell align="center">Vahvistettu</TableCell>
-                  ) : (
-                    <TableCell align="center">Vahvistamatta</TableCell>
-                  )}
-                  <TableCell align="right">
-                    <Button
-                      onClick={() => handleAppointmentInfo(item.id)}
-                      variant="contained"
-                      color="primary"
-                    >
-                      Muokkaa
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
+              {filterNotConfirmed
+                ? (rowsPerPage > 0
+                    ? filteredAppointments.slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage
+                      )
+                    : filteredAppointments
+                  ).map((item) => (
+                    <TableRow hover key={item.id}>
+                      <TableCell>{`${item.first_name} ${item.last_name}`}</TableCell>
+                      <TableCell>
+                        {item.appointment_date !== null
+                          ? `${item.time.time.beginning} - ${item.time.time.end}`
+                          : 'lol'}
+                      </TableCell>
+                      {item.confirmed ? (
+                        <TableCell align="center">Vahvistettu</TableCell>
+                      ) : (
+                        <TableCell align="center">Vahvistamatta</TableCell>
+                      )}
+                      <TableCell align="right">
+                        <Button
+                          onClick={() => handleAppointmentInfo(item.id)}
+                          variant="contained"
+                          color="primary"
+                        >
+                          Muokkaa
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                : (rowsPerPage > 0
+                    ? appointments.slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage
+                      )
+                    : appointments
+                  ).map((item) => (
+                    <TableRow hover key={item.id}>
+                      <TableCell>{`${item.first_name} ${item.last_name}`}</TableCell>
+                      <TableCell>
+                        {item.appointment_date !== null
+                          ? `${item.time.time.beginning} - ${item.time.time.end}`
+                          : 'lol'}
+                      </TableCell>
+                      {item.confirmed ? (
+                        <TableCell align="center">Vahvistettu</TableCell>
+                      ) : (
+                        <TableCell align="center">Vahvistamatta</TableCell>
+                      )}
+                      <TableCell align="right">
+                        <Button
+                          onClick={() => handleAppointmentInfo(item.id)}
+                          variant="contained"
+                          color="primary"
+                        >
+                          Muokkaa
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
             </TableBody>
           </Table>
         </TableContainer>
