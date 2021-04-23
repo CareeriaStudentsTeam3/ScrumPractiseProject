@@ -14,7 +14,6 @@ import LogoutButton from '../components/admin/LogoutButton/LogoutButton'
 // Material UI imports
 import Button from '@material-ui/core/Button'
 
-
 const HairModelAdmin = () => {
   let location = useLocation()
 
@@ -62,7 +61,7 @@ const HairModelAdmin = () => {
     return <Redirect to="/admin/login" />
   }
 
-  var history = useHistory()
+  let history = useHistory()
   const handleBackButton = (e) => {
     e.preventDefault()
     history.push({
@@ -73,7 +72,7 @@ const HairModelAdmin = () => {
     <div>
       <LogoutButton />
       <Button
-        onClick={e => handleBackButton(e)}
+        onClick={(e) => handleBackButton(e)}
         color="primary"
         variant="contained"
         type="button"

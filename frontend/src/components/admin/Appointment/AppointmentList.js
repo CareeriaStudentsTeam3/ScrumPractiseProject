@@ -12,8 +12,10 @@ import TablePagination from '@material-ui/core/TablePagination'
 import Paper from '@material-ui/core/Paper'
 import Button from '@material-ui/core/Button'
 import Box from '@material-ui/core/Box'
+import { useHistory } from 'react-router'
 
 const AppointmentList = ({ appointments }) => {
+  let history = useHistory()
   console.log(appointments)
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
@@ -26,6 +28,10 @@ const AppointmentList = ({ appointments }) => {
     setRowsPerPage(parseInt(event.target.value, 10))
     setPage(0)
   }
+  const handleAppointmentInfo = (id) => {
+    history.push(`/admin/appointment/${id}`)
+  }
+
   return (
     <Box display="flex" justifyContent="center" justifyItems="center">
       <Box minWidth="60%">
@@ -58,7 +64,11 @@ const AppointmentList = ({ appointments }) => {
                     <TableCell align="center">Vahvistamatta</TableCell>
                   )}
                   <TableCell align="right">
-                    <Button variant="contained" color="primary">
+                    <Button
+                      onClick={() => handleAppointmentInfo(item.id)}
+                      variant="contained"
+                      color="primary"
+                    >
                       Muokkaa
                     </Button>
                   </TableCell>
