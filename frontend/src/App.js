@@ -12,6 +12,7 @@ import Appointment from './routes/Appointment'
 import ServiceAdmin from './routes/ServiceAdmin'
 import AppointmentDateAdmin from './routes/AppointmentDateAdmin'
 import AppointmentAdmin from './routes/AppointmentAdmin'
+import AppointmentInfoAdmin from './routes/AppointmentInfoAdmin'
 import Login from './routes/Login'
 
 function App() {
@@ -27,12 +28,13 @@ function App() {
       />
       <Route exact path="/appointment" component={Appointment} />
       <Route exact path="/admin/service" component={ServiceAdmin} />
+      <Route exact path="/admin/date" component={AppointmentDateAdmin} />
+      <Route exact path="/admin/appointment" component={AppointmentAdmin} />
       <Route
         exact
-        path="/admin/appointment/date"
-        component={AppointmentDateAdmin}
+        path="/admin/appointment/:id"
+        component={AppointmentInfoAdmin}
       />
-      <Route exact path="/admin/appointment" component={AppointmentAdmin} />
       <Route exact path="/admin/login" component={Login} />
     </Router>
   )
