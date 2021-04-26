@@ -1,6 +1,9 @@
 /* eslint-disable indent */
 import React, { useState, useEffect } from 'react'
 
+// Import utils
+import { formatStartDate, formatEndDate } from '../../../utils/dateFuncs'
+
 // Material UI imports
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -80,6 +83,7 @@ const AppointmentList = ({ appointments }) => {
             <TableHead>
               <TableRow>
                 <TableCell>Yhteyshenkilö</TableCell>
+                <TableCell>Puhelinnumero</TableCell>
                 <TableCell>Päivämäärä</TableCell>
                 <TableCell align="center">Tila</TableCell>
                 <TableCell></TableCell>
@@ -96,9 +100,12 @@ const AppointmentList = ({ appointments }) => {
                   ).map((item) => (
                     <TableRow hover key={item.id}>
                       <TableCell>{`${item.first_name} ${item.last_name}`}</TableCell>
+                      <TableCell>{item.phone}</TableCell>
                       <TableCell>
                         {item.appointment_date !== null
-                          ? `${item.time.time.beginning} - ${item.time.time.end}`
+                          ? `${formatStartDate(
+                              item.time.time.beginning
+                            )} - ${formatEndDate(item.time.time.end)}`
                           : 'lol'}
                       </TableCell>
                       {item.confirmed ? (
@@ -126,9 +133,12 @@ const AppointmentList = ({ appointments }) => {
                   ).map((item) => (
                     <TableRow hover key={item.id}>
                       <TableCell>{`${item.first_name} ${item.last_name}`}</TableCell>
+                      <TableCell>{item.phone}</TableCell>
                       <TableCell>
                         {item.appointment_date !== null
-                          ? `${item.time.time.beginning} - ${item.time.time.end}`
+                          ? `${formatStartDate(
+                              item.time.time.beginning
+                            )} - ${formatEndDate(item.time.time.end)}`
                           : 'lol'}
                       </TableCell>
                       {item.confirmed ? (

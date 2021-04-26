@@ -6,6 +6,9 @@ import { useFormik } from 'formik'
 // Service import
 import appointmentService from '../../../services/appointment'
 
+// Import utils
+import { formatStartDate, formatEndDate } from '../../../utils/dateFuncs'
+
 // Component imports
 import Notification from '../../Notification/Notification'
 
@@ -243,7 +246,7 @@ const AppointmentUpdate = ({ appointment, services, dateTimes }) => {
                 >
                   {services.map((item) => (
                     <MenuItem key={item.id} value={item.id || ''}>
-                      {item.service_name}
+                      {`${item.service_name} - Pituus: ${item.duration}min`}
                     </MenuItem>
                   ))}
                 </Select>
@@ -269,7 +272,9 @@ const AppointmentUpdate = ({ appointment, services, dateTimes }) => {
                 >
                   {dateTimes.map((item) => (
                     <MenuItem key={item.id} value={item.id || ''}>
-                      {`${item.beginning} - ${item.end}`}
+                      {`${formatStartDate(item.beginning)} - ${formatEndDate(
+                        item.end
+                      )} - Max ryhmäkoko: ${item.max_group_size}`}
                     </MenuItem>
                   ))}
                 </Select>

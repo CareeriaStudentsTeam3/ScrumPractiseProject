@@ -1,6 +1,9 @@
 /* eslint-disable indent */
 import React, { useState, useEffect } from 'react'
 
+// Import utils
+import { formatStartDate, formatEndDate } from '../../utils/dateFuncs'
+
 // Material UI Imports
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
@@ -21,35 +24,6 @@ const TimeSelect = ({
 }) => {
   const [times, setTimes] = useState([])
   const [isLoading, setIsLoading] = useState(false)
-
-  const formatStartDate = (date) => {
-    // TODO: Check that dates matches what comes from db
-    // from server time comes as UTC format
-    console.log('dbDate', date)
-    const wd = new Date(date).toLocaleDateString('fi-FI', {
-      timeZone: 'UTC',
-      weekday: 'short',
-    })
-    const d = new Date(date).toLocaleDateString('fi-FI', {
-      timeZone: 'UTC',
-    })
-    const t = new Date(date).toLocaleTimeString('fi-FI', {
-      hour: 'numeric',
-      minute: 'numeric',
-      timeZone: 'UTC',
-    })
-    return `${wd} ${d} ${t}`
-  }
-
-  const formatEndDate = (date) => {
-    console.log('dbDate', date)
-    const t = new Date(date).toLocaleTimeString('fi-FI', {
-      hour: 'numeric',
-      minute: 'numeric',
-      timeZone: 'UTC',
-    })
-    return t
-  }
 
   const getFreeTimes = async () => {
     try {
