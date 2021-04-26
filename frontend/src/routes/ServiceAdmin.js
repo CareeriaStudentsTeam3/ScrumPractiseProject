@@ -73,6 +73,7 @@ const ServiceAdmin = () => {
 
   const handleBackButton = () => {
     setCreateService(false)
+    setEditService(false)
   }
 
   const handleDelete = async (id) => {
