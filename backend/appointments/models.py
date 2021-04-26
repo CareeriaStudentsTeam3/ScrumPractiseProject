@@ -20,8 +20,8 @@ class Appointment(models.Model):
 
 class Service(models.Model):
     service_name = models.CharField("service_name", max_length=50)
-    duration = models.IntegerField("duration") #DurationField?
-    price = models.DecimalField("price", decimal_places=2,max_digits=4)
+    duration = models.IntegerField("duration") 
+    price = models.DecimalField("price", decimal_places=2,max_digits=6) 
     max_group_size = models.IntegerField("max_group_size")
     category = models.ForeignKey("Category",verbose_name="category", on_delete=models.SET_NULL, null=True)
 
@@ -40,6 +40,7 @@ class Appointment_timespan(models.Model):
     beginning = models.DateTimeField("beginning")
     end = models.DateTimeField("end")
     max_group_size = models.IntegerField("max_group_size")
+    status = models.CharField("status", max_length=50) 
 
     def __str__(self):
         return f"{self.beginning}/{self.end}"
