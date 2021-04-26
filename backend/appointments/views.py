@@ -8,26 +8,26 @@ from .serializers import HairModelSerializer, AppointmentTimeSpanSerializer, App
 from datetime import datetime,timedelta
 from django.contrib.auth import login, logout
 from rest_framework.authentication import SessionAuthentication
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, DjangoModelPermissions
 from .permissions import IsAuthenticatedOrCreateOnly
 
 # Create your views here.
 
 class HairModelViewSet(viewsets.ModelViewSet):
     authentication_classes = [SessionAuthentication]
-    permission_classes = [IsAuthenticatedOrCreateOnly]
+    permission_classes = [IsAuthenticatedOrCreateOnly & (DjangoModelPermissions)]
     queryset = Hairmodel.objects.all()
     serializer_class = HairModelSerializer
 
 class AppointmentViewSet(viewsets.ModelViewSet):
     authentication_classes = [SessionAuthentication]
-    permission_classes = [IsAuthenticatedOrCreateOnly]
+    permission_classes = [IsAuthenticatedOrCreateOnly & (DjangoModelPermissions)]
     queryset = Appointment.objects.all()
     serializer_class = AppointmentSerializer
 
 class AppointmentTimeSpanViewSet(viewsets.ModelViewSet):
     authentication_classes = [SessionAuthentication]
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticatedOrReadOnly & (DjangoModelPermissions)]
     serializer_class = AppointmentTimeSpanSerializer
     def get_queryset(self):
         queryset = Appointment_timespan.objects.all()
@@ -40,13 +40,13 @@ class AppointmentTimeSpanViewSet(viewsets.ModelViewSet):
 
 class CategoryViewSet(viewsets.ModelViewSet):
     authentication_classes = [SessionAuthentication]
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticatedOrReadOnly & (DjangoModelPermissions)]
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
 
 class ServiceViewSet(viewsets.ModelViewSet):
     authentication_classes = [SessionAuthentication]
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticatedOrReadOnly & (DjangoModelPermissions)]
     serializer_class = ServiceSerializer
     def get_queryset(self):
         queryset = Service.objects.all()
