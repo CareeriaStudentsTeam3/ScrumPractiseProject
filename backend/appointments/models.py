@@ -53,7 +53,7 @@ class Hairmodel(models.Model):
     phone = models.CharField("phone", max_length=10)
     email = models.EmailField("email", max_length=50)
     age = models.IntegerField("age")
-    gender = models.CharField("gender", max_length=10, choices=[("FEMALE", "nainen"), ("MALE", "mies"), ("OTHER", "muu/en halua määritellä")], default="OTHER")
+    gender = models.CharField("gender", max_length=50, choices=[("FEMALE", "nainen"), ("MALE", "mies"), ("OTHER", "muu/en halua määritellä")], default="OTHER")
     hair_length = models.CharField("hair_length", max_length=20, choices=[("LONG", "pitkät"), ("MEDIUM", "puolipitkät"), ("SHORT", "lyhyet")], default="MEDIUM")
     hair_procedures = models.CharField("hair_procedures", max_length=200)
     image = models.ImageField("image", null=True, upload_to="images/")
