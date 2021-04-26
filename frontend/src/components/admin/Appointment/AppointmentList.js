@@ -83,6 +83,7 @@ const AppointmentList = ({ appointments }) => {
             <TableHead>
               <TableRow>
                 <TableCell>Yhteyshenkilö</TableCell>
+                <TableCell>Puhelinnumero</TableCell>
                 <TableCell>Päivämäärä</TableCell>
                 <TableCell align="center">Tila</TableCell>
                 <TableCell></TableCell>
@@ -99,6 +100,7 @@ const AppointmentList = ({ appointments }) => {
                   ).map((item) => (
                     <TableRow hover key={item.id}>
                       <TableCell>{`${item.first_name} ${item.last_name}`}</TableCell>
+                      <TableCell>{item.phone}</TableCell>
                       <TableCell>
                         {item.appointment_date !== null
                           ? `${formatStartDate(
@@ -131,6 +133,7 @@ const AppointmentList = ({ appointments }) => {
                   ).map((item) => (
                     <TableRow hover key={item.id}>
                       <TableCell>{`${item.first_name} ${item.last_name}`}</TableCell>
+                      <TableCell>{item.phone}</TableCell>
                       <TableCell>
                         {item.appointment_date !== null
                           ? `${formatStartDate(

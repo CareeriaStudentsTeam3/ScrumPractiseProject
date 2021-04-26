@@ -246,7 +246,7 @@ const AppointmentUpdate = ({ appointment, services, dateTimes }) => {
                 >
                   {services.map((item) => (
                     <MenuItem key={item.id} value={item.id || ''}>
-                      {item.service_name}
+                      {`${item.service_name} - Pituus: ${item.duration}min`}
                     </MenuItem>
                   ))}
                 </Select>
@@ -274,7 +274,7 @@ const AppointmentUpdate = ({ appointment, services, dateTimes }) => {
                     <MenuItem key={item.id} value={item.id || ''}>
                       {`${formatStartDate(item.beginning)} - ${formatEndDate(
                         item.end
-                      )}`}
+                      )} - Max ryhmäkoko: ${item.max_group_size}`}
                     </MenuItem>
                   ))}
                 </Select>
