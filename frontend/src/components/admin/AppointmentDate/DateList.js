@@ -4,6 +4,9 @@ import React, { useState } from 'react'
 // Service import
 import timespanService from '../../../services/timespan'
 
+// Import utils
+import { formatStartDate, formatEndDate } from '../../../utils/dateFuncs'
+
 // Material UI imports
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -40,28 +43,28 @@ const DateList = ({
     setCreateDate(true)
   }
 
-  const formatStartDate = (date) => {
-    const wd = new Date(date).toLocaleDateString('fi-FI', {
-      weekday: 'short',
-      timeZone: 'UTC',
-    })
-    const d = new Date(date).toLocaleDateString('fi-FI', { timeZone: 'UTC' })
-    const t = new Date(date).toLocaleTimeString('fi-FI', {
-      hour: 'numeric',
-      minute: 'numeric',
-      timeZone: 'UTC',
-    })
-    return `${wd} ${d} ${t}`
-  }
+  // const formatStartDate = (date) => {
+  //   const wd = new Date(date).toLocaleDateString('fi-FI', {
+  //     weekday: 'short',
+  //     timeZone: 'UTC',
+  //   })
+  //   const d = new Date(date).toLocaleDateString('fi-FI', { timeZone: 'UTC' })
+  //   const t = new Date(date).toLocaleTimeString('fi-FI', {
+  //     hour: 'numeric',
+  //     minute: 'numeric',
+  //     timeZone: 'UTC',
+  //   })
+  //   return `${wd} ${d} ${t}`
+  // }
 
-  const formatEndDate = (date) => {
-    const t = new Date(date).toLocaleTimeString('fi-FI', {
-      hour: 'numeric',
-      minute: 'numeric',
-      timeZone: 'UTC',
-    })
-    return t
-  }
+  // const formatEndDate = (date) => {
+  //   const t = new Date(date).toLocaleTimeString('fi-FI', {
+  //     hour: 'numeric',
+  //     minute: 'numeric',
+  //     timeZone: 'UTC',
+  //   })
+  //   return t
+  // }
 
   const handleDateEdit = async (id) => {
     console.log('id', id)

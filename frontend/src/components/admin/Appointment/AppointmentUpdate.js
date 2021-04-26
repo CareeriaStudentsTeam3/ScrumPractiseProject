@@ -6,6 +6,9 @@ import { useFormik } from 'formik'
 // Service import
 import appointmentService from '../../../services/appointment'
 
+// Import utils
+import { formatStartDate, formatEndDate } from '../../../utils/dateFuncs'
+
 // Component imports
 import Notification from '../../Notification/Notification'
 
@@ -269,7 +272,9 @@ const AppointmentUpdate = ({ appointment, services, dateTimes }) => {
                 >
                   {dateTimes.map((item) => (
                     <MenuItem key={item.id} value={item.id || ''}>
-                      {`${item.beginning} - ${item.end}`}
+                      {`${formatStartDate(item.beginning)} - ${formatEndDate(
+                        item.end
+                      )}`}
                     </MenuItem>
                   ))}
                 </Select>

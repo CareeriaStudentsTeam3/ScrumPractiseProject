@@ -3,11 +3,15 @@ import { useFormik } from 'formik'
 
 // Import React datepicker
 import DatePicker from 'react-datepicker'
+import fi from 'date-fns/esm/locale/fi'
 
 import 'react-datepicker/dist/react-datepicker.css'
 
 // Import service
 import timespanService from '../../../services/timespan'
+
+// Import utils
+import { formatStartDate, formatEndDate } from '../../../utils/dateFuncs'
 
 // Import form validation schema
 import { appointmentDateValidationSchema } from '../../../validationSchemas/validationSchemas'
@@ -44,26 +48,6 @@ const AddDates = ({ setCreateDate, setRefresh, refresh }) => {
       console.log(error)
       handleNotification('On tapahtunut virhe', true)
     }
-  }
-
-  const formatStartDate = (date) => {
-    const wd = new Date(date).toLocaleDateString('fi-FI', {
-      weekday: 'short',
-    })
-    const d = new Date(date).toLocaleDateString('fi-FI')
-    const t = new Date(date).toLocaleTimeString('fi-FI', {
-      hour: 'numeric',
-      minute: 'numeric',
-    })
-    return `${wd} ${d} ${t}`
-  }
-
-  const formatEndDate = (date) => {
-    const t = new Date(date).toLocaleTimeString('fi-FI', {
-      hour: 'numeric',
-      minute: 'numeric',
-    })
-    return t
   }
 
   const handleDelete = (object) => {
@@ -127,8 +111,10 @@ const AddDates = ({ setCreateDate, setRefresh, refresh }) => {
             <form onSubmit={formik.handleSubmit}>
               <Box display="flex" justifyContent="center" mb={2}>
                 <DatePicker
+                  locale={fi}
                   showTimeSelect
-                  dateFormat="dd.MM.yyyy, hh:mm aa"
+                  timeIntervals={30}
+                  dateFormat="Pp"
                   timeFormat="p"
                   selected={formik.values.beginning}
                   onChange={(date) => {
@@ -137,15 +123,16 @@ const AddDates = ({ setCreateDate, setRefresh, refresh }) => {
                   }}
                 />
                 <DatePicker
+                  locale={fi}
                   selected={formik.values.end}
                   onChange={(date) => formik.setFieldValue('end', date)}
                   minDate={formik.values.beginning}
                   showTimeSelect
                   showTimeSelectOnly
-                  timeIntervals={15}
+                  timeIntervals={30}
                   timeCaption="Time"
-                  timeFormat="hh:mm aa"
-                  dateFormat="dd.MM.yyyy, hh:mm aa"
+                  timeFormat="p"
+                  dateFormat="Pp"
                 />
               </Box>
               <TextField
