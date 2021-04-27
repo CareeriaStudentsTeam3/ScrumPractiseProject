@@ -192,8 +192,9 @@ const HairModelForm = ({
                 onChange={formik.handleChange}
                 error={formik.touched.gender && Boolean(formik.errors.gender)}
               >
-                <MenuItem value={'mies'}>Mies</MenuItem>
-                <MenuItem value={'nainen'}>Nainen</MenuItem>
+                <MenuItem value={'MALE'}>Mies</MenuItem>
+                <MenuItem value={'FEMALE'}>Nainen</MenuItem>
+                <MenuItem value={'OTHER'}>Muu/en halua määritellä</MenuItem>
               </Select>
             </Box>
             <Box mb={2}>
@@ -214,9 +215,9 @@ const HairModelForm = ({
                   Boolean(formik.errors.hair_length)
                 }
               >
-                <MenuItem value={'lyhyet'}>Lyhyet</MenuItem>
-                <MenuItem value={'keskipitkät'}>Keskipitkät</MenuItem>
-                <MenuItem value={'pitkät'}>Pitkät</MenuItem>
+                <MenuItem value={'SHORT'}>Lyhyet</MenuItem>
+                <MenuItem value={'MEDIUM'}>Keskipitkät</MenuItem>
+                <MenuItem value={'LONG'}>Pitkät</MenuItem>
               </Select>
             </Box>
             <Box mb={2}>

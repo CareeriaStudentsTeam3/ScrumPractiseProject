@@ -44,9 +44,8 @@ const AppointmentUpdate = ({ appointment, services, dateTimes }) => {
         const response = await appointmentService.del(id)
         console.log('response', response)
         if (
-          response.detail.includes(
-            'You do not have permission to perform this action.'
-          )
+          response.detail ===
+          'You do not have permission to perform this action.'
         ) {
           throw new Error('Sinulla ei ole oikeutta tehdä tätä!')
         }
@@ -61,7 +60,7 @@ const AppointmentUpdate = ({ appointment, services, dateTimes }) => {
             setRedirect(true)
           }, 3000)
         } else {
-          handleNotification('Hiusmallin poisto epäonnistui!')
+          handleNotification('Varauksen poisto epäonnistui!')
           setTimeout(() => {
             setRedirect(true)
           }, 3000)
@@ -118,9 +117,8 @@ const AppointmentUpdate = ({ appointment, services, dateTimes }) => {
         const response = await appointmentService.update(values, values.id)
         console.log('res', response)
         if (
-          response.detail.includes(
-            'You do not have permission to perform this action.'
-          )
+          response.detail ===
+          'You do not have permission to perform this action.'
         ) {
           throw new Error('Sinulla ei ole oikeutta tehdä tätä!')
         }

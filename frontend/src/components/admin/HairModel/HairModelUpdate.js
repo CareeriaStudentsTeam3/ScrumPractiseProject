@@ -13,6 +13,8 @@ import InputLabel from '@material-ui/core/InputLabel'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import Select from '@material-ui/core/Select'
+import MenuItem from '@material-ui/core/MenuItem'
 
 import Input from '@material-ui/core/Input'
 
@@ -43,17 +45,29 @@ const HairModelUpdate = ({ hairModel }) => {
     console.log(id)
     if (window.confirm('Haluatko varmasti poistaa tämän hiusmallin?')) {
       try {
-        await hairmodelService.del(id)
+        const response = await hairmodelService.del(id)
+        if (
+          response.detail ===
+          'You do not have permission to perform this action.'
+        ) {
+          throw new Error('Sinulla ei ole oikeutta tehdä tätä!')
+        }
         handleNotification('Poistetaan...')
         setTimeout(() => {
           setRedirect(true)
         }, 2000)
       } catch (err) {
-        console.log('delerror', err.name)
-        handleNotification('Hiusmallin poisto epäonnistui!')
-        setTimeout(() => {
-          setRedirect(true)
-        }, 3000)
+        if (err.message.includes('Sinulla ei ole oikeutta tehdä tätä!')) {
+          handleNotification('Sinulla ei ole oikeutta tehdä tätä!')
+          setTimeout(() => {
+            setRedirect(true)
+          }, 3000)
+        } else {
+          handleNotification('Hiusmallin poisto epäonnistui!')
+          setTimeout(() => {
+            setRedirect(true)
+          }, 3000)
+        }
       }
     }
   }
@@ -126,20 +140,35 @@ const HairModelUpdate = ({ hairModel }) => {
       try {
         const response = await hairmodelService.update(formData, values.id)
         console.log('res', response)
-        handleNotification('Tallennetaan...')
-        setTimeout(() => {
-          history.push({
-            pathname: '/admin/hairmodel',
-          })
-        }, 2000)
+        if (
+          response.detail ===
+          'You do not have permission to perform this action.'
+        ) {
+          throw new Error('Sinulla ei ole oikeutta tehdä tätä!')
+        } else {
+          handleNotification('Tallennetaan...')
+          setTimeout(() => {
+            history.push({
+              pathname: '/admin/hairmodel',
+            })
+          }, 2000)
+        }
       } catch (err) {
-        console.log('error', err.name)
-        handleNotification('On tapahtunut virhe! Palataan edelliselle sivulle.')
-        setTimeout(() => {
-          history.push({
-            pathname: '/admin/hairmodel',
-          })
-        }, 3000)
+        if (err.message.includes('Sinulla ei ole oikeutta tehdä tätä!')) {
+          handleNotification('Sinulla ei ole oikeutta tehdä tätä!')
+          setTimeout(() => {
+            setRedirect(true)
+          }, 3000)
+        } else {
+          handleNotification(
+            'On tapahtunut virhe! Palataan edelliselle sivulle.'
+          )
+          setTimeout(() => {
+            history.push({
+              pathname: '/admin/hairmodel',
+            })
+          }, 3000)
+        }
       }
     },
   })
@@ -249,37 +278,49 @@ const HairModelUpdate = ({ hairModel }) => {
                 />
               </Box>
               <Box mb={2}>
-                <TextField
+                <InputLabel shrink id="gender">
+                  Sukupuoli
+                </InputLabel>
+                <Select
                   disabled={disable}
                   fullWidth
+                  // variant="outlined"
+                  labelId="gender"
                   id="gender"
                   name="gender"
                   label="Sukupuoli"
-                  type="text"
                   value={formik.values.gender}
                   onChange={formik.handleChange}
                   error={formik.touched.gender && Boolean(formik.errors.gender)}
-                  helperText={formik.touched.gender && formik.errors.gender}
-                />
+                >
+                  <MenuItem value={'MALE'}>Mies</MenuItem>
+                  <MenuItem value={'FEMALE'}>Nainen</MenuItem>
+                  <MenuItem value={'OTHER'}>Muu/en halua määritellä</MenuItem>
+                </Select>
               </Box>
               <Box mb={2}>
-                <TextField
+                <InputLabel shrink id="hair_length">
+                  Hiusten pituus
+                </InputLabel>
+                <Select
                   disabled={disable}
                   fullWidth
+                  // variant="outlined"
+                  labelId="hair_length"
                   id="hair_length"
                   name="hair_length"
                   label="Hiusten pituus"
-                  type="text"
                   value={formik.values.hair_length}
                   onChange={formik.handleChange}
                   error={
                     formik.touched.hair_length &&
                     Boolean(formik.errors.hair_length)
                   }
-                  helperText={
-                    formik.touched.hair_length && formik.errors.hair_length
-                  }
-                />
+                >
+                  <MenuItem value={'SHORT'}>Lyhyet</MenuItem>
+                  <MenuItem value={'MEDIUM'}>Keskipitkät</MenuItem>
+                  <MenuItem value={'LONG'}>Pitkät</MenuItem>
+                </Select>
               </Box>
               <Box mb={2}>
                 <TextField
