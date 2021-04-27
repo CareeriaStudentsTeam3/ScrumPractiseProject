@@ -58,7 +58,7 @@ const AppointmentAdmin = () => {
   }, [])
 
   if (redirect) {
-    return <Redirect to="/login" />
+    return <Redirect to="/admin/login" />
   }
 
   return (

@@ -43,29 +43,6 @@ const DateList = ({
     setCreateDate(true)
   }
 
-  // const formatStartDate = (date) => {
-  //   const wd = new Date(date).toLocaleDateString('fi-FI', {
-  //     weekday: 'short',
-  //     timeZone: 'UTC',
-  //   })
-  //   const d = new Date(date).toLocaleDateString('fi-FI', { timeZone: 'UTC' })
-  //   const t = new Date(date).toLocaleTimeString('fi-FI', {
-  //     hour: 'numeric',
-  //     minute: 'numeric',
-  //     timeZone: 'UTC',
-  //   })
-  //   return `${wd} ${d} ${t}`
-  // }
-
-  // const formatEndDate = (date) => {
-  //   const t = new Date(date).toLocaleTimeString('fi-FI', {
-  //     hour: 'numeric',
-  //     minute: 'numeric',
-  //     timeZone: 'UTC',
-  //   })
-  //   return t
-  // }
-
   const handleDateEdit = async (id) => {
     console.log('id', id)
     setEditDate(true)

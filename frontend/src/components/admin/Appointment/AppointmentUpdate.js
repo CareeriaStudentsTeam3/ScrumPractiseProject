@@ -41,17 +41,30 @@ const AppointmentUpdate = ({ appointment, services, dateTimes }) => {
     console.log(id)
     if (window.confirm('Haluatko varmasti poistaa tämän hiusmallin?')) {
       try {
-        await appointmentService.del(id)
+        const response = await appointmentService.del(id)
+        console.log('response', response)
+        if (
+          response.detail ===
+          'You do not have permission to perform this action.'
+        ) {
+          throw new Error('Sinulla ei ole oikeutta tehdä tätä!')
+        }
         handleNotification('Poistetaan...')
         setTimeout(() => {
           setRedirect(true)
         }, 2000)
       } catch (err) {
-        console.log('delerror', err.name)
-        handleNotification('Hiusmallin poisto epäonnistui!')
-        setTimeout(() => {
-          setRedirect(true)
-        }, 3000)
+        if (err.message.includes('Sinulla ei ole oikeutta tehdä tätä!')) {
+          handleNotification('Sinulla ei ole oikeutta tehdä tätä!')
+          setTimeout(() => {
+            setRedirect(true)
+          }, 3000)
+        } else {
+          handleNotification('Varauksen poisto epäonnistui!')
+          setTimeout(() => {
+            setRedirect(true)
+          }, 3000)
+        }
       }
     }
   }
@@ -103,6 +116,12 @@ const AppointmentUpdate = ({ appointment, services, dateTimes }) => {
       try {
         const response = await appointmentService.update(values, values.id)
         console.log('res', response)
+        if (
+          response.detail ===
+          'You do not have permission to perform this action.'
+        ) {
+          throw new Error('Sinulla ei ole oikeutta tehdä tätä!')
+        }
         handleNotification('Tallennetaan...')
         setTimeout(() => {
           history.push({
@@ -110,13 +129,21 @@ const AppointmentUpdate = ({ appointment, services, dateTimes }) => {
           })
         }, 2000)
       } catch (err) {
-        console.log('error', err.name)
-        handleNotification('On tapahtunut virhe! Palataan edelliselle sivulle.')
-        setTimeout(() => {
-          history.push({
-            pathname: '/admin/appointment',
-          })
-        }, 3000)
+        if (err.message.includes('Sinulla ei ole oikeutta tehdä tätä!')) {
+          handleNotification('Sinulla ei ole oikeutta tehdä tätä!')
+          setTimeout(() => {
+            setRedirect(true)
+          }, 3000)
+        } else {
+          handleNotification(
+            'On tapahtunut virhe! Palataan edelliselle sivulle.'
+          )
+          setTimeout(() => {
+            history.push({
+              pathname: '/admin/appointment',
+            })
+          }, 3000)
+        }
       }
     },
   })
