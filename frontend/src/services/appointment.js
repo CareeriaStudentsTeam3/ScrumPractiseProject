@@ -8,10 +8,31 @@ const getAll = async () => {
     const response = await axios.get(appointmentUrl)
     return response.data
   } catch (err) {
-    if (err.response.status === 403) {
+    if (
+      err.response.status === 403 &&
+      err.response.data.detail.includes(
+        'Authentication credentials were not provided.'
+      )
+    ) {
       window.localStorage.clear()
       logoutService.logout()
-      return { error: true, status: err.response.status }
+      return {
+        error: true,
+        status: err.response.status,
+        detail: err.response.data.detail,
+      }
+    }
+    if (
+      err.response.status === 403 &&
+      err.response.data.detail.includes(
+        'You do not have permission to perform this action.'
+      )
+    ) {
+      return {
+        error: true,
+        status: err.response.status,
+        detail: err.response.data.detail,
+      }
     }
   }
 }
@@ -21,10 +42,27 @@ const getOne = async (id) => {
     const response = await axios.get(`${appointmentUrl}${id}/`)
     return response.data
   } catch (err) {
-    if (err.response.status === 403) {
+    if (
+      err.response.status === 403 &&
+      err.response.data.detail.includes(
+        'Authentication credentials were not provided.'
+      )
+    ) {
       window.localStorage.clear()
       logoutService.logout()
       return { error: true, status: err.response.status }
+    }
+    if (
+      err.response.status === 403 &&
+      err.response.data.detail.includes(
+        'You do not have permission to perform this action.'
+      )
+    ) {
+      return {
+        error: true,
+        status: err.response.status,
+        detail: err.response.data.detail,
+      }
     }
   }
 }
@@ -42,9 +80,26 @@ const update = async (updatedAppointment, id) => {
     )
     return response.data
   } catch (err) {
-    if (err.response.status === 403) {
+    if (
+      err.response.status === 403 &&
+      err.response.data.detail.includes(
+        'Authentication credentials were not provided.'
+      )
+    ) {
       window.localStorage.clear()
       logoutService.logout()
+    }
+    if (
+      err.response.status === 403 &&
+      err.response.data.detail.includes(
+        'You do not have permission to perform this action.'
+      )
+    ) {
+      return {
+        error: true,
+        status: err.response.status,
+        detail: err.response.data.detail,
+      }
     }
   }
 }
@@ -54,9 +109,26 @@ const del = async (id) => {
     const response = await axios.delete(`${appointmentUrl}${id}/`)
     return response.data
   } catch (err) {
-    if (err.response.status === 403) {
+    if (
+      err.response.status === 403 &&
+      err.response.data.detail.includes(
+        'Authentication credentials were not provided.'
+      )
+    ) {
       window.localStorage.clear()
       logoutService.logout()
+    }
+    if (
+      err.response.status === 403 &&
+      err.response.data.detail.includes(
+        'You do not have permission to perform this action.'
+      )
+    ) {
+      return {
+        error: true,
+        status: err.response.status,
+        detail: err.response.data.detail,
+      }
     }
   }
 }
