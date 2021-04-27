@@ -10,7 +10,7 @@ class HairModelSerializer(serializers.HyperlinkedModelSerializer):
 class AppointmentTimeSpanSerializer(serializers.ModelSerializer):
     class Meta:
         model = Appointment_timespan
-        fields = ["id","beginning", "end", "max_group_size"]
+        fields = ["id","beginning", "end", "max_group_size", "status"]
 
 class AppointmentSerializer(serializers.ModelSerializer):
     class Meta:
