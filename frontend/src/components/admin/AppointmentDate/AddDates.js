@@ -34,20 +34,35 @@ const AddDates = ({ setCreateDate, setRefresh, refresh }) => {
   const [notificationOpen, setNotificationOpen] = useState(false)
 
   const saveDatesToDb = async (arrayOfDates) => {
-    try {
-      await arrayOfDates.map((date) => {
-        timespanService.create(date)
-      })
-      setDate([])
-      handleNotification('Ajat tallennettu tietokantaan', true)
-      setTimeout(() => {
-        setRefresh(!refresh)
-        setCreateDate(false)
-      }, 2000)
-    } catch (error) {
-      console.log(error)
-      handleNotification('On tapahtunut virhe', true)
-    }
+    console.log('errArr', arrayOfDates)
+    await arrayOfDates.map(async (date) => {
+      try {
+        let response = await timespanService.create(date)
+        console.log('res', response)
+        if (
+          response.error &&
+          response.status === 403 &&
+          response.detail ===
+            'You do not have permission to perform this action.'
+        ) {
+          throw new Error('Sinulla ei ole oikeutta tehdä tätä!')
+        } else {
+          setDate([])
+          handleNotification('Ajat tallennettu tietokantaan')
+          setTimeout(() => {
+            setRefresh(!refresh)
+            setCreateDate(false)
+          }, 2000)
+        }
+      } catch (err) {
+        if (err.message === 'Sinulla ei ole oikeutta tehdä tätä!') {
+          handleNotification('Sinulla ei ole oikeutta tehdä tätä!')
+          setDate([])
+        } else {
+          handleNotification('On tapahtunut virhe')
+        }
+      }
+    })
   }
 
   const handleDelete = (object) => {
@@ -55,13 +70,13 @@ const AddDates = ({ setCreateDate, setRefresh, refresh }) => {
       console.log(object)
       const newDateArr = date.filter((item) => item !== object)
       setDate(newDateArr)
-      handleNotification('Aika poistettu.', true)
+      handleNotification('Aika poistettu.')
     }
   }
 
-  const handleNotification = (msg, isOpen) => {
+  const handleNotification = (msg) => {
     setNotificationMsg(msg)
-    setNotificationOpen(isOpen)
+    setNotificationOpen(true)
     setTimeout(() => {
       setNotificationMsg(null)
       setNotificationOpen(false)
@@ -87,7 +102,7 @@ const AddDates = ({ setCreateDate, setRefresh, refresh }) => {
         )
       ) {
         console.log('ERROR sama aika löytyy jo')
-        handleNotification('Sama aika löytyy jo!', true)
+        handleNotification('Sama aika löytyy jo!')
       } else {
         console.log('values', values)
         setDate(date.concat(values))
@@ -95,8 +110,7 @@ const AddDates = ({ setCreateDate, setRefresh, refresh }) => {
         handleNotification(
           `Lisätty: ${formatStartDate(values.beginning)} ${formatEndDate(
             values.end
-          )}`,
-          true
+          )}`
         )
       }
     },

@@ -25,9 +25,14 @@ const AppointmentDateAdmin = () => {
   const [notificationMsg, setNotificationMsg] = useState(null)
   const [openNotification, setOpenNotification] = useState(false)
 
-  const handleNotification = (msg, isOpen) => {
+  const handleNotification = (msg) => {
     setNotificationMsg(msg)
-    setOpenNotification(isOpen)
+    setOpenNotification(true)
+
+    setTimeout(() => {
+      setNotificationMsg(null)
+      setOpenNotification(false)
+    }, 2000)
   }
 
   const getDates = async () => {
@@ -48,11 +53,28 @@ const AppointmentDateAdmin = () => {
 
   const handleDelete = async (id) => {
     if (window.confirm('Haluatko varmasti poistaa tämän ajan?')) {
-      const response = await timespanService.del(id)
-      if (response.error && response.status === 403) {
-        return setRedirect(true)
+      try {
+        const response = await timespanService.del(id)
+        console.log('res', response)
+        if (
+          response.error &&
+          response.status === 403 &&
+          response.detail ===
+            'You do not have permission to perform this action.'
+        ) {
+          throw new Error('Sinulla ei ole oikeutta tehdä tätä!')
+        }
+        if (response.error && response.status === 403) {
+          return setRedirect(true)
+        }
+        setRefresh(!refresh)
+      } catch (err) {
+        if (err.message.includes('Sinulla ei ole oikeutta tehdä tätä!')) {
+          handleNotification('Sinulla ei ole oikeutta tehdä tätä!')
+        } else {
+          handleNotification('On tapahtunut virhe!')
+        }
       }
-      setRefresh(!refresh)
     }
   }
 
@@ -60,22 +82,35 @@ const AppointmentDateAdmin = () => {
     try {
       const response = await timespanService.update(date.id, updatedService)
       console.log('updateed', response)
+      if (
+        response.error &&
+        response.status === 403 &&
+        response.detail === 'You do not have permission to perform this action.'
+      ) {
+        throw new Error('Sinulla ei ole oikeutta tehdä tätä!')
+      }
       if (response.error && response.status === 403) {
         return setRedirect(true)
       }
-      handleNotification('Muokataan...', true)
+      handleNotification('Muokataan...')
       setTimeout(() => {
         setRefresh(!refresh)
         setEditDate(false)
         setDate(null)
       }, 2000)
-    } catch (error) {
-      console.log('delerror', error)
-      handleNotification('Muokkaus epäonnistui!', true)
-      setTimeout(() => {
-        setEditDate(false)
-        setDate(null)
-      }, 2000)
+    } catch (err) {
+      if (err.message.includes('Sinulla ei ole oikeutta tehdä tätä!')) {
+        handleNotification('Sinulla ei ole oikeutta tehdä tätä!')
+        setTimeout(() => {
+          setEditDate(false)
+        }, 2000)
+      } else {
+        handleNotification('Muokkaus epäonnistui!')
+        setTimeout(() => {
+          setEditDate(false)
+          setDate(null)
+        }, 2000)
+      }
     }
   }
 
