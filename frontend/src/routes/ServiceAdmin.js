@@ -27,26 +27,43 @@ const ServiceAdmin = () => {
   const [notificationMsg, setNotificationMsg] = useState(null)
   const [openNotification, setOpenNotification] = useState(false)
 
-  const handleNotification = (msg, isOpen) => {
+  const handleNotification = (msg) => {
     setNotificationMsg(msg)
-    setOpenNotification(isOpen)
+    setOpenNotification(true)
+    setTimeout(() => {
+      setNotificationMsg(null)
+      setOpenNotification(false)
+    }, 2000)
   }
 
   const addNewService = async (newService) => {
     try {
       const response = await serviceService.create(newService)
       console.log(response)
+      if (
+        response.error &&
+        response.status === 403 &&
+        response.detail === 'You do not have permission to perform this action.'
+      ) {
+        throw new Error('Sinulla ei ole oikeutta tehdä tätä!')
+      }
       if (response.error && response.status === 403) {
         return setRedirect(true)
       }
-      handleNotification('Luodaan palvelua...', true)
+      handleNotification('Luodaan palvelua...')
       setTimeout(() => {
         setCreateService(false)
         setRefresh(!refresh)
       }, 2000)
-    } catch (error) {
-      console.log('adderror', error)
-      handleNotification('Luonti epäonnistui!', true)
+    } catch (err) {
+      if (err.message.includes('Sinulla ei ole oikeutta tehdä tätä!')) {
+        handleNotification('Sinulla ei ole oikeutta tehdä tätä!')
+        setTimeout(() => {
+          setRedirect(true)
+        }, 3000)
+      } else {
+        handleNotification('Luonti epäonnistui!')
+      }
     }
   }
 
@@ -54,6 +71,13 @@ const ServiceAdmin = () => {
     try {
       const response = await serviceService.update(service.id, updatedService)
       console.log('updateed', response)
+      if (
+        response.error &&
+        response.status === 403 &&
+        response.detail === 'You do not have permission to perform this action.'
+      ) {
+        throw new Error('Sinulla ei ole oikeutta tehdä tätä!')
+      }
       if (response.error && response.status === 403) {
         return setRedirect(true)
       }
@@ -62,12 +86,19 @@ const ServiceAdmin = () => {
         setRefresh(!refresh)
         setEditService(false)
       }, 2000)
-    } catch (error) {
-      console.log('delerror', error)
-      handleNotification('Muokkaus epäonnistui!', true)
-      setTimeout(() => {
-        setEditService(false)
-      }, 200)
+    } catch (err) {
+      console.log('delerror', err)
+      if (err.message.includes('Sinulla ei ole oikeutta tehdä tätä!')) {
+        handleNotification('Sinulla ei ole oikeutta tehdä tätä!')
+        setTimeout(() => {
+          setEditService(false)
+        }, 2000)
+      } else {
+        handleNotification('Muokkaus epäonnistui!')
+        setTimeout(() => {
+          setEditService(false)
+        }, 2000)
+      }
     }
   }
 
@@ -76,13 +107,37 @@ const ServiceAdmin = () => {
     setEditService(false)
   }
 
+  // TODO FIX NOTIFICATIONS!
   const handleDelete = async (id) => {
     if (window.confirm('Haluatko varmasti poistaa tämän palvelun?')) {
-      const response = await serviceService.del(id)
-      if (response.error && response.status === 403) {
-        return setRedirect(true)
+      try {
+        const response = await serviceService.del(id)
+        if (
+          response.error &&
+          response.status === 403 &&
+          response.detail ===
+            'You do not have permission to perform this action.'
+        ) {
+          throw new Error('Sinulla ei ole oikeutta tehdä tätä!')
+        }
+        if (response.error && response.status === 403) {
+          return setRedirect(true)
+        }
+        handleNotification('Poistetaan...')
+        setRefresh(!refresh)
+      } catch (err) {
+        if (err.message.includes('Sinulla ei ole oikeutta tehdä tätä!')) {
+          handleNotification('Sinulla ei ole oikeutta tehdä tätä!')
+          setTimeout(() => {
+            setRefresh(!refresh)
+          }, 2000)
+        } else {
+          handleNotification('Poisto epäonnistui!')
+          setTimeout(() => {
+            setRefresh(true)
+          }, 2000)
+        }
       }
-      setRefresh(!refresh)
     }
   }
 
