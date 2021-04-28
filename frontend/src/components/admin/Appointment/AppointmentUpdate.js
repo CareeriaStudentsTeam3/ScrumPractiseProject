@@ -12,6 +12,9 @@ import { formatStartDate, formatEndDate } from '../../../utils/dateFuncs'
 // Component imports
 import Notification from '../../Notification/Notification'
 
+// Validationschema
+import { appointmentValidationSchema } from '../../../validationSchemas/validationSchemas'
+
 // Material UI imports
 import Grid from '@material-ui/core/Grid'
 import TextField from '@material-ui/core/TextField'
@@ -110,6 +113,7 @@ const AppointmentUpdate = ({ appointment, services, dateTimes }) => {
       info: appointment.info || '',
       confirmed: appointment.confirmed || false,
     },
+    validationSchema: appointmentValidationSchema,
     onSubmit: async (values) => {
       // alert(JSON.stringify(values, null, 2))
       console.log(values)
