@@ -29,7 +29,12 @@ const TimeSelect = ({
     try {
       setIsLoading(true)
       const response = await timespanService.getFreeTimes(grpSize, duration)
-      setTimes(response)
+      console.log('times', response)
+      const filterByStatus = response.filter((time) => {
+        return time.status === 'FREE'
+      })
+      console.log('filterTimes', filterByStatus)
+      setTimes(filterByStatus)
       setIsLoading(false)
     } catch (err) {
       setError(true)

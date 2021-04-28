@@ -22,6 +22,9 @@ import Input from '@material-ui/core/Input'
 import hairmodelService from '../../../services/hairmodel'
 import Notification from '../../Notification/Notification'
 
+// Validation schema
+import { hairModelValidationSchema } from '../../../validationSchemas/validationSchemas'
+
 const HairModelUpdate = ({ hairModel }) => {
   // console.log(hairModel)
 
@@ -114,6 +117,7 @@ const HairModelUpdate = ({ hairModel }) => {
       hair_procedures: model.hair_procedures || '',
       image: model.image || null,
     },
+    validationSchema: hairModelValidationSchema,
     onSubmit: async (values) => {
       let formData = new FormData()
       formData.append('first_name', values.first_name)
