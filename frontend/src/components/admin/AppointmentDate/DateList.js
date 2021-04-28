@@ -67,7 +67,7 @@ const DateList = ({
               <TableRow>
                 <TableCell>Vapaa aika</TableCell>
                 <TableCell align="center">Maksimi ryhmäkoko</TableCell>
-                <TableCell></TableCell>
+                <TableCell>Status</TableCell>
                 <TableCell></TableCell>
               </TableRow>
             </TableHead>
@@ -84,6 +84,7 @@ const DateList = ({
                     item.beginning
                   )} - ${formatEndDate(item.end)}`}</TableCell>
                   <TableCell align="center">{`${item.max_group_size} henkilöä`}</TableCell>
+                  <TableCell>{item.status}</TableCell>
                   <TableCell align="right">
                     <Button
                       onClick={() => handleDateEdit(item.id)}

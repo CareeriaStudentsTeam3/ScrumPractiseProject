@@ -19,6 +19,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 
 // Service import
 import appointmentService from '../../services/appointment'
+import timespanService from '../../services/timespan'
 
 const AppointmentForm = ({
   groupSize,
@@ -50,6 +51,19 @@ const AppointmentForm = ({
         setIsLoading(true)
         const response = await appointmentService.create(values)
         console.log('response', response)
+        if (response) {
+          const timespan = await timespanService.getOne(values.appointment_date)
+          if (timespan) {
+            const updatedTimespan = {
+              ...timespan,
+              status: 'CONFIRMED',
+            }
+            await timespanService.update(
+              values.appointment_date,
+              updatedTimespan
+            )
+          }
+        }
         resetForm()
         setConfirm(response)
         setIsLoading(false)

@@ -5,6 +5,7 @@ import { useFormik } from 'formik'
 
 // Service import
 import appointmentService from '../../../services/appointment'
+import timespanService from '../../../services/timespan'
 
 // Import utils
 import { formatStartDate, formatEndDate } from '../../../utils/dateFuncs'
@@ -51,6 +52,19 @@ const AppointmentUpdate = ({ appointment, services, dateTimes }) => {
           'You do not have permission to perform this action.'
         ) {
           throw new Error('Sinulla ei ole oikeutta tehdä tätä!')
+        }
+        const timespan = await timespanService.getOne(
+          appointment.appointment_date
+        )
+        if (timespan) {
+          const updatedTimespan = {
+            ...timespan,
+            status: 'FREE',
+          }
+          await timespanService.update(
+            appointment.appointment_date,
+            updatedTimespan
+          )
         }
         handleNotification('Poistetaan...')
         setTimeout(() => {
@@ -116,7 +130,8 @@ const AppointmentUpdate = ({ appointment, services, dateTimes }) => {
     validationSchema: appointmentValidationSchema,
     onSubmit: async (values) => {
       // alert(JSON.stringify(values, null, 2))
-      console.log(values)
+      console.log('INITIAL VALUES', formik.initialValues)
+      console.log('FINAL VALUES', values)
       try {
         const response = await appointmentService.update(values, values.id)
         console.log('res', response)
@@ -125,6 +140,29 @@ const AppointmentUpdate = ({ appointment, services, dateTimes }) => {
           'You do not have permission to perform this action.'
         ) {
           throw new Error('Sinulla ei ole oikeutta tehdä tätä!')
+        }
+        const newTimespan = await timespanService.getOne(
+          values.appointment_date
+        )
+        const oldTimespan = await timespanService.getOne(
+          formik.initialValues.appointment_date
+        )
+        if (newTimespan) {
+          const updatedTimespan = {
+            ...newTimespan,
+            status: 'CONFIRMED',
+          }
+          await timespanService.update(values.appointment_date, updatedTimespan)
+        }
+        if (oldTimespan) {
+          const updatedOldTimespan = {
+            ...oldTimespan,
+            status: 'FREE',
+          }
+          await timespanService.update(
+            formik.initialValues.appointment_date,
+            updatedOldTimespan
+          )
         }
         handleNotification('Tallennetaan...')
         setTimeout(() => {
