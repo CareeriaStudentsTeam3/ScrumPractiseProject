@@ -8,26 +8,26 @@ from .serializers import HairModelSerializer, AppointmentTimeSpanSerializer, App
 from datetime import datetime,timedelta
 from django.contrib.auth import login, logout
 from rest_framework.authentication import SessionAuthentication
-from rest_framework.permissions import IsAuthenticatedOrReadOnly, DjangoModelPermissions
-from .permissions import IsAuthenticatedOrCreateOnly
+from rest_framework.permissions import DjangoModelPermissions, DjangoModelPermissionsOrAnonReadOnly
+from .permissions import CreateOnly
 
 # Create your views here.
 
 class HairModelViewSet(viewsets.ModelViewSet):
     authentication_classes = [SessionAuthentication]
-    permission_classes = [IsAuthenticatedOrCreateOnly & (DjangoModelPermissions)]
+    permission_classes = [CreateOnly | (DjangoModelPermissions)]
     queryset = Hairmodel.objects.all()
     serializer_class = HairModelSerializer
 
 class AppointmentViewSet(viewsets.ModelViewSet):
     authentication_classes = [SessionAuthentication]
-    permission_classes = [IsAuthenticatedOrCreateOnly & (DjangoModelPermissions)]
+    permission_classes = [CreateOnly | (DjangoModelPermissions)]
     queryset = Appointment.objects.all()
     serializer_class = AppointmentSerializer
 
 class AppointmentTimeSpanViewSet(viewsets.ModelViewSet):
     authentication_classes = [SessionAuthentication]
-    permission_classes = [IsAuthenticatedOrReadOnly & (DjangoModelPermissions)]
+    permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
     serializer_class = AppointmentTimeSpanSerializer
     def get_queryset(self):
         queryset = Appointment_timespan.objects.all()
@@ -40,13 +40,13 @@ class AppointmentTimeSpanViewSet(viewsets.ModelViewSet):
 
 class CategoryViewSet(viewsets.ModelViewSet):
     authentication_classes = [SessionAuthentication]
-    permission_classes = [IsAuthenticatedOrReadOnly & (DjangoModelPermissions)]
+    permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
 
 class ServiceViewSet(viewsets.ModelViewSet):
     authentication_classes = [SessionAuthentication]
-    permission_classes = [IsAuthenticatedOrReadOnly & (DjangoModelPermissions)]
+    permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
     serializer_class = ServiceSerializer
     def get_queryset(self):
         queryset = Service.objects.all()
