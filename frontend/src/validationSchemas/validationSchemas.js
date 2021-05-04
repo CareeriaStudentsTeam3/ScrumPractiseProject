@@ -11,7 +11,7 @@ const REGEX_ONLY_LETTERS_WHITESPACE_ASCII = '^[A-Za-z\\u0080-\\uFFFF - \\s]+$'
 const REGEX_PHONE_NUMBER =
   '^\\s*(?:\\+?(\\d{1,3}))?[-. (]*(\\d{3})[-. )]*(\\d{3})[-. ]*(\\d{4})(?: *x(\\d+))?\\s*$'
 
-const REGEX_NO_SPECIAL_CHAR = '^[A-Za-z\\u0080-\\uFFFF - \\s][^*<>$_]*$'
+const REGEX_NO_SPECIAL_CHAR = '^[A-Za-z\\u0080-\\uFFFF - \\s][^*<>$_&"]*$'
 
 // List of supported image formats
 const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png']
@@ -62,7 +62,7 @@ export const hairModelValidationSchema = yup.object({
     .required('Anna kaupunki'),
   phone: yup
     .string('Anna puhelinnumero')
-    .max(12, 'Puhelinnumero saa olla enintään 12 merkkiä pitkä')
+    .max(20, 'Puhelinnumero saa olla enintään 20 merkkiä pitkä')
     .matches(REGEX_PHONE_NUMBER, 'Tarkista puhelinnumeron muoto')
     .required('Anna puhelinnumero'),
   email: yup
@@ -125,7 +125,7 @@ export const appointmentValidationSchema = yup.object({
     .required('Anna sähköpostiosoite'),
   phone: yup
     .string('Anna puhelinnumero')
-    .max(10, 'Puhelinnumero saa olla enintään 10 merkkiä pitkä')
+    .max(20, 'Puhelinnumero saa olla enintään 20 merkkiä pitkä')
     .matches(REGEX_PHONE_NUMBER, 'Tarkista puhelinnumeron muoto')
     .required('Anna puhelinnumero'),
   place: yup
