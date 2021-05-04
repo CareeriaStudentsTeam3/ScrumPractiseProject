@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 // Form library
 import { useFormik } from 'formik'
@@ -6,6 +6,7 @@ import { useFormik } from 'formik'
 // Service import
 import appointmentService from '../../../services/appointment'
 import timespanService from '../../../services/timespan'
+import logoutService from '../../../services/logout'
 
 // Import utils
 import { formatStartDate, formatEndDate } from '../../../utils/dateFuncs'
@@ -31,6 +32,8 @@ import { useHistory, Redirect } from 'react-router'
 
 const AppointmentUpdate = ({ appointment, services, dateTimes }) => {
   let history = useHistory()
+
+  const [user, setUser] = useState(null)
 
   const [disable, setDisable] = useState(true)
   const [edit, setEdit] = useState(false)
@@ -112,6 +115,25 @@ const AppointmentUpdate = ({ appointment, services, dateTimes }) => {
       pathname: '/admin/appointment',
     })
   }
+
+  useEffect(() => {
+    const loggedUserJSON = window.localStorage.getItem('user')
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
+      if (user.login_success === true) {
+        console.log('user', user)
+        setUser(user)
+      }
+    }
+    if (
+      JSON.parse(loggedUserJSON) === null ||
+      !JSON.parse(loggedUserJSON).login_success
+    ) {
+      logoutService.logout()
+      setRedirect(true)
+    }
+  }, [])
+
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
@@ -192,6 +214,228 @@ const AppointmentUpdate = ({ appointment, services, dateTimes }) => {
 
   if (redirect) {
     return <Redirect to="/admin/appointment" />
+  }
+
+  if (user !== null && user.user_group[0] === 'student') {
+    return (
+      <Grid container spacing={0} alignItems="center" justify="center">
+        {console.log(appointment)}
+        <Grid container item xs={12} md={6}>
+          <Box display="flex" m="auto">
+            <Box>
+              <Typography variant="h3" color="textSecondary">
+                Ylläpidon info kenttä?
+              </Typography>
+            </Box>
+          </Box>
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <Box display="flex" justifyContent="center">
+            <Box width={'75%'}>
+              <form onSubmit={formik.handleSubmit}>
+                <Notification message={notificationMsg} open={open} />
+                <Box my={2}>
+                  <TextField
+                    disabled={disable}
+                    fullWidth
+                    id="first_name"
+                    name="first_name"
+                    label="Etunimi"
+                    type="text"
+                    value={formik.values.first_name}
+                    onChange={formik.handleChange}
+                    error={
+                      formik.touched.first_name &&
+                      Boolean(formik.errors.first_name)
+                    }
+                    helperText={
+                      formik.touched.first_name && formik.errors.first_name
+                    }
+                  />
+                </Box>
+                <Box my={2}>
+                  <TextField
+                    disabled={disable}
+                    fullWidth
+                    id="last_name"
+                    name="last_name"
+                    label="Sukunimi"
+                    type="text"
+                    value={formik.values.last_name}
+                    onChange={formik.handleChange}
+                    error={
+                      formik.touched.last_name &&
+                      Boolean(formik.errors.last_name)
+                    }
+                    helperText={
+                      formik.touched.last_name && formik.errors.last_name
+                    }
+                  />
+                </Box>
+                <Box my={2}>
+                  <TextField
+                    disabled={disable}
+                    fullWidth
+                    id="email"
+                    name="email"
+                    label="Sähköposti"
+                    type="email"
+                    value={formik.values.email}
+                    onChange={formik.handleChange}
+                    error={formik.touched.email && Boolean(formik.errors.email)}
+                    helperText={formik.touched.email && formik.errors.email}
+                  />
+                </Box>
+                <Box my={2}>
+                  <TextField
+                    disabled={disable}
+                    fullWidth
+                    id="phone"
+                    name="phone"
+                    label="Puhelinnumero"
+                    type="text"
+                    value={formik.values.phone}
+                    onChange={formik.handleChange}
+                    error={formik.touched.phone && Boolean(formik.errors.phone)}
+                    helperText={formik.touched.phone && formik.errors.phone}
+                  />
+                </Box>
+                <Box my={2}>
+                  <TextField
+                    disabled={disable}
+                    fullWidth
+                    id="group_size"
+                    name="group_size"
+                    label="Ryhmä koko"
+                    type="number"
+                    value={formik.values.group_size}
+                    onChange={formik.handleChange}
+                    error={
+                      formik.touched.group_size &&
+                      Boolean(formik.errors.group_size)
+                    }
+                    helperText={
+                      formik.touched.group_size && formik.errors.group_size
+                    }
+                  />
+                </Box>
+                <Box my={2}>
+                  <InputLabel shrink id="service">
+                    Palvelu
+                  </InputLabel>
+                  <Select
+                    disabled={disable}
+                    fullWidth
+                    // variant="outlined"
+                    labelId="service"
+                    id="service"
+                    name="service"
+                    label="Palvelu"
+                    value={formik.values.service}
+                    onChange={formik.handleChange}
+                    error={
+                      formik.touched.service && Boolean(formik.errors.service)
+                    }
+                  >
+                    {services.map((item) => (
+                      <MenuItem key={item.id} value={item.id || ''}>
+                        {`${item.service_name} - Pituus: ${item.duration}min`}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </Box>
+                <Box my={2}>
+                  <InputLabel shrink id="appointment_date">
+                    Varauksen päivämäärä
+                  </InputLabel>
+                  <Select
+                    disabled={disable}
+                    fullWidth
+                    // variant="outlined"
+                    labelId="appointment_date"
+                    id="appointment_date"
+                    name="appointment_date"
+                    label="Varauksen päivämäärä"
+                    value={formik.values.appointment_date}
+                    onChange={formik.handleChange}
+                    error={
+                      formik.touched.appointment_date &&
+                      Boolean(formik.errors.appointment_date)
+                    }
+                  >
+                    {dateTimes.map((item) => (
+                      <MenuItem key={item.id} value={item.id || ''}>
+                        {`${formatStartDate(item.beginning)} - ${formatEndDate(
+                          item.end
+                        )} - Max ryhmäkoko: ${item.max_group_size}`}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </Box>
+                <Box my={2}>
+                  <TextField
+                    disabled={disable}
+                    fullWidth
+                    id="place"
+                    name="place"
+                    label="Paikka"
+                    type="text"
+                    value={formik.values.place}
+                    onChange={formik.handleChange}
+                    error={formik.touched.place && Boolean(formik.errors.place)}
+                    helperText={formik.touched.place && formik.errors.place}
+                  />
+                </Box>
+                <Box my={2}>
+                  <TextField
+                    disabled={disable}
+                    fullWidth
+                    multiline
+                    rows={4}
+                    id="info"
+                    name="info"
+                    label="Lisätiedot"
+                    type="text"
+                    value={formik.values.info}
+                    onChange={formik.handleChange}
+                    error={formik.touched.info && Boolean(formik.errors.info)}
+                    helperText={formik.touched.info && formik.errors.info}
+                  />
+                </Box>
+                <Box my={2}>
+                  <FormControlLabel
+                    label={
+                      formik.values.confirmed === false
+                        ? 'Vahvista varaus'
+                        : 'Varaus vahvistettu'
+                    }
+                    control={
+                      <Switch
+                        disabled={disable}
+                        checked={formik.values.confirmed}
+                        onChange={formik.handleChange}
+                        name="confirmed"
+                        inputProps={{ 'aria-label': 'secondary checkbox' }}
+                      />
+                    }
+                  />
+                </Box>
+                <Box>
+                  <Button
+                    onClick={(e) => handleBackButton(e)}
+                    color="default"
+                    variant="contained"
+                    type="button"
+                  >
+                    Palaa takaisin listaan
+                  </Button>
+                </Box>
+              </form>
+            </Box>
+          </Box>
+        </Grid>
+      </Grid>
+    )
   }
 
   return (

@@ -6,6 +6,7 @@ import { Redirect } from 'react-router-dom'
 // Import service
 import appointmentService from '../services/appointment'
 import timespanService from '../services/timespan'
+import logoutService from '../services/logout'
 
 // Import components
 import AppointmentList from '../components/admin/Appointment/AppointmentList'
@@ -53,8 +54,24 @@ const AppointmentAdmin = () => {
       setAppointments(sorted)
     })
   }
+
   useEffect(() => {
-    getAppointments()
+    const loggedUserJSON = window.localStorage.getItem('user')
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
+      if (user.login_success === true) {
+        console.log('user', user)
+        // setUser(user)
+        getAppointments()
+      }
+    }
+    if (
+      JSON.parse(loggedUserJSON) === null ||
+      !JSON.parse(loggedUserJSON).login_success
+    ) {
+      logoutService.logout()
+      setRedirect(true)
+    }
   }, [])
 
   if (redirect) {

@@ -37,8 +37,8 @@ const HairdModelInfoAdmin = () => {
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
       if (user.login_success === true) {
-        console.log('user', user.username)
-        setUser(user.username)
+        console.log('user', user)
+        setUser(user)
         getHairModel()
       }
     }
@@ -70,7 +70,7 @@ const HairdModelInfoAdmin = () => {
         <HairModelPhoto photo={hairModel.image} />
       </Grid>
       <Grid item xs={12} md={6}>
-        <HairModelUpdate hairModel={hairModel} />
+        <HairModelUpdate hairModel={hairModel} user={user} />
       </Grid>
     </Grid>
   )
