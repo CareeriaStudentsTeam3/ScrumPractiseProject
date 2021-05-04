@@ -15,6 +15,8 @@ import serviceService from '../services/service'
 import logoutService from '../services/logout'
 
 const ServiceAdmin = () => {
+  const [user, setUser] = useState(null)
+
   const [services, setServices] = useState([])
   const [service, setService] = useState(null)
 
@@ -155,7 +157,7 @@ const ServiceAdmin = () => {
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
       if (user.login_success === true) {
-        // setUser(user.username)
+        setUser(user)
         getServices()
         setRedirect(false)
       }
@@ -207,6 +209,7 @@ const ServiceAdmin = () => {
         handleDelete={handleDelete}
         setEditService={setEditService}
         setService={setService}
+        user={user}
       />
     </div>
   )

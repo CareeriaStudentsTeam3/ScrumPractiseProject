@@ -14,6 +14,8 @@ import EditDates from '../components/admin/AppointmentDate/EditDates'
 import Notification from '../components/Notification/Notification'
 
 const AppointmentDateAdmin = () => {
+  const [user, setUser] = useState(null)
+
   const [dates, setDates] = useState([])
   const [date, setDate] = useState(null)
   const [refresh, setRefresh] = useState(false)
@@ -124,7 +126,7 @@ const AppointmentDateAdmin = () => {
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
       if (user.login_success === true) {
-        // setUser(user.username)
+        setUser(user)
         getDates()
         setRedirect(false)
       }
@@ -172,6 +174,7 @@ const AppointmentDateAdmin = () => {
       handleDelete={handleDelete}
       setEditDate={setEditDate}
       setDate={setDate}
+      user={user}
     />
   )
 }
