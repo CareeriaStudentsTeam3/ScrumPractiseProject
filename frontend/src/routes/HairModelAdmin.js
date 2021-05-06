@@ -43,7 +43,7 @@ const HairModelAdmin = () => {
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
       if (user.login_success === true) {
-        setUser(user.username)
+        setUser(user)
         getHairModels()
         setRedirect(false)
       }

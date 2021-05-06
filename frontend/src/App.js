@@ -14,6 +14,7 @@ import AppointmentDateAdmin from './routes/AppointmentDateAdmin'
 import AppointmentAdmin from './routes/AppointmentAdmin'
 import AppointmentInfoAdmin from './routes/AppointmentInfoAdmin'
 import Login from './routes/Login'
+import Admin from './routes/Admin'
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
         component={AppointmentInfoAdmin}
       />
       <Route exact path="/admin/login" component={Login} />
+      <Route exact path="/admin" component={Admin} />
     </Router>
   )
 }

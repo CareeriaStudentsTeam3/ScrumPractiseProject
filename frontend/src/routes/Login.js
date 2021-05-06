@@ -44,7 +44,7 @@ const Login = () => {
   }, [])
 
   if (redirect) {
-    return <Redirect to="/admin/hairmodel" />
+    return <Redirect to="/admin" />
   }
 
   return (
