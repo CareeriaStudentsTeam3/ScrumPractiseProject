@@ -169,14 +169,15 @@ const AppointmentUpdate = ({ appointment, services, dateTimes }) => {
         const oldTimespan = await timespanService.getOne(
           formik.initialValues.appointment_date
         )
-        if (newTimespan) {
+
+        if (newTimespan && newTimespan !== oldTimespan) {
           const updatedTimespan = {
             ...newTimespan,
-            status: 'CONFIRMED',
+            status: values.confirmed ? 'CONFIRMED' : 'UNCONFIRMED',
           }
           await timespanService.update(values.appointment_date, updatedTimespan)
         }
-        if (oldTimespan) {
+        if (oldTimespan && oldTimespan !== newTimespan) {
           const updatedOldTimespan = {
             ...oldTimespan,
             status: 'FREE',
@@ -185,6 +186,13 @@ const AppointmentUpdate = ({ appointment, services, dateTimes }) => {
             formik.initialValues.appointment_date,
             updatedOldTimespan
           )
+        }
+        if (values.appointment_date === formik.initialValues.appointment_date) {
+          const updatedTimespan = {
+            ...newTimespan,
+            status: values.confirmed ? 'CONFIRMED' : 'UNCONFIRMED',
+          }
+          await timespanService.update(values.appointment_date, updatedTimespan)
         }
         handleNotification('Tallennetaan...')
         setTimeout(() => {
@@ -557,11 +565,17 @@ const AppointmentUpdate = ({ appointment, services, dateTimes }) => {
                     formik.touched.service && Boolean(formik.errors.service)
                   }
                 >
-                  {services.map((item) => (
-                    <MenuItem key={item.id} value={item.id || ''}>
-                      {`${item.service_name} - Pituus: ${item.duration}min`}
-                    </MenuItem>
-                  ))}
+                  {services.map((item) => {
+                    if (
+                      item.max_group_size <= formik.initialValues.group_size
+                    ) {
+                      return (
+                        <MenuItem key={item.id} value={item.id || ''}>
+                          {`${item.service_name} - Pituus: ${item.duration}min`}
+                        </MenuItem>
+                      )
+                    }
+                  })}
                 </Select>
               </Box>
               <Box my={2}>
@@ -583,13 +597,22 @@ const AppointmentUpdate = ({ appointment, services, dateTimes }) => {
                     Boolean(formik.errors.appointment_date)
                   }
                 >
-                  {dateTimes.map((item) => (
-                    <MenuItem key={item.id} value={item.id || ''}>
-                      {`${formatStartDate(item.beginning)} - ${formatEndDate(
-                        item.end
-                      )} - Max ryhmäkoko: ${item.max_group_size}`}
-                    </MenuItem>
-                  ))}
+                  {dateTimes.map((item) => {
+                    if (
+                      item.status === 'FREE' ||
+                      item.id === formik.initialValues.appointment_date
+                    ) {
+                      return (
+                        <MenuItem key={item.id} value={item.id || ''}>
+                          {`${formatStartDate(
+                            item.beginning
+                          )} - ${formatEndDate(item.end)} - Max ryhmäkoko: ${
+                            item.max_group_size
+                          }`}
+                        </MenuItem>
+                      )
+                    }
+                  })}
                 </Select>
               </Box>
               <Box my={2}>

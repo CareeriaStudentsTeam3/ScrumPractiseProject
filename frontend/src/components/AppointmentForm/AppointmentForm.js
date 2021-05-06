@@ -56,7 +56,7 @@ const AppointmentForm = ({
           if (timespan) {
             const updatedTimespan = {
               ...timespan,
-              status: 'CONFIRMED',
+              status: 'UNCONFIRMED',
             }
             await timespanService.update(
               values.appointment_date,
