@@ -9,6 +9,7 @@ import ServiceCreate from '../components/admin/Service/ServiceCreate'
 import ServiceEdit from '../components/admin/Service/ServiceEdit'
 import LogoutButton from '../components/admin/LogoutButton/LogoutButton'
 import Notification from '../components/Notification/Notification'
+import AdminButton from '../components/admin/AdminButton/AdminButton'
 
 // Service import
 import serviceService from '../services/service'
@@ -203,6 +204,7 @@ const ServiceAdmin = () => {
   return (
     <div>
       <LogoutButton />
+      <AdminButton />
       <ServiceList
         services={services}
         setCreateService={setCreateService}

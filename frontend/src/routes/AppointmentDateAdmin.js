@@ -12,6 +12,7 @@ import AddDates from '../components/admin/AppointmentDate/AddDates'
 import DateList from '../components/admin/AppointmentDate/DateList'
 import EditDates from '../components/admin/AppointmentDate/EditDates'
 import Notification from '../components/Notification/Notification'
+import AdminButton from '../components/admin/AdminButton/AdminButton'
 
 const AppointmentDateAdmin = () => {
   const [user, setUser] = useState(null)
@@ -168,14 +169,17 @@ const AppointmentDateAdmin = () => {
   }
 
   return (
-    <DateList
-      dates={dates}
-      setCreateDate={setCreateDate}
-      handleDelete={handleDelete}
-      setEditDate={setEditDate}
-      setDate={setDate}
-      user={user}
-    />
+    <div>
+      <AdminButton />
+      <DateList
+        dates={dates}
+        setCreateDate={setCreateDate}
+        handleDelete={handleDelete}
+        setEditDate={setEditDate}
+        setDate={setDate}
+        user={user}
+      />
+    </div>
   )
 }
 

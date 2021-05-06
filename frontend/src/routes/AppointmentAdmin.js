@@ -10,6 +10,7 @@ import logoutService from '../services/logout'
 
 // Import components
 import AppointmentList from '../components/admin/Appointment/AppointmentList'
+import AdminButton from '../components/admin/AdminButton/AdminButton'
 
 const AppointmentAdmin = () => {
   const [appointments, setAppointments] = useState([])
@@ -79,7 +80,13 @@ const AppointmentAdmin = () => {
   }
 
   return (
-    <AppointmentList appointments={appointments} getDateTimes={getDateTimes} />
+    <div>
+      <AdminButton />
+      <AppointmentList
+        appointments={appointments}
+        getDateTimes={getDateTimes}
+      />
+    </div>
   )
 }
 
