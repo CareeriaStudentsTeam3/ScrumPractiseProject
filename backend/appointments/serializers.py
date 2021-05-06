@@ -47,14 +47,18 @@ class UserLoginSerializer(serializers.Serializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ["id", "username", "first_name", "last_name", "is_active", "groups"]
+        fields = ["id", "username", "first_name", "last_name", "password", "is_active", "groups"]
+        extra_kwargs = {"password": {"write_only": True} }
     
     def create(self, validated_data):
         groups = validated_data.pop("groups")
+        password = validated_data.pop("password")
         if len(groups) >=2:
             raise serializers.ValidationError("Only one group allowed.")
         else:
             user = User.objects.create(**validated_data)
+            user.set_password(password)
+            user.save()
             for group in groups:
                 user.groups.add(group)
             return user
