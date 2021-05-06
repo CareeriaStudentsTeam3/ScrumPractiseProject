@@ -10,6 +10,7 @@ import logoutService from '../services/logout'
 // Component imports
 import HairModelList from '../components/admin/HairModel/HairModelList'
 import LogoutButton from '../components/admin/LogoutButton/LogoutButton'
+import AdminButton from '../components/admin/AdminButton/AdminButton'
 
 // Material UI imports
 import Button from '@material-ui/core/Button'
@@ -43,7 +44,7 @@ const HairModelAdmin = () => {
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
       if (user.login_success === true) {
-        setUser(user.username)
+        setUser(user)
         getHairModels()
         setRedirect(false)
       }
@@ -79,6 +80,7 @@ const HairModelAdmin = () => {
       >
         Palaa etusivulle
       </Button>
+      <AdminButton />
       <HairModelList hairModels={hairModels} />
     </div>
   )

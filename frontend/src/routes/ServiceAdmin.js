@@ -9,12 +9,15 @@ import ServiceCreate from '../components/admin/Service/ServiceCreate'
 import ServiceEdit from '../components/admin/Service/ServiceEdit'
 import LogoutButton from '../components/admin/LogoutButton/LogoutButton'
 import Notification from '../components/Notification/Notification'
+import AdminButton from '../components/admin/AdminButton/AdminButton'
 
 // Service import
 import serviceService from '../services/service'
 import logoutService from '../services/logout'
 
 const ServiceAdmin = () => {
+  const [user, setUser] = useState(null)
+
   const [services, setServices] = useState([])
   const [service, setService] = useState(null)
 
@@ -155,7 +158,7 @@ const ServiceAdmin = () => {
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
       if (user.login_success === true) {
-        // setUser(user.username)
+        setUser(user)
         getServices()
         setRedirect(false)
       }
@@ -201,12 +204,14 @@ const ServiceAdmin = () => {
   return (
     <div>
       <LogoutButton />
+      <AdminButton />
       <ServiceList
         services={services}
         setCreateService={setCreateService}
         handleDelete={handleDelete}
         setEditService={setEditService}
         setService={setService}
+        user={user}
       />
     </div>
   )

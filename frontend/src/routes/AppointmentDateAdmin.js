@@ -12,8 +12,11 @@ import AddDates from '../components/admin/AppointmentDate/AddDates'
 import DateList from '../components/admin/AppointmentDate/DateList'
 import EditDates from '../components/admin/AppointmentDate/EditDates'
 import Notification from '../components/Notification/Notification'
+import AdminButton from '../components/admin/AdminButton/AdminButton'
 
 const AppointmentDateAdmin = () => {
+  const [user, setUser] = useState(null)
+
   const [dates, setDates] = useState([])
   const [date, setDate] = useState(null)
   const [refresh, setRefresh] = useState(false)
@@ -124,7 +127,7 @@ const AppointmentDateAdmin = () => {
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
       if (user.login_success === true) {
-        // setUser(user.username)
+        setUser(user)
         getDates()
         setRedirect(false)
       }
@@ -166,13 +169,17 @@ const AppointmentDateAdmin = () => {
   }
 
   return (
-    <DateList
-      dates={dates}
-      setCreateDate={setCreateDate}
-      handleDelete={handleDelete}
-      setEditDate={setEditDate}
-      setDate={setDate}
-    />
+    <div>
+      <AdminButton />
+      <DateList
+        dates={dates}
+        setCreateDate={setCreateDate}
+        handleDelete={handleDelete}
+        setEditDate={setEditDate}
+        setDate={setDate}
+        user={user}
+      />
+    </div>
   )
 }
 

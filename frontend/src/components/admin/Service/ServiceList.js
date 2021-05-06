@@ -23,7 +23,9 @@ const ServiceList = ({
   handleDelete,
   setEditService,
   setService,
+  user,
 }) => {
+  console.log('service user', user)
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
 
@@ -49,13 +51,15 @@ const ServiceList = ({
   return (
     <Box display="flex" justifyContent="center" justifyItems="center">
       <Box minWidth="60%">
-        <Button
-          onClick={() => handleServiceCreate()}
-          variant="contained"
-          color="primary"
-        >
-          Luo uusi
-        </Button>
+        {user && user.user_group[0] === 'student' ? null : (
+          <Button
+            onClick={() => handleServiceCreate()}
+            variant="contained"
+            color="primary"
+          >
+            Luo uusi
+          </Button>
+        )}
         <TableContainer component={Paper}>
           <Table size="small">
             <TableHead>
@@ -81,24 +85,33 @@ const ServiceList = ({
                   <TableCell>{item.duration}min</TableCell>
                   <TableCell>{item.price}€</TableCell>
                   <TableCell align="center">{`${item.max_group_size} henkilöä`}</TableCell>
-                  <TableCell align="right">
-                    <Button
-                      onClick={() => handleServiceEdit(item.id)}
-                      variant="contained"
-                      color="primary"
-                    >
-                      Muokkaa
-                    </Button>
-                  </TableCell>
-                  <TableCell align="left">
-                    <Button
-                      onClick={() => handleDelete(item.id)}
-                      variant="contained"
-                      color="secondary"
-                    >
-                      Poista
-                    </Button>
-                  </TableCell>
+                  {user && user.user_group[0] === 'student' ? (
+                    <>
+                      <TableCell></TableCell>
+                      <TableCell></TableCell>
+                    </>
+                  ) : (
+                    <>
+                      <TableCell align="right">
+                        <Button
+                          onClick={() => handleServiceEdit(item.id)}
+                          variant="contained"
+                          color="primary"
+                        >
+                          Muokkaa
+                        </Button>
+                      </TableCell>
+                      <TableCell align="left">
+                        <Button
+                          onClick={() => handleDelete(item.id)}
+                          variant="contained"
+                          color="secondary"
+                        >
+                          Poista
+                        </Button>
+                      </TableCell>
+                    </>
+                  )}
                 </TableRow>
               ))}
             </TableBody>
