@@ -8,6 +8,7 @@ router.register(r"appointment", views.AppointmentViewSet)
 router.register(r"appointment_timespan", views.AppointmentTimeSpanViewSet,"appointment_timespan")
 router.register(r"category", views.CategoryViewSet)
 router.register(r"service", views.ServiceViewSet, "service")
+router.register(r"user", views.UserViewSet)
 
 urlpatterns = [
     path("api/", include((router.urls, "appointments"))),

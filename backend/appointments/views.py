@@ -2,9 +2,9 @@ from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import Hairmodel, Appointment_timespan, Appointment, Category, Service
+from .models import Hairmodel, Appointment_timespan, Appointment, Category, Service, User
 from django.db.models import F, ExpressionWrapper, DurationField
-from .serializers import HairModelSerializer, AppointmentTimeSpanSerializer, AppointmentSerializer, CategorySerializer, ServiceSerializer, UserLoginSerializer
+from .serializers import HairModelSerializer, AppointmentTimeSpanSerializer, AppointmentSerializer, CategorySerializer, ServiceSerializer, UserLoginSerializer, UserSerializer
 from datetime import datetime,timedelta
 from django.contrib.auth import login, logout
 from rest_framework.authentication import SessionAuthentication
@@ -68,4 +68,10 @@ class UserLogoutView(APIView):
     def post(self, request):
         logout(request)
         return Response({"logout_success": True})
+
+class UserViewSet(viewsets.ModelViewSet):
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [DjangoModelPermissions]
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 

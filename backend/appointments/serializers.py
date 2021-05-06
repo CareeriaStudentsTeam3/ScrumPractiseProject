@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Hairmodel, Appointment_timespan, Appointment, Category, Service
+from .models import Hairmodel, Appointment_timespan, Appointment, Category, Service, User
 from django.contrib.auth import authenticate
 
 class HairModelSerializer(serializers.HyperlinkedModelSerializer):
@@ -43,3 +43,23 @@ class UserLoginSerializer(serializers.Serializer):
             raise serializers.ValidationError("User not found.")
             
         return data
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["id", "username", "first_name", "last_name", "password", "is_active", "groups"]
+        extra_kwargs = {"password": {"write_only": True} }
+    
+    def create(self, validated_data):
+        groups = validated_data.pop("groups")
+        password = validated_data.pop("password")
+        if len(groups) >=2:
+            raise serializers.ValidationError("Only one group allowed.")
+        else:
+            user = User.objects.create(**validated_data)
+            user.set_password(password)
+            user.save()
+            for group in groups:
+                user.groups.add(group)
+            return user
+
