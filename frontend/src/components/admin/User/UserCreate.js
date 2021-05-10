@@ -2,7 +2,7 @@ import React from 'react'
 import { useFormik } from 'formik'
 
 // Import form validation schema
-// import { serviceValidationSchema } from '../../../validationSchemas/validationSchemas'
+import { userValidationSchema } from '../../../validationSchemas/validationSchemas'
 
 // Material UI imports
 import Paper from '@material-ui/core/Paper'
@@ -22,7 +22,7 @@ const UserCreate = ({ handleBackButton, addNewUser }) => {
       is_active: true,
       groups: [''],
     },
-    // validationSchema: serviceValidationSchema,
+    validationSchema: userValidationSchema,
     onSubmit: async (values) => {
       values.groups = [...values.groups]
       console.log('values', values)
