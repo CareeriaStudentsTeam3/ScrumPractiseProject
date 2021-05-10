@@ -2,6 +2,7 @@ from rest_framework import serializers
 from django.contrib.auth.models import Group
 from .models import Hairmodel, Appointment_timespan, Appointment, Category, Service, User
 from django.contrib.auth import authenticate
+from django.contrib.auth.password_validation import validate_password
 
 class HairModelSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
@@ -46,12 +47,12 @@ class UserLoginSerializer(serializers.Serializer):
         return data
 
 class UserSerializer(serializers.ModelSerializer):
-    password_again = serializers.CharField(max_length=128, required=False, write_only=True)
+    password = serializers.CharField(max_length=128, required=False, write_only=True, validators=[validate_password])
+    password_again = serializers.CharField(max_length=128, required=False, write_only=True, validators=[validate_password])
     groups = serializers.SlugRelatedField(many=True, slug_field="name", queryset=Group.objects.all())
     class Meta:
         model = User
         fields = ["id", "username", "first_name", "last_name", "password", "password_again", "is_active", "groups"]
-        extra_kwargs = {"password": {"write_only": True, "required": False} }
 
     def create(self, validated_data):
         groups = validated_data.pop("groups")
