@@ -1,6 +1,9 @@
 /* eslint-disable indent */
 import React, { useState } from 'react'
 
+// Service import
+import userService from '../../../services/user'
+
 // Material UI imports
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -13,7 +16,14 @@ import Paper from '@material-ui/core/Paper'
 import Button from '@material-ui/core/Button'
 import Box from '@material-ui/core/Box'
 
-const UserList = ({ users, user, handleDelete, setCreateUser }) => {
+const UserList = ({
+  users,
+  user,
+  handleDelete,
+  setCreateUser,
+  setOneUser,
+  setEditUser,
+}) => {
   console.log('user', user)
 
   const [page, setPage] = useState(0)
@@ -30,6 +40,12 @@ const UserList = ({ users, user, handleDelete, setCreateUser }) => {
 
   const handleServiceCreate = () => {
     setCreateUser(true)
+  }
+
+  const handleUserEdit = async (id) => {
+    setEditUser(true)
+    const response = await userService.getOne(id)
+    setOneUser(response)
   }
 
   return (
@@ -66,7 +82,11 @@ const UserList = ({ users, user, handleDelete, setCreateUser }) => {
                   <TableCell>{item.username}</TableCell>
                   <TableCell>{item.groups}</TableCell>
                   <TableCell align="right">
-                    <Button variant="contained" color="primary">
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => handleUserEdit(item.id)}
+                    >
                       Muokkaa
                     </Button>
                   </TableCell>

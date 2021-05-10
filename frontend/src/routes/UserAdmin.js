@@ -10,16 +10,20 @@ import logoutService from '../services/logout'
 // Component imports
 import UserList from '../components/admin/User/UserList'
 import UserCreate from '../components/admin/User/UserCreate'
+import UserEdit from '../components/admin/User/UserEdit'
 import Notification from '../components/Notification/Notification'
+import AdminButton from '../components/admin/AdminButton/AdminButton'
 
 const UserAdmin = () => {
   const [user, setUser] = useState(null)
   const [users, setUsers] = useState([])
+  const [oneUser, setOneUser] = useState(null)
 
   const [redirect, setRedirect] = useState(false)
   const [refresh, setRefresh] = useState(false)
 
   const [createUser, setCreateUser] = useState(false)
+  const [editUser, setEditUser] = useState(false)
 
   const [notificationMsg, setNotificationMsg] = useState(null)
   const [openNotification, setOpenNotification] = useState(null)
@@ -56,7 +60,7 @@ const UserAdmin = () => {
       if (response.error && response.status === 403) {
         return setRedirect(true)
       }
-      handleNotification('Luodaan palvelua...')
+      handleNotification('Luodaan käyttäjää...')
       setTimeout(() => {
         setCreateUser(false)
         setRefresh(!refresh)
@@ -106,9 +110,48 @@ const UserAdmin = () => {
     }
   }
 
+  const updateUser = async (updatedUser) => {
+    try {
+      const response = await userService.update(oneUser.id, updatedUser)
+      console.log('updateed', response)
+      if (
+        response.error &&
+        response.status === 403 &&
+        response.detail === 'You do not have permission to perform this action.'
+      ) {
+        throw new Error('Sinulla ei ole oikeutta tehdä tätä!')
+      }
+      if (response.error && response.status === 403) {
+        return setRedirect(true)
+      }
+      handleNotification('Muokataan...', true)
+      setTimeout(() => {
+        setOneUser(null)
+        setRefresh(!refresh)
+        setEditUser(false)
+      }, 2000)
+    } catch (err) {
+      console.log('delerror', err)
+      if (err.message.includes('Sinulla ei ole oikeutta tehdä tätä!')) {
+        handleNotification('Sinulla ei ole oikeutta tehdä tätä!')
+        setTimeout(() => {
+          setOneUser(null)
+          setEditUser(false)
+        }, 2000)
+      } else {
+        handleNotification('Muokkaus epäonnistui!')
+        setTimeout(() => {
+          setOneUser(null)
+          setEditUser(false)
+        }, 2000)
+      }
+    }
+  }
+
   const handleBackButton = () => {
+    setOneUser(null)
     setCreateUser(false)
-    // setEditService(false)
+    setEditUser(false)
   }
 
   useEffect(() => {
@@ -140,18 +183,45 @@ const UserAdmin = () => {
 
   if (user && user.user_group[0] !== 'student' && createUser) {
     return (
-      <UserCreate addNewUser={addNewUser} handleBackButton={handleBackButton} />
+      <div>
+        <UserCreate
+          addNewUser={addNewUser}
+          handleBackButton={handleBackButton}
+        />
+        <Notification message={notificationMsg} open={openNotification} />
+      </div>
+    )
+  }
+
+  if (
+    user &&
+    user.user_group[0] !== 'student' &&
+    editUser &&
+    oneUser !== null
+  ) {
+    return (
+      <div>
+        <UserEdit
+          handleBackButton={handleBackButton}
+          oneUser={oneUser}
+          updateUser={updateUser}
+        />
+        <Notification message={notificationMsg} open={openNotification} />
+      </div>
     )
   }
 
   if (user && user.user_group[0] !== 'student') {
     return (
       <div>
+        <AdminButton />
         <UserList
           users={users}
           user={user}
           handleDelete={handleDelete}
           setCreateUser={setCreateUser}
+          setEditUser={setEditUser}
+          setOneUser={setOneUser}
         />
         <Notification message={notificationMsg} open={openNotification} />
       </div>
