@@ -45,21 +45,43 @@ class UserLoginSerializer(serializers.Serializer):
         return data
 
 class UserSerializer(serializers.ModelSerializer):
+    password_again = serializers.CharField(max_length=128, required=False, write_only=True)
     class Meta:
         model = User
-        fields = ["id", "username", "first_name", "last_name", "password", "is_active", "groups"]
-        extra_kwargs = {"password": {"write_only": True} }
+        fields = ["id", "username", "first_name", "last_name", "password", "password_again", "is_active", "groups"]
+        extra_kwargs = {"password": {"write_only": True, "required": False} }
     
     def create(self, validated_data):
         groups = validated_data.pop("groups")
         password = validated_data.pop("password")
+        password_again = validated_data.pop("password_again")
         if len(groups) >=2:
             raise serializers.ValidationError("Only one group allowed.")
         else:
             user = User.objects.create(**validated_data)
-            user.set_password(password)
+            if password == password_again:
+                user.set_password(password)
+            else:
+                raise serializers.ValidationError("Passwords are not similar.")
             user.save()
             for group in groups:
                 user.groups.add(group)
             return user
+    
+    def update(self, instance, validated_data):
+        groups = validated_data.pop("groups")
+        password = validated_data.pop("password", None)
+        password_again = validated_data.pop("password_again", None)
+        if groups:
+            if len(groups) >=2:
+                raise serializers.ValidationError("Only one group allowed.")
+            else:
+                instance.groups.set(groups)
+                instance.save()
+        if password and password == password_again:
+            instance.set_password(password)
+            instance.save()
+        else:
+            raise serializers.ValidationError("Passwords are not similar.")
+        return instance
 
