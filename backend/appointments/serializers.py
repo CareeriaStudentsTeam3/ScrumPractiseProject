@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from django.contrib.auth.models import Group
 from .models import Hairmodel, Appointment_timespan, Appointment, Category, Service, User
 from django.contrib.auth import authenticate
 
@@ -46,11 +47,12 @@ class UserLoginSerializer(serializers.Serializer):
 
 class UserSerializer(serializers.ModelSerializer):
     password_again = serializers.CharField(max_length=128, required=False, write_only=True)
+    groups = serializers.SlugRelatedField(many=True, slug_field="name", queryset=Group.objects.all())
     class Meta:
         model = User
         fields = ["id", "username", "first_name", "last_name", "password", "password_again", "is_active", "groups"]
         extra_kwargs = {"password": {"write_only": True, "required": False} }
-    
+
     def create(self, validated_data):
         groups = validated_data.pop("groups")
         password = validated_data.pop("password")
@@ -81,7 +83,7 @@ class UserSerializer(serializers.ModelSerializer):
         if password and password == password_again:
             instance.set_password(password)
             instance.save()
-        else:
+        elif password and password != password_again:
             raise serializers.ValidationError("Passwords are not similar.")
         return instance
 
