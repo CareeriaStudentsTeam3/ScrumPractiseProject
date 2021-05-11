@@ -16,6 +16,31 @@ const REGEX_NO_SPECIAL_CHAR = '^[A-Za-z\\u0080-\\uFFFF - \\s][^*<>$_&"]*$'
 // List of supported image formats
 const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png']
 
+export const userValidationSchema = yup.object({
+  username: yup
+    .string()
+    .matches(REGEX_ONLY_LETTERS_ASCII, 'Käytä pelkkiä kirjaimia')
+    .required('Anna käyttäjätunnus'),
+  first_name: yup
+    .string()
+    .matches(REGEX_ONLY_LETTERS_ASCII, 'Käytä pelkkiä kirjaimia')
+    .required('Anna etunimi'),
+  last_name: yup
+    .string()
+    .matches(REGEX_ONLY_LETTERS_ASCII, 'Käytä pelkkiä kirjaimia')
+    .required('Anna sukunimi'),
+  password: yup
+    .string()
+    .min(5, 'Vähintään 5 merkkiä pitkä')
+    .required('Anna salasana'),
+  password_again: yup
+    .string()
+    .min(5, 'Vähintään 5 merkkiä pitkä')
+    .required('Anna salasana'),
+  is_active: yup.boolean(),
+  groups: yup.number().positive().integer().required('Anna käyttäjäryhmä'),
+})
+
 export const appointmentDateValidationSchema = yup.object({
   beginning: yup.string().required('Pakollinen'),
   end: yup.string().required('Pakollinen'),

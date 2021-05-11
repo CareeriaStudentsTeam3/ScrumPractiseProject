@@ -101,6 +101,17 @@ const Admin = () => {
           Vapaat ajat
         </Button>
       </Grid>
+      {user && user.user_group[0] !== 'student' ? (
+        <Grid item xd={3}>
+          <Button
+            onClick={() => history.push('/admin/user')}
+            variant="contained"
+            color="secondary"
+          >
+            Käyttäjät
+          </Button>
+        </Grid>
+      ) : null}
     </Grid>
   )
 }

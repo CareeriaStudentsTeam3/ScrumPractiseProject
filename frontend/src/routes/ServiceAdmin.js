@@ -86,6 +86,7 @@ const ServiceAdmin = () => {
       }
       handleNotification('Muokataan...', true)
       setTimeout(() => {
+        setService(null)
         setRefresh(!refresh)
         setEditService(false)
       }, 2000)
@@ -94,11 +95,13 @@ const ServiceAdmin = () => {
       if (err.message.includes('Sinulla ei ole oikeutta tehdä tätä!')) {
         handleNotification('Sinulla ei ole oikeutta tehdä tätä!')
         setTimeout(() => {
+          setService(null)
           setEditService(false)
         }, 2000)
       } else {
         handleNotification('Muokkaus epäonnistui!')
         setTimeout(() => {
+          setService(null)
           setEditService(false)
         }, 2000)
       }
@@ -106,11 +109,11 @@ const ServiceAdmin = () => {
   }
 
   const handleBackButton = () => {
+    setService(null)
     setCreateService(false)
     setEditService(false)
   }
 
-  // TODO FIX NOTIFICATIONS!
   const handleDelete = async (id) => {
     if (window.confirm('Haluatko varmasti poistaa tämän palvelun?')) {
       try {
@@ -213,6 +216,7 @@ const ServiceAdmin = () => {
         setService={setService}
         user={user}
       />
+      <Notification message={notificationMsg} open={openNotification} />
     </div>
   )
 }
