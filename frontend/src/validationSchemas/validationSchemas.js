@@ -31,14 +31,14 @@ export const userValidationSchema = yup.object({
     .required('Anna sukunimi'),
   password: yup
     .string()
-    .min(5, 'Vähintään 5 merkkiä pitkä')
+    .min(8, 'Vähintään 8 merkkiä pitkä')
     .required('Anna salasana'),
   password_again: yup
     .string()
-    .min(5, 'Vähintään 5 merkkiä pitkä')
+    .min(8, 'Vähintään 8 merkkiä pitkä')
     .required('Anna salasana'),
   is_active: yup.boolean(),
-  groups: yup.number().positive().integer().required('Anna käyttäjäryhmä'),
+  groups: yup.string().required('Anna käyttäjäryhmä'),
 })
 
 export const appointmentDateValidationSchema = yup.object({
