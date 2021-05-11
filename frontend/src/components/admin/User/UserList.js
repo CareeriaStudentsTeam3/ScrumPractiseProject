@@ -80,7 +80,9 @@ const UserList = ({
                 <TableRow hover key={item.id}>
                   <TableCell>{`${item.first_name} ${item.last_name}`}</TableCell>
                   <TableCell>{item.username}</TableCell>
-                  <TableCell>{item.groups}</TableCell>
+                  <TableCell>
+                    {item.groups[0] === 'student' ? 'Opiskelija' : 'Opettaja'}
+                  </TableCell>
                   <TableCell align="right">
                     <Button
                       variant="contained"

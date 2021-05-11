@@ -10,6 +10,9 @@ import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import Box from '@material-ui/core/Box'
+import Select from '@material-ui/core/Select'
+import MenuItem from '@material-ui/core/MenuItem'
+import InputLabel from '@material-ui/core/InputLabel'
 
 const UserCreate = ({ handleBackButton, addNewUser }) => {
   const formik = useFormik({
@@ -20,11 +23,11 @@ const UserCreate = ({ handleBackButton, addNewUser }) => {
       password: '',
       password_again: '',
       is_active: true,
-      groups: [''],
+      groups: ['student'] || null,
     },
     validationSchema: userValidationSchema,
     onSubmit: async (values) => {
-      values.groups = [...values.groups]
+      values.groups = [values.groups]
       console.log('values', values)
       addNewUser(values)
     },
@@ -112,7 +115,7 @@ const UserCreate = ({ handleBackButton, addNewUser }) => {
                   onChange={formik.handleChange}
                   error={
                     formik.touched.password_again &&
-                    Boolean(formik.errors.password)
+                    Boolean(formik.errors.password_again)
                   }
                   helperText={
                     formik.touched.password_again &&
@@ -120,18 +123,23 @@ const UserCreate = ({ handleBackButton, addNewUser }) => {
                   }
                 />
               </Box>
-              <TextField
+              <InputLabel shrink id="groups">
+                Käyttäjäryhmä
+              </InputLabel>
+              <Select
                 fullWidth
                 variant="outlined"
+                labelId="groups"
                 id="groups"
                 name="groups"
                 label="Käyttäjäryhmä"
-                type="text"
                 value={formik.values.groups}
                 onChange={formik.handleChange}
                 error={formik.touched.groups && Boolean(formik.errors.groups)}
-                helperText={formik.touched.groups && formik.errors.groups}
-              />
+              >
+                <MenuItem value={'teacher'}>Opettaja</MenuItem>
+                <MenuItem value={'student'}>Opiskelija</MenuItem>
+              </Select>
               <Box my={3} display="flex" justifyContent="center">
                 <Button color="primary" variant="contained" type="submit">
                   Luo uusi käyttäjä
