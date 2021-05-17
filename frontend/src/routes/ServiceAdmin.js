@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 // React-router-dom imports
-import { Redirect } from 'react-router-dom'
+import { Redirect, useHistory } from 'react-router-dom'
 
 // Component imports
 import ServiceList from '../components/admin/Service/ServiceList'
@@ -14,6 +14,10 @@ import AdminButton from '../components/admin/AdminButton/AdminButton'
 // Service import
 import serviceService from '../services/service'
 import logoutService from '../services/logout'
+
+// Material UI imports
+import Grid from '@material-ui/core/Grid'
+import Button from '@material-ui/core/Button'
 
 const ServiceAdmin = () => {
   const [user, setUser] = useState(null)
@@ -204,19 +208,40 @@ const ServiceAdmin = () => {
     )
   }
 
+  let history = useHistory()
+  const handleBackBtn = (e) => {
+    e.preventDefault()
+    history.push({
+      pathname: '/',
+    })
+  }
+
   return (
     <div>
-      <LogoutButton />
-      <AdminButton />
-      <ServiceList
-        services={services}
-        setCreateService={setCreateService}
-        handleDelete={handleDelete}
-        setEditService={setEditService}
-        setService={setService}
-        user={user}
-      />
-      <Notification message={notificationMsg} open={openNotification} />
+      <Grid container justify="flex-end">
+        <LogoutButton />
+        <AdminButton />
+        <Button
+          onClick={(e) => handleBackBtn(e)}
+          color="primary"
+          variant="contained"
+          size="small"
+          style={{ margin: '10px', marginLeft: '5px' }}
+        >
+          Palaa etusivulle
+        </Button>
+      </Grid>
+      <div>
+        <ServiceList
+          services={services}
+          setCreateService={setCreateService}
+          handleDelete={handleDelete}
+          setEditService={setEditService}
+          setService={setService}
+          user={user}
+        />
+        <Notification message={notificationMsg} open={openNotification} />
+      </div>
     </div>
   )
 }

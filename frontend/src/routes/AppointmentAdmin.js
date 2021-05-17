@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
 // React-router-dom import
-import { Redirect } from 'react-router-dom'
+import { Redirect, useHistory } from 'react-router-dom'
 
 // Import service
 import appointmentService from '../services/appointment'
@@ -11,6 +11,11 @@ import logoutService from '../services/logout'
 // Import components
 import AppointmentList from '../components/admin/Appointment/AppointmentList'
 import AdminButton from '../components/admin/AdminButton/AdminButton'
+import LogoutButton from '../components/admin/LogoutButton/LogoutButton'
+
+// Material UI imports
+import Grid from '@material-ui/core/Grid'
+import Button from '@material-ui/core/Button'
 
 const AppointmentAdmin = () => {
   const [appointments, setAppointments] = useState([])
@@ -79,13 +84,35 @@ const AppointmentAdmin = () => {
     return <Redirect to="/admin/login" />
   }
 
+  let history = useHistory()
+  const handleBackButton = (e) => {
+    e.preventDefault()
+    history.push({
+      pathname: '/',
+    })
+  }
+
   return (
     <div>
-      <AdminButton />
-      <AppointmentList
-        appointments={appointments}
-        getDateTimes={getDateTimes}
-      />
+      <Grid container justify="flex-end">
+        <LogoutButton />
+        <AdminButton />
+        <Button
+          onClick={(e) => handleBackButton(e)}
+          color="primary"
+          variant="contained"
+          size="small"
+          style={{ margin: '10px' }}
+        >
+          Palaa etusivulle
+        </Button>
+      </Grid>
+      <div>
+        <AppointmentList
+          appointments={appointments}
+          getDateTimes={getDateTimes}
+        />
+      </div>
     </div>
   )
 }
