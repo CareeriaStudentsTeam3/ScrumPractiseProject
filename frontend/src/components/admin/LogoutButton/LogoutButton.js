@@ -24,7 +24,7 @@ const LogoutButton = () => {
   }
 
   return (
-    <Button onClick={() => handleLogout()} variant="contained" color="primary">
+    <Button onClick={() => handleLogout()} variant="contained" color="primary" size="small" style={{ margin: '10px' }}>
       Kirjaudu ulos
     </Button>
   )

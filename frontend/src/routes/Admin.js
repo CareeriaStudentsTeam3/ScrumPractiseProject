@@ -12,6 +12,8 @@ import LogoutButton from '../components/admin/LogoutButton/LogoutButton'
 // Material UI imports
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
+import Typography from '@material-ui/core/Typography'
+import Box from '@material-ui/core/Box'
 
 const Admin = () => {
   let history = useHistory()
@@ -50,68 +52,83 @@ const Admin = () => {
       justify="center"
       style={{ minHeight: '100vh' }}
     >
-      <Grid item xs={3}>
-        <h1>HELLO {user ? `${user.username}` : ''}</h1>
+      <Grid m="auto" textAlign="center">
+        <Typography variant="h3" color="textPrimary" gutterBottom>
+          CareeriaCare hiusalan palvelut
+        </Typography>
       </Grid>
-      <Grid item xs={3}>
-        <LogoutButton />
+      <Grid container justify="flex-end">
+        <h3 style={{ margin:'10px', marginRight: '50px' }}>Käyttäjä: {user ? `${user.username}` : ''} </h3>
       </Grid>
-      <Grid item xs={3}>
+      <Grid container justify="flex-end">
+        <LogoutButton/>
         <Button
           onClick={() => history.push('/')}
+          size="small"
           variant="contained"
           color="primary"
+          style={{ margin: '10px', marginRight: '50px' }}
         >
           Palaa etusivulle
         </Button>
       </Grid>
-      <Grid item xs={3}>
-        <Button
-          onClick={() => history.push('/admin/hairmodel')}
-          variant="contained"
-          color="secondary"
-        >
-          Hiusmallit
-        </Button>
-      </Grid>
-      <Grid item xd={3}>
-        <Button
-          onClick={() => history.push('/admin/appointment')}
-          variant="contained"
-          color="secondary"
-        >
-          Varaukset
-        </Button>
-      </Grid>
-      <Grid item xd={3}>
-        <Button
-          onClick={() => history.push('/admin/service')}
-          variant="contained"
-          color="secondary"
-        >
-          Palvelut
-        </Button>
-      </Grid>
-      <Grid item xd={3}>
-        <Button
-          onClick={() => history.push('/admin/date')}
-          variant="contained"
-          color="secondary"
-        >
-          Vapaat ajat
-        </Button>
-      </Grid>
-      {user && user.user_group[0] !== 'student' ? (
-        <Grid item xd={3}>
+      <Grid container  justify="center" alignItems="center" direction="row">
+        <Box m="auto" textAlign="center">
+          <Typography variant="h5" component="p" gutterBottom>
+            Toimintojen ylläpito
+          </Typography>
+          <Typography variant="body1" component="p" gutterBottom>
+            Valitse osio, jota haluat tarkastella.
+          </Typography>
           <Button
-            onClick={() => history.push('/admin/user')}
+            onClick={() => history.push('/admin/hairmodel')}
             variant="contained"
-            color="secondary"
+            color="primary"
+            size="large"
+            style={{ margin: '10px' }}
           >
-            Käyttäjät
+            Hiusmallit
           </Button>
-        </Grid>
-      ) : null}
+          <Button
+            onClick={() => history.push('/admin/appointment')}
+            variant="contained"
+            color="primary"
+            size="large"
+            style={{ margin: '10px' }}
+          >
+            Varaukset
+          </Button>
+          <Button
+            onClick={() => history.push('/admin/service')}
+            variant="contained"
+            color="primary"
+            size="large"
+            style={{ margin: '10px' }}
+          >
+            Palvelut
+          </Button>
+          <Button
+            onClick={() => history.push('/admin/date')}
+            variant="contained"
+            color="primary"
+            size="large"
+            style={{ margin: '10px' }}
+          >
+            Vapaat ajat
+          </Button>
+          {user && user.user_group[0] !== 'student' ? (
+            <Button
+              onClick={() => history.push('/admin/user')}
+              variant="contained"
+              color="primary"
+              size="large"
+              style={{ margin: '10px' }}
+            >
+              Käyttäjät
+            </Button>
+          ) : null}
+        </Box>
+      </Grid>
     </Grid>
   )
 }
