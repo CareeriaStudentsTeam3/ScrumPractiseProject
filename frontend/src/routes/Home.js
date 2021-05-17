@@ -32,13 +32,9 @@ const Home = () => {
 
   return (
     <Box m="auto" mt={6} maxWidth="80%">
-      {/* You can size the ImageCarousel with Vox component */}
-      <Box m="auto">
-        <Grid item xs={12}>
-          <Box m="auto">
-            <ImageCarousel />
-          </Box>
-        </Grid>
+      {/* You can size the ImageCarousel with Box component */}
+      <Box m="auto" mb={4}>
+        <ImageCarousel />
       </Box>
       <Grid
         container
