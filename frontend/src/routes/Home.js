@@ -8,6 +8,7 @@ import Box from '@material-ui/core/Box'
 // Component imports
 import HomeInfo from '../components/Home/HomeInfo'
 import HomeNavigation from '../components/Home/HomeNavigation'
+import ImageCarousel from '../components/ImageCarousel/ImageCarousel'
 
 const Home = () => {
   let history = useHistory()
@@ -31,6 +32,14 @@ const Home = () => {
 
   return (
     <Box m="auto" mt={6} maxWidth="80%">
+      {/* You can size the ImageCarousel with Vox component */}
+      <Box m="auto">
+        <Grid item xs={12}>
+          <Box m="auto">
+            <ImageCarousel />
+          </Box>
+        </Grid>
+      </Box>
       <Grid
         container
         spacing={4}
