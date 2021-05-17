@@ -431,7 +431,7 @@ const AppointmentUpdate = ({ appointment, services, dateTimes }) => {
                 <Box>
                   <Button
                     onClick={(e) => handleBackButton(e)}
-                    color="default"
+                    color="primary"
                     variant="contained"
                     type="button"
                   >
@@ -669,6 +669,7 @@ const AppointmentUpdate = ({ appointment, services, dateTimes }) => {
                     <Button
                       onClick={(e) => handleEdit(e)}
                       color="primary"
+                      size="medium"
                       variant="contained"
                       type="button"
                     >
@@ -679,6 +680,7 @@ const AppointmentUpdate = ({ appointment, services, dateTimes }) => {
                     <Button
                       onClick={() => handleDelete(formik.values.id)}
                       color="secondary"
+                      size="medium"
                       variant="contained"
                       type="button"
                     >
@@ -688,7 +690,8 @@ const AppointmentUpdate = ({ appointment, services, dateTimes }) => {
                   <Box>
                     <Button
                       onClick={(e) => handleBackButton(e)}
-                      color="default"
+                      color="primary"
+                      size="medium"
                       variant="contained"
                       type="button"
                     >
