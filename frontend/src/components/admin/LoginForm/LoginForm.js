@@ -7,6 +7,9 @@ import loginService from '../../../services/login'
 // Import form validation schema
 import { loginValidationSchema } from '../../../validationSchemas/validationSchemas'
 
+// Component import
+import HomeButton from '../../HomeButton/HomeButton'
+
 // Material UI imports
 import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
@@ -80,6 +83,9 @@ const LoginForm = ({ saveLogginInfo, setRedirect }) => {
               </Button>
             </Box>
           </form>
+          <Box m="auto" textAlign="center" mt={2}>
+            <HomeButton />
+          </Box>
         </Box>
       </Grid>
     </Grid>

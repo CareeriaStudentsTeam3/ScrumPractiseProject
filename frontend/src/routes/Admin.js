@@ -8,6 +8,7 @@ import logoutService from '../services/logout'
 
 // Componen imports
 import LogoutButton from '../components/admin/LogoutButton/LogoutButton'
+import HomeButton from '../components/HomeButton/HomeButton'
 
 // Material UI imports
 import Button from '@material-ui/core/Button'
@@ -52,27 +53,21 @@ const Admin = () => {
       justify="center"
       style={{ minHeight: '100vh' }}
     >
-      <Grid m="auto" textAlign="center">
+      <Grid m="auto" textalign="center">
         <Typography variant="h3" color="textPrimary" gutterBottom>
           CareeriaCare hiusalan palvelut
         </Typography>
       </Grid>
       <Grid container justify="flex-end">
-        <h3 style={{ margin:'10px', marginRight: '50px' }}>Käyttäjä: {user ? `${user.username}` : ''} </h3>
+        <h3 style={{ margin: '10px', marginRight: '50px' }}>
+          Käyttäjä: {user ? `${user.username}` : ''}{' '}
+        </h3>
       </Grid>
       <Grid container justify="flex-end">
-        <LogoutButton/>
-        <Button
-          onClick={() => history.push('/')}
-          size="small"
-          variant="contained"
-          color="primary"
-          style={{ margin: '10px', marginRight: '50px' }}
-        >
-          Palaa etusivulle
-        </Button>
+        <LogoutButton />
+        <HomeButton />
       </Grid>
-      <Grid container  justify="center" alignItems="center" direction="row">
+      <Grid container justify="center" alignItems="center" direction="row">
         <Box m="auto" textAlign="center">
           <Typography variant="h5" component="p" gutterBottom>
             Toimintojen ylläpito
