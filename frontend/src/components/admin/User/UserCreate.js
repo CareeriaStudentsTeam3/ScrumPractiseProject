@@ -38,9 +38,12 @@ const UserCreate = ({ handleBackButton, addNewUser }) => {
       <Grid container item xs={12} md={6} component={Paper} justify="center">
         <Grid item xs={10} md={8}>
           <Box my={3}>
-            <form onSubmit={formik.handleSubmit}>
+            <form data-testid="form" onSubmit={formik.handleSubmit}>
               <Box mb={2}>
                 <TextField
+                  inputProps={{
+                    'data-testid': 'usernameInput',
+                  }}
                   fullWidth
                   variant="outlined"
                   id="username"
@@ -56,6 +59,9 @@ const UserCreate = ({ handleBackButton, addNewUser }) => {
                 />
               </Box>
               <TextField
+                inputProps={{
+                  'data-testid': 'firstNameInput',
+                }}
                 fullWidth
                 variant="outlined"
                 id="first_name"
@@ -73,6 +79,9 @@ const UserCreate = ({ handleBackButton, addNewUser }) => {
               />
               <Box my={3}>
                 <TextField
+                  inputProps={{
+                    'data-testid': 'lastNameInput',
+                  }}
                   fullWidth
                   variant="outlined"
                   id="last_name"
@@ -90,6 +99,9 @@ const UserCreate = ({ handleBackButton, addNewUser }) => {
                 />
               </Box>
               <TextField
+                inputProps={{
+                  'data-testid': 'passwordInput',
+                }}
                 fullWidth
                 variant="outlined"
                 id="password"
@@ -105,6 +117,9 @@ const UserCreate = ({ handleBackButton, addNewUser }) => {
               />
               <Box my={3}>
                 <TextField
+                  inputProps={{
+                    'data-testid': 'passwordAgainInput',
+                  }}
                   fullWidth
                   variant="outlined"
                   id="password_again"
@@ -127,6 +142,9 @@ const UserCreate = ({ handleBackButton, addNewUser }) => {
                 Käyttäjäryhmä
               </InputLabel>
               <Select
+                inputProps={{
+                  'data-testid': 'groupdSelect',
+                }}
                 fullWidth
                 variant="outlined"
                 labelId="groups"
@@ -141,7 +159,15 @@ const UserCreate = ({ handleBackButton, addNewUser }) => {
                 <MenuItem value={'student'}>Opiskelija</MenuItem>
               </Select>
               <Box my={3} display="flex" justifyContent="center">
-                <Button color="primary" variant="contained" type="submit">
+                <Button
+                  data-testid="submit"
+                  inputProps={{
+                    'data-testid': 'firstNameInput',
+                  }}
+                  color="primary"
+                  variant="contained"
+                  type="submit"
+                >
                   Luo uusi käyttäjä
                 </Button>
               </Box>

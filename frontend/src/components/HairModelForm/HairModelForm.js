@@ -1,7 +1,7 @@
 import React from 'react'
 
 // Form library
-import { useFormik } from 'formik'
+import { useFormik, Formik, Form } from 'formik'
 
 // Import form validation schema
 import { hairModelValidationSchema } from '../../validationSchemas/validationSchemas'
@@ -20,6 +20,19 @@ import Input from '@material-ui/core/Input'
 // Service import
 import hairModelService from '../../services/hairmodel'
 
+const INITIAL_FORM_STATE = {
+  first_name: '',
+  last_name: '',
+  city: '',
+  phone: '',
+  email: '',
+  age: '',
+  gender: '',
+  hair_length: '',
+  hair_procedures: '',
+  image: null,
+}
+
 const HairModelForm = ({
   setConfirm,
   setHairModel,
@@ -27,68 +40,62 @@ const HairModelForm = ({
   setErrorMsg,
   setIsLoading,
 }) => {
-  const formik = useFormik({
-    initialValues: {
-      first_name: '',
-      last_name: '',
-      city: '',
-      phone: '',
-      email: '',
-      age: '',
-      gender: '',
-      hair_length: '',
-      hair_procedures: '',
-      image: null,
-    },
-    validationSchema: hairModelValidationSchema,
-    onSubmit: async (values, { resetForm }) => {
-      let formData = new FormData()
-      formData.append('first_name', values.first_name)
-      formData.append('last_name', values.last_name)
-      formData.append('city', values.city)
-      formData.append('phone', values.phone)
-      formData.append('email', values.email)
-      formData.append('age', values.age)
-      formData.append('gender', values.gender)
-      formData.append('hair_length', values.hair_length)
-      formData.append('hair_procedures', values.hair_procedures)
-      if (values.image) {
-        formData.append('image', values.image)
-      }
-
-      // alert(JSON.stringify(values, null, 2))
-      console.log(values)
-      console.log(formData.get('image'))
-      try {
-        setIsLoading(true)
-        const response = await hairModelService.create(formData)
-        console.log('res', response)
-        setHairModel(response)
-        resetForm()
-        setIsLoading(false)
-        setConfirm(true)
-      } catch (err) {
-        console.log('error', err.name)
-        setErrorMsg(err.message)
-        setError(true)
-      }
-
-      // await hairModelService
-      //   .create(formData)
-      //   .catch((e) => console.log(e))
-      //   .then(setName(`${values.first_name} ${values.last_name}`))
-      //   .then(resetForm())
-      //   .then(setConfirm(true))
-    },
-  })
+  // const formik = useFormik({
+  //   initialValues: {
+  //     first_name: '',
+  //     last_name: '',
+  //     city: '',
+  //     phone: '',
+  //     email: '',
+  //     age: '',
+  //     gender: '',
+  //     hair_length: '',
+  //     hair_procedures: '',
+  //     image: null,
+  //   },
+  //   validationSchema: hairModelValidationSchema,
+  //   onSubmit: async (values, { resetForm }) => {
+  //     let formData = new FormData()
+  //     formData.append('first_name', values.first_name)
+  //     formData.append('last_name', values.last_name)
+  //     formData.append('city', values.city)
+  //     formData.append('phone', values.phone)
+  //     formData.append('email', values.email)
+  //     formData.append('age', values.age)
+  //     formData.append('gender', values.gender)
+  //     formData.append('hair_length', values.hair_length)
+  //     formData.append('hair_procedures', values.hair_procedures)
+  //     if (values.image) {
+  //       formData.append('image', values.image)
+  //     }
+  //     console.log(values)
+  //     console.log(formData.get('image'))
+  //     try {
+  //       setIsLoading(true)
+  //       const response = await hairModelService.create(formData)
+  //       console.log('res', response)
+  //       setHairModel(response)
+  //       resetForm()
+  //       setIsLoading(false)
+  //       setConfirm(true)
+  //     } catch (err) {
+  //       console.log('error', err.name)
+  //       setErrorMsg(err.message)
+  //       setError(true)
+  //     }
+  //   },
+  // })
 
   return (
     <div>
       <Box display="flex" justifyContent="center">
         <Box width={'75%'}>
-          <form onSubmit={formik.handleSubmit}>
+          <form data-testid="form" onSubmit={formik.handleSubmit}>
             <Box my={2}>
               <TextField
+                inputProps={{
+                  'data-testid': 'firstNameInput',
+                }}
                 variant="outlined"
                 fullWidth
                 id="first_name"
@@ -107,6 +114,9 @@ const HairModelForm = ({
             </Box>
             <Box mb={2}>
               <TextField
+                inputProps={{
+                  'data-testid': 'lastNameInput',
+                }}
                 fullWidth
                 variant="outlined"
                 id="last_name"
@@ -123,6 +133,9 @@ const HairModelForm = ({
             </Box>
             <Box mb={2}>
               <TextField
+                inputProps={{
+                  'data-testid': 'cityInput',
+                }}
                 fullWidth
                 variant="outlined"
                 id="city"
@@ -137,6 +150,9 @@ const HairModelForm = ({
             </Box>
             <Box mb={2}>
               <TextField
+                inputProps={{
+                  'data-testid': 'phoneInput',
+                }}
                 fullWidth
                 variant="outlined"
                 id="phone"
@@ -151,6 +167,9 @@ const HairModelForm = ({
             </Box>
             <Box mb={2}>
               <TextField
+                inputProps={{
+                  'data-testid': 'emailInput',
+                }}
                 fullWidth
                 variant="outlined"
                 id="email"
@@ -165,6 +184,9 @@ const HairModelForm = ({
             </Box>
             <Box mb={2}>
               <TextField
+                inputProps={{
+                  'data-testid': 'ageInput',
+                }}
                 fullWidth
                 variant="outlined"
                 id="age"
@@ -182,6 +204,9 @@ const HairModelForm = ({
                 Sukupuoli
               </InputLabel>
               <Select
+                inputProps={{
+                  'data-testid': 'genderSelect',
+                }}
                 fullWidth
                 variant="outlined"
                 labelId="gender"
@@ -202,6 +227,9 @@ const HairModelForm = ({
                 Hiusten pituus
               </InputLabel>
               <Select
+                inputProps={{
+                  'data-testid': 'hairLengthSelect',
+                }}
                 fullWidth
                 variant="outlined"
                 labelId="hair_length"
@@ -222,6 +250,9 @@ const HairModelForm = ({
             </Box>
             <Box mb={2}>
               <TextField
+                inputProps={{
+                  'data-testid': 'hairProceduresInput',
+                }}
                 fullWidth
                 variant="outlined"
                 multiline
@@ -247,6 +278,9 @@ const HairModelForm = ({
                 Lisää kuva
               </InputLabel>
               <Input
+                inputProps={{
+                  'data-testid': 'imageFileInput',
+                }}
                 id="image"
                 name="image"
                 label="Kuva"
@@ -265,6 +299,7 @@ const HairModelForm = ({
             </Box>
             <Box mb={2}>
               <Button
+                data-testid="submit"
                 color="primary"
                 variant="contained"
                 fullWidth

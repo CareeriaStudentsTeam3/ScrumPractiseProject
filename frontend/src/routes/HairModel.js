@@ -9,6 +9,7 @@ import HairdModelForm from '../components/HairModelForm/HairModelForm'
 import HairModelInfo from '../components/HairModelForm/HairModelInfo'
 import HairModelConfirm from '../components/HairModelForm/HairModelConfirm'
 import HairModelError from '../components/HairModelForm/HairModelError'
+import HomeInfo from '../components/Home/HomeInfo'
 
 const HairModel = () => {
   const [confirm, setConfirm] = useState(false)
@@ -53,20 +54,23 @@ const HairModel = () => {
   }
 
   return (
-    <Grid container spacing={0} alignItems="center" justify="center">
-      <Grid container item xs={12} md={6}>
-        <HairModelInfo />
+    <>
+      <HomeInfo />
+      <Grid container spacing={0} alignItems="center" justify="center">
+        <Grid container item xs={12} md={6}>
+          <HairModelInfo />
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <HairdModelForm
+            setConfirm={setConfirm}
+            setHairModel={setHairModel}
+            setError={setError}
+            setErrorMsg={setErrorMsg}
+            setIsLoading={setIsLoading}
+          />
+        </Grid>
       </Grid>
-      <Grid item xs={12} md={6}>
-        <HairdModelForm
-          setConfirm={setConfirm}
-          setHairModel={setHairModel}
-          setError={setError}
-          setErrorMsg={setErrorMsg}
-          setIsLoading={setIsLoading}
-        />
-      </Grid>
-    </Grid>
+    </>
   )
 }
 

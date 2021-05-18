@@ -17,6 +17,7 @@ const HomeButton = () => {
 
   return (
     <Button
+      data-testid="home-button"
       onClick={() => handleBackToMainPage()}
       color="primary"
       variant="contained"
