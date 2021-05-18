@@ -14,6 +14,8 @@ import AdminButton from '../components/admin/AdminButton/AdminButton'
 
 // Material UI imports
 import Button from '@material-ui/core/Button'
+import Grid from '@material-ui/core/Grid'
+
 
 const HairModelAdmin = () => {
   let location = useLocation()
@@ -71,17 +73,22 @@ const HairModelAdmin = () => {
   }
   return (
     <div>
-      <LogoutButton />
-      <Button
-        onClick={(e) => handleBackButton(e)}
-        color="primary"
-        variant="contained"
-        type="button"
-      >
-        Palaa etusivulle
-      </Button>
-      <AdminButton />
-      <HairModelList hairModels={hairModels} />
+      <Grid container justify="flex-end">
+        <LogoutButton />
+        <AdminButton />
+        <Button
+          onClick={(e) => handleBackButton(e)}
+          color="primary"
+          variant="contained"
+          size="small"
+          style={{ margin: '10px', marginLeft: '5px' }}
+        >
+          Palaa etusivulle
+        </Button>
+      </Grid>
+      <div>
+        <HairModelList hairModels={hairModels} />
+      </div>
     </div>
   )
 }

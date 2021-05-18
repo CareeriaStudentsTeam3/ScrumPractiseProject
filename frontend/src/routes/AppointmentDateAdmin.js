@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
 // React-router-dom imports
-import { Redirect } from 'react-router-dom'
+import { Redirect, useHistory } from 'react-router-dom'
 
 // Service import
 import timespanService from '../services/timespan'
@@ -13,6 +13,11 @@ import DateList from '../components/admin/AppointmentDate/DateList'
 import EditDates from '../components/admin/AppointmentDate/EditDates'
 import Notification from '../components/Notification/Notification'
 import AdminButton from '../components/admin/AdminButton/AdminButton'
+import LogoutButton from '../components/admin/LogoutButton/LogoutButton'
+
+// Material UI imports
+import Grid from '@material-ui/core/Grid'
+import Button from '@material-ui/core/Button'
 
 const AppointmentDateAdmin = () => {
   const [user, setUser] = useState(null)
@@ -168,17 +173,39 @@ const AppointmentDateAdmin = () => {
     )
   }
 
+  let history = useHistory()
+  const handleBackBtn = (e) => {
+    e.preventDefault()
+    history.push({
+      pathname: '/',
+    })
+  }
+
   return (
     <div>
-      <AdminButton />
-      <DateList
-        dates={dates}
-        setCreateDate={setCreateDate}
-        handleDelete={handleDelete}
-        setEditDate={setEditDate}
-        setDate={setDate}
-        user={user}
-      />
+      <Grid container justify="flex-end">
+        <LogoutButton />
+        <AdminButton />
+        <Button
+          onClick={(e) => handleBackBtn(e)}
+          color="primary"
+          variant="contained"
+          size="small"
+          style={{ margin: '10px', marginLeft: '5px' }}
+        >
+          Palaa etusivulle
+        </Button>
+      </Grid>
+      <div>
+        <DateList
+          dates={dates}
+          setCreateDate={setCreateDate}
+          handleDelete={handleDelete}
+          setEditDate={setEditDate}
+          setDate={setDate}
+          user={user}
+        />
+      </div>
     </div>
   )
 }

@@ -30,11 +30,11 @@ const ServiceSelect = ({
     return (
       <Box display="flex" justifyContent="center" textAlign="center">
         <CardContent>
-          <Typography variant="h4" color="textSecondary" gutterBottom>
+          <Typography variant="h4" color="textPrimary" gutterBottom>
             Palvelu
           </Typography>
           <Typography variant="h5" component="h2"></Typography>
-          <Typography color="textSecondary" gutterBottom>
+          <Typography color="textPrimary" gutterBottom>
             Valitse palvelu
           </Typography>
           <Typography variant="body2" component="p" gutterBottom>
@@ -55,29 +55,29 @@ const ServiceSelect = ({
   return (
     <Box display="flex" justifyContent="center" textAlign="center">
       <CardContent>
-        <Typography variant="h4" color="textSecondary" gutterBottom>
+        <Typography variant="h4" color="textPrimary" gutterBottom>
           Palvelu
         </Typography>
         <Typography variant="h5" component="h2"></Typography>
-        <Typography color="textSecondary" gutterBottom>
+        <Typography color="textPrimary" gutterBottom>
           Valitse palvelu
         </Typography>
         <Grid container spacing={2}>
           {services.length === 1
             ? services.map((item) => (
                 <Grid key={item.id} item xs={12}>
-                  <Card>
+                  <Card border={5} borderColor="primary">
                     <CardContent>
                       <Typography
                         variant="h5"
-                        color="textSecondary"
+                        color="textPrimary"
                         gutterBottom
                       >
                         {item.service_name}
                       </Typography>
                       <Typography variant="h5" component="h2"></Typography>
                       <Typography color="textSecondary" gutterBottom>
-                        Jotai infoo?
+                        Palvelun kuvaus.
                       </Typography>
                       <Typography variant="body2" component="p">
                         Kesto: {item.duration} min
@@ -86,6 +86,7 @@ const ServiceSelect = ({
                         Hinta: {item.price}€/hlö
                       </Typography>
                       <Button
+                        color="primary"
                         variant="contained"
                         onClick={() =>
                           handleService(
@@ -107,14 +108,14 @@ const ServiceSelect = ({
                     <CardContent>
                       <Typography
                         variant="h5"
-                        color="textSecondary"
+                        color="textPrimary"
                         gutterBottom
                       >
                         {item.service_name}
                       </Typography>
                       <Typography variant="h5" component="h2"></Typography>
                       <Typography color="textSecondary" gutterBottom>
-                        Jotai infoo?
+                        Palvelun kuvaus.
                       </Typography>
                       <Typography variant="body2" component="p">
                         Kesto: {item.duration} min
@@ -123,6 +124,7 @@ const ServiceSelect = ({
                         Hinta: {item.price}€/hlö
                       </Typography>
                       <Button
+                        color="primary"
                         variant="contained"
                         onClick={() =>
                           handleService(

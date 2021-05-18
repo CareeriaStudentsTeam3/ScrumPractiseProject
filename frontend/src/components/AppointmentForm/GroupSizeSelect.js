@@ -11,14 +11,14 @@ const GroupSizeSelect = ({ handleGroupSize }) => {
   return (
     <Box display="flex" justifyContent="center" textAlign="center">
       <CardContent>
-        <Typography variant="h4" color="textSecondary" gutterBottom>
+        <Typography variant="h4" color="textPrimary" gutterBottom>
           Ryhmän koko
         </Typography>
         <Typography variant="h5" component="h2"></Typography>
-        <Typography color="textSecondary" gutterBottom>
+        <Typography color="textPrimary" gutterBottom>
           Valitse ryhmän koko
         </Typography>
-        <ButtonGroup size="large">
+        <ButtonGroup size="large" color="primary" variant="contained">
           <Button onClick={() => handleGroupSize(3)}>3</Button>
           <Button onClick={() => handleGroupSize(4)}>4</Button>
           <Button onClick={() => handleGroupSize(5)}>5</Button>

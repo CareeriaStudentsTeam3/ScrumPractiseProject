@@ -17,6 +17,7 @@ import AppointmentError from '../components/AppointmentForm/AppointmentError'
 
 // Service imports
 import serviceService from '../services/service'
+import { Typography } from '@material-ui/core'
 
 const Appointment = () => {
   let history = useHistory()
@@ -162,6 +163,11 @@ const Appointment = () => {
   if (groupSize === null && service === null) {
     return (
       <Grid container spacing={0} alignItems="center" justify="center">
+        <Box m="auto" textAlign="center">
+          <Typography variant="h3" color="textPrimary" gutterBottom>
+            CareeriaCare hiusalan palvelut
+          </Typography>
+        </Box>
         <Grid item xs={12} md={6}>
           <Card>
             <Box m={1}>
@@ -183,6 +189,11 @@ const Appointment = () => {
   if (groupSize !== null && service === null) {
     return (
       <Grid container spacing={0} alignItems="center" justify="center">
+        <Box m="auto" textAlign="center">
+          <Typography variant="h3" color="textPrimary" gutterBottom>
+            CareeriaCare hiusalan palvelut
+          </Typography>
+        </Box>
         <Grid item xs={12} md={6}>
           <Card>
             <Box m={1}>
@@ -209,6 +220,11 @@ const Appointment = () => {
   if (groupSize !== null && service !== null && timeId === null) {
     return (
       <Grid container spacing={0} alignItems="center" justify="center">
+        <Box m="auto" textAlign="center">
+          <Typography variant="h3" color="textPrimary" gutterBottom>
+            CareeriaCare hiusalan palvelut
+          </Typography>
+        </Box>
         <Grid item xs={12} md={6}>
           <Card>
             <Box m={1}>
@@ -237,6 +253,11 @@ const Appointment = () => {
   if (groupSize !== null && service !== null && timeId !== null) {
     return (
       <Grid container spacing={0} alignItems="center" justify="center">
+        <Box m="auto" textAlign="center">
+          <Typography variant="h3" color="textPrimary" gutterBottom>
+            CareeriaCare hiusalan palvelut
+          </Typography>
+        </Box>
         <Grid item xs={12} md={6}>
           <Card>
             <Box m={1}>

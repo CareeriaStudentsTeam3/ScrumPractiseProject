@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 // React-router-dom import
-import { Redirect } from 'react-router-dom'
+import { Redirect, useHistory } from 'react-router-dom'
 
 // Service import
 import userService from '../services/user'
@@ -13,6 +13,11 @@ import UserCreate from '../components/admin/User/UserCreate'
 import UserEdit from '../components/admin/User/UserEdit'
 import Notification from '../components/Notification/Notification'
 import AdminButton from '../components/admin/AdminButton/AdminButton'
+import LogoutButton from '../components/admin/LogoutButton/LogoutButton'
+
+// Material UI imports
+import Grid from '@material-ui/core/Grid'
+import Button from '@material-ui/core/Button'
 
 const UserAdmin = () => {
   const [user, setUser] = useState(null)
@@ -211,19 +216,41 @@ const UserAdmin = () => {
     )
   }
 
+  let history = useHistory()
+  const handleBackBtn = (e) => {
+    e.preventDefault()
+    history.push({
+      pathname: '/',
+    })
+  }
+
   if (user && user.user_group[0] !== 'student') {
     return (
       <div>
-        <AdminButton />
-        <UserList
-          users={users}
-          user={user}
-          handleDelete={handleDelete}
-          setCreateUser={setCreateUser}
-          setEditUser={setEditUser}
-          setOneUser={setOneUser}
-        />
-        <Notification message={notificationMsg} open={openNotification} />
+        <Grid container justify="flex-end">
+          <LogoutButton />
+          <AdminButton />
+          <Button
+            onClick={(e) => handleBackBtn(e)}
+            color="primary"
+            variant="contained"
+            size="small"
+            style={{ margin: '10px', marginLeft: '5px' }}
+          >
+            Palaa etusivulle
+          </Button>
+        </Grid>
+        <div>
+          <UserList
+            users={users}
+            user={user}
+            handleDelete={handleDelete}
+            setCreateUser={setCreateUser}
+            setEditUser={setEditUser}
+            setOneUser={setOneUser}
+          />
+          <Notification message={notificationMsg} open={openNotification} />
+        </div>
       </div>
     )
   }

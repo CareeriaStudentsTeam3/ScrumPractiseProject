@@ -14,7 +14,7 @@ const AdminButton = () => {
   }
 
   return (
-    <Button onClick={() => handleClick()} variant="contained" color="primary">
+    <Button onClick={() => handleClick()} variant="contained" size="small" color="primary" style={{ margin: '10px', marginRight: '10px' }}>
       Palaa ylläpidon etusivulle
     </Button>
   )

@@ -5,9 +5,6 @@ import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemText from '@material-ui/core/ListItemText'
 
 const HomeNavigation = ({ handleNavigation }) => {
   return (
@@ -23,7 +20,7 @@ const HomeNavigation = ({ handleNavigation }) => {
           Kirjaudu ylläpitoon
         </Button>
       </Grid>
-      <Box m="auto" border={5} textAlign="center" borderColor="primary.main" maxWidth='250px' minWidth='250px' height='300px' margin='10px'>
+      <Box m="auto" border={5} textAlign="center" borderColor="primary.main" maxWidth='250px' minWidth='250px' height='250px' margin='10px'>
         <Typography variant="h6" component="p" gutterBottom>
           Varaa aika ryhmälle
         </Typography>
@@ -35,7 +32,7 @@ const HomeNavigation = ({ handleNavigation }) => {
         <Button
           onClick={() => handleNavigation('appointment')}
           fullWidth
-          style={{ marginTop: '30px' }}
+          style={{ marginTop: '5px' }}
           size="large"
           variant="contained"
           color="primary"
@@ -43,7 +40,7 @@ const HomeNavigation = ({ handleNavigation }) => {
           Ajanvaraukseen tästä
         </Button>
       </Box>
-      <Box m="auto" border={5} textAlign="center" borderColor="primary.main" maxWidth='250px' minWidth='250px' height='300px' margin='10px'>
+      <Box m="auto" border={5} textAlign="center" borderColor="primary.main" maxWidth='250px' minWidth='250px' height='250px' margin='10px'>
         <Typography variant="h6" component="p" gutterBottom>
             Rekisteröidy hiusmalliksi
         </Typography>
@@ -55,7 +52,7 @@ const HomeNavigation = ({ handleNavigation }) => {
         <Button
           onClick={() => handleNavigation('hairmodel')}
           fullWidth
-          style={{ marginTop: '30px' }}
+          style={{ marginTop: '5px' }}
           size="large"
           variant="contained"
           color="primary"
@@ -63,36 +60,31 @@ const HomeNavigation = ({ handleNavigation }) => {
           Rekisteröidy tästä
         </Button>
       </Box>
-      <Box m="auto" border={5} textAlign="center" borderColor="primary.main" maxWidth='250px' minWidth='250px' height='300px' margin='10px'>
+      <Box m="auto" border={5} textAlign="center" borderColor="primary.main" maxWidth='250px' minWidth='250px' height='250px' margin='10px'>
         <Typography variant="h6" component="p" gutterBottom>
               Yhteystiedot
         </Typography>
-        <List dense>
-          <ListItem>
-            <ListItemText
-              primary="Osoite"
-              secondary="Linnankoskenkatu 20, 3. krs"
-            />
-          </ListItem>
-          <ListItem>
-            <ListItemText
-              primary="Postitoimipaikka"
-              secondary="06100 Porvoo"
-            />
-          </ListItem>
-          <ListItem>
-            <ListItemText
-              primary="Puhelin"
-              secondary="0400 360 622"
-            />
-          </ListItem>
-          <ListItem>
-            <ListItemText
-              primary="Sähköposti"
-              secondary="CareeriaCare.Pomotalo@careeria.fi"
-            />
-          </ListItem>
-        </List>
+        <Typography variant="body1" component="p" gutterBottom>
+            Osoite
+        </Typography>
+        <Typography variant="body2" component="p" gutterBottom>
+            Linnankoskenkatu 20, 3. krs,
+        </Typography>
+        <Typography variant="body2" component="p" gutterBottom>
+          06100 Porvoo
+        </Typography>
+        <Typography variant="body1" component="p" gutterBottom>
+          Puhelin
+        </Typography>
+        <Typography variant="body2" component="p" gutterBottom>
+        0400 360 622
+        </Typography>
+        <Typography variant="body1" component="p" gutterBottom>
+          Sähköposti
+        </Typography>
+        <Typography variant="body2" component="p" gutterBottom>
+        CareeriaCare.Pomotalo@careeria.fi
+        </Typography>
       </Box>
     </Grid>
   )

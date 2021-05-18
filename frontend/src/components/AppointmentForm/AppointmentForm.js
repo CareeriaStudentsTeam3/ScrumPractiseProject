@@ -91,11 +91,11 @@ const AppointmentForm = ({
     <Box justifyContent="center">
       <CardContent>
         <Box textAlign="center">
-          <Typography variant="h4" color="textSecondary" gutterBottom>
+          <Typography variant="h4" color="textPrimary" gutterBottom>
             Yhteystiedot
           </Typography>
           <Typography variant="h5" component="h2"></Typography>
-          <Typography color="textSecondary" gutterBottom>
+          <Typography color="textPrimary" gutterBottom>
             Täytä yhteystiedot
           </Typography>
         </Box>

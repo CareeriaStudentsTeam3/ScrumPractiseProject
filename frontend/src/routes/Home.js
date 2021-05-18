@@ -32,10 +32,6 @@ const Home = () => {
 
   return (
     <Box m="auto" mt={6} maxWidth="80%">
-      {/* You can size the ImageCarousel with Box component */}
-      <Box m="auto" mb={4}>
-        <ImageCarousel />
-      </Box>
       <Grid
         container
         spacing={4}
@@ -43,12 +39,14 @@ const Home = () => {
         alignItems="center"
         direction="column"
       >
-        <Grid container item xs={12} xl={6}>
-          <HomeInfo />
-        </Grid>
-        <Grid container item xs={12} xl={6}>
-          <HomeNavigation handleNavigation={handleNavigation} />
-        </Grid>
+        <HomeInfo />
+      </Grid>
+      {/* You can size the ImageCarousel with Box component */}
+      <Box m="auto" mb={4}>
+        <ImageCarousel />
+      </Box>
+      <Grid container item xs={12} xl={6}>
+        <HomeNavigation handleNavigation={handleNavigation} />
       </Grid>
     </Box>
   )

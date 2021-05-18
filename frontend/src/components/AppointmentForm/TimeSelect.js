@@ -63,11 +63,11 @@ const TimeSelect = ({
     return (
       <Box display="flex" justifyContent="center" textAlign="center">
         <CardContent>
-          <Typography variant="h4" color="textSecondary" gutterBottom>
+          <Typography variant="h4" color="textPrimary" gutterBottom>
             Vapaat ajat
           </Typography>
           <Typography variant="h5" component="h2"></Typography>
-          <Typography color="textSecondary" gutterBottom>
+          <Typography color="textPrimary" gutterBottom>
             Valitse päivämäärä ja kellonaika
           </Typography>
           <Typography variant="body2" component="p" gutterBottom>
@@ -88,11 +88,11 @@ const TimeSelect = ({
   return (
     <Box display="flex" justifyContent="center" textAlign="center">
       <CardContent>
-        <Typography variant="h4" color="textSecondary" gutterBottom>
+        <Typography variant="h4" color="textPrimary" gutterBottom>
           Vapaat ajat
         </Typography>
         <Typography variant="h5" component="h2"></Typography>
-        <Typography color="textSecondary" gutterBottom>
+        <Typography color="textPrimary" gutterBottom>
           Valitse päivämäärä ja kellonaika
         </Typography>
         <ButtonGroup

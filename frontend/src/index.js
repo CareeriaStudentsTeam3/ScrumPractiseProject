@@ -8,8 +8,8 @@ import { fiFI } from '@material-ui/core/locale'
 const theme = createMuiTheme(
   {
     palette: {
-      primary: { main: '#f3ba00' },
-      secondary: { main: '#aa8200' },
+      primary: { main: '#e3b716' },
+      secondary: { main: '#e93e00' },
     },
   },
   fiFI
