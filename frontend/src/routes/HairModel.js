@@ -1,8 +1,5 @@
 import React, { useState } from 'react'
 
-// React-router-dom imports
-import { useHistory } from 'react-router-dom'
-
 // Material UI imports
 import Grid from '@material-ui/core/Grid'
 import CircularProgress from '@material-ui/core/CircularProgress'
@@ -12,10 +9,9 @@ import HairdModelForm from '../components/HairModelForm/HairModelForm'
 import HairModelInfo from '../components/HairModelForm/HairModelInfo'
 import HairModelConfirm from '../components/HairModelForm/HairModelConfirm'
 import HairModelError from '../components/HairModelForm/HairModelError'
+import HomeInfo from '../components/Home/HomeInfo'
 
 const HairModel = () => {
-  let history = useHistory()
-
   const [confirm, setConfirm] = useState(false)
   const [error, setError] = useState(false)
   const [hairModel, setHairModel] = useState(null)
@@ -24,22 +20,11 @@ const HairModel = () => {
   // For developin to show the error message
   const [errorMsg, setErrorMsg] = useState(null)
 
-  const handleBackToMainPage = () => {
-    // setError(false)
-    // setConfirm(false)
-    history.push({
-      pathname: '/',
-    })
-  }
-
   if (confirm) {
     return (
       <Grid container spacing={0} alignItems="center" justify="center">
         <Grid item xs={12} md={6}>
-          <HairModelConfirm
-            hairModel={hairModel}
-            handleBackToMainPage={handleBackToMainPage}
-          />
+          <HairModelConfirm hairModel={hairModel} />
         </Grid>
       </Grid>
     )
@@ -49,10 +34,7 @@ const HairModel = () => {
     return (
       <Grid container spacing={0} alignItems="center" justify="center">
         <Grid item xs={12} md={6}>
-          <HairModelError
-            error={errorMsg}
-            handleBackToMainPage={handleBackToMainPage}
-          />
+          <HairModelError error={errorMsg} />
         </Grid>
       </Grid>
     )
@@ -72,20 +54,23 @@ const HairModel = () => {
   }
 
   return (
-    <Grid container spacing={0} alignItems="center" justify="center">
-      <Grid container item xs={12} md={6}>
-        <HairModelInfo />
+    <>
+      <HomeInfo />
+      <Grid container spacing={0} alignItems="center" justify="center">
+        <Grid container item xs={12} md={6}>
+          <HairModelInfo />
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <HairdModelForm
+            setConfirm={setConfirm}
+            setHairModel={setHairModel}
+            setError={setError}
+            setErrorMsg={setErrorMsg}
+            setIsLoading={setIsLoading}
+          />
+        </Grid>
       </Grid>
-      <Grid item xs={12} md={6}>
-        <HairdModelForm
-          setConfirm={setConfirm}
-          setHairModel={setHairModel}
-          setError={setError}
-          setErrorMsg={setErrorMsg}
-          setIsLoading={setIsLoading}
-        />
-      </Grid>
-    </Grid>
+    </>
   )
 }
 

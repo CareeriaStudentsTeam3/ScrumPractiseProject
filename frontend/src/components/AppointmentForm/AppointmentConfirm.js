@@ -1,12 +1,14 @@
 import React from 'react'
 
+// Component impport
+import HomeButton from '../HomeButton/HomeButton'
+
 // Material UI imports
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import CardContent from '@material-ui/core/CardContent'
-import Button from '@material-ui/core/Button'
 
-const AppointmentConfirm = ({ appointment, handleBackToMainPage }) => {
+const AppointmentConfirm = ({ appointment }) => {
   return (
     <Box justifyContent="center">
       <CardContent>
@@ -27,15 +29,7 @@ const AppointmentConfirm = ({ appointment, handleBackToMainPage }) => {
             Olemme teihin yhteydessä tarvittaessa puhelimitse tai sähköpostilla.
           </Typography>
           <Box mt={2}>
-            <Button
-              onClick={() => handleBackToMainPage()}
-              color="default"
-              variant="contained"
-              fullWidth
-              type="submit"
-            >
-              Palaa takaisin etusivulle
-            </Button>
+            <HomeButton />
           </Box>
         </Box>
       </CardContent>

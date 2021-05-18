@@ -6,6 +6,9 @@ import Card from '@material-ui/core/Card'
 import Typography from '@material-ui/core/Typography'
 import CardContent from '@material-ui/core/CardContent'
 
+// Component import
+import HomeButton from '../HomeButton/HomeButton'
+
 const HairModelInfo = () => {
   return (
     <Box display="flex" justifyContent="center" justifyItems="center">
@@ -35,6 +38,9 @@ const HairModelInfo = () => {
               organic messenger bag marfa semiotics.
             </Typography>
           </CardContent>
+          <Box m="auto" textAlign="center" my={1}>
+            <HomeButton />
+          </Box>
         </Card>
       </Box>
     </Box>

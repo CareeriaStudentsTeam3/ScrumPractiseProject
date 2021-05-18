@@ -1,10 +1,12 @@
 import React from 'react'
 
+// Component import
+import HomeButton from '../HomeButton/HomeButton'
+
 // Material UI imports
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import CardContent from '@material-ui/core/CardContent'
-// import Button from '@material-ui/core/Button'
 
 const AppointmentError = ({ error }) => {
   return (
@@ -18,6 +20,9 @@ const AppointmentError = ({ error }) => {
           <Typography variant="body2" component="p">
             {error}
           </Typography>
+        </Box>
+        <Box mt={2}>
+          <HomeButton />
         </Box>
       </CardContent>
     </Box>
