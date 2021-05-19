@@ -13,69 +13,30 @@ import { hairModelValidationSchema } from '../../validationSchemas/validationSch
 // Material UI imports
 import Box from '@material-ui/core/Box'
 
-// Service import
-import hairModelService from '../../services/hairmodel'
+const HairModelForm = ({ handleSubmit }) => {
+  const INITIAL_FORM_STATE = {
+    first_name: '',
+    last_name: '',
+    city: '',
+    phone: '',
+    email: '',
+    age: '',
+    gender: '',
+    hair_length: '',
+    hair_procedures: '',
+    image: null || '',
+  }
 
-const INITIAL_FORM_STATE = {
-  first_name: '',
-  last_name: '',
-  city: '',
-  phone: '',
-  email: '',
-  age: '',
-  gender: '',
-  hair_length: '',
-  hair_procedures: '',
-  image: null || '',
-}
+  const GENDERS = {
+    MALE: 'Mies',
+    FEMALE: 'Nainen',
+    OTHER: 'Muu/en halua määritellä',
+  }
 
-const GENDERS = {
-  MALE: 'Mies',
-  FEMALE: 'Nainen',
-  OTHER: 'Muu/en halua määritellä',
-}
-
-const HAIR_LENGTHS = {
-  SHORT: 'Lyhyet',
-  MEDIUM: 'Keskipitkät',
-  LONG: 'Pitkät',
-}
-
-const HairModelForm = ({
-  setConfirm,
-  setHairModel,
-  setError,
-  setErrorMsg,
-  setIsLoading,
-}) => {
-  const handleSubmit = async (values) => {
-    let formData = new FormData()
-    formData.append('first_name', values.first_name)
-    formData.append('last_name', values.last_name)
-    formData.append('city', values.city)
-    formData.append('phone', values.phone)
-    formData.append('email', values.email)
-    formData.append('age', values.age)
-    formData.append('gender', values.gender)
-    formData.append('hair_length', values.hair_length)
-    formData.append('hair_procedures', values.hair_procedures)
-    if (values.image) {
-      formData.append('image', values.image)
-    }
-    console.log(values)
-    console.log(formData.get('image'))
-    try {
-      setIsLoading(true)
-      const response = await hairModelService.create(formData)
-      console.log('res', response)
-      setHairModel(response)
-      setIsLoading(false)
-      setConfirm(true)
-    } catch (err) {
-      console.log('error', err.name)
-      setErrorMsg(err.message)
-      setError(true)
-    }
+  const HAIR_LENGTHS = {
+    SHORT: 'Lyhyet',
+    MEDIUM: 'Keskipitkät',
+    LONG: 'Pitkät',
   }
 
   return (
@@ -104,7 +65,15 @@ const HairModelForm = ({
                 <Textfield name="email" label="Sähköposti" type="email" />
               </Box>
               <Box mb={2}>
-                <Textfield name="age" label="Ikä" type="number" />
+                <Textfield
+                  name="age"
+                  label="Ikä"
+                  type="number"
+                  inputProps={{
+                    min: '0',
+                    max: '100',
+                  }}
+                />
               </Box>
               <Box mb={2}>
                 <Select name="gender" label="Sukupuoli" options={GENDERS} />
