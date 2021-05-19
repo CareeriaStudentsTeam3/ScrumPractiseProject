@@ -80,11 +80,10 @@ class UserSerializer(serializers.ModelSerializer):
                 raise serializers.ValidationError("Only one group allowed.")
             else:
                 instance.groups.set(groups)
-                instance.save()
         if password and password == password_again:
             instance.set_password(password)
-            instance.save()
         elif password and password != password_again:
             raise serializers.ValidationError("Passwords are not similar.")
+        instance = super().update(instance, validated_data)
         return instance
 

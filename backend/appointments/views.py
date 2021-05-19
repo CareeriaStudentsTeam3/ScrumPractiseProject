@@ -9,7 +9,7 @@ from datetime import datetime,timedelta
 from django.contrib.auth import login, logout
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.permissions import DjangoModelPermissions, DjangoModelPermissionsOrAnonReadOnly
-from .permissions import CreateOnly
+from .permissions import CreateOnly, CustomModelPerm
 
 # Create your views here.
 
@@ -71,7 +71,7 @@ class UserLogoutView(APIView):
 
 class UserViewSet(viewsets.ModelViewSet):
     authentication_classes = [SessionAuthentication]
-    permission_classes = [DjangoModelPermissions]
+    permission_classes = [DjangoModelPermissions & CustomModelPerm]
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
