@@ -94,8 +94,10 @@ const create = async (newService) => {
 }
 
 const update = async (id, updatedUser) => {
+  console.log('userService', updatedUser)
   try {
     const response = await axios.put(`${baseUrl}${id}/`, updatedUser)
+    console.log('userServResponse', response.data)
     return response.data
   } catch (err) {
     if (

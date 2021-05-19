@@ -4,7 +4,7 @@ import React from 'react'
 import { Formik, Form } from 'formik'
 import Textfield from '../../FormsUI/Textfield/Textfield'
 import Select from '../../FormsUI/Select/Select'
-import Button from '../../FormsUI/Button/Button'
+import FormButton from '../../FormsUI/Button/Button'
 
 // Import form validation schema
 import { userValidationSchema } from '../../../validationSchemas/validationSchemas'
@@ -13,6 +13,7 @@ import { userValidationSchema } from '../../../validationSchemas/validationSchem
 import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
 import Box from '@material-ui/core/Box'
+import Button from '@material-ui/core/Button'
 
 const UserCreate = ({ handleBackButton, handleSubmit }) => {
   // @TODO: Fix group validation!!!
@@ -85,9 +86,9 @@ const UserCreate = ({ handleBackButton, handleSubmit }) => {
                   inputProps={{ 'data-testid': 'groupsSelect' }}
                 />
                 <Box my={3} display="flex" justifyContent="center">
-                  <Button data-testid="submit" type="submit">
+                  <FormButton data-testid="submit" type="submit">
                     Luo uusi käyttäjä
-                  </Button>
+                  </FormButton>
                 </Box>
                 <Box my={3} display="flex" justifyContent="center">
                   <Button

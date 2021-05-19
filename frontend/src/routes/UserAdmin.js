@@ -120,9 +120,14 @@ const UserAdmin = () => {
     }
   }
 
-  const updateUser = async (updatedUser) => {
+  const handleUpdateSubmit = async (values) => {
+    // DONT WORK! Even backend editin doesent work!
     try {
-      const response = await userService.update(oneUser.id, updatedUser)
+      values.groups = [values.groups]
+      // const newValues = { ...values, groups: [values.groups] }
+      // console.log('values', newValues)
+      // console.log('user in func', values.id)
+      const response = await userService.update(values.id, values)
       console.log('updateed', response)
       if (
         response.error &&
@@ -157,6 +162,44 @@ const UserAdmin = () => {
       }
     }
   }
+
+  // const updateUser = async (updatedUser) => {
+  //   try {
+  //     const response = await userService.update(oneUser.id, updatedUser)
+  //     console.log('updateed', response)
+  //     if (
+  //       response.error &&
+  //       response.status === 403 &&
+  //       response.detail === 'You do not have permission to perform this action.'
+  //     ) {
+  //       throw new Error('Sinulla ei ole oikeutta tehdä tätä!')
+  //     }
+  //     if (response.error && response.status === 403) {
+  //       return setRedirect(true)
+  //     }
+  //     handleNotification('Muokataan...', true)
+  //     setTimeout(() => {
+  //       setOneUser(null)
+  //       setRefresh(!refresh)
+  //       setEditUser(false)
+  //     }, 2000)
+  //   } catch (err) {
+  //     console.log('delerror', err)
+  //     if (err.message.includes('Sinulla ei ole oikeutta tehdä tätä!')) {
+  //       handleNotification('Sinulla ei ole oikeutta tehdä tätä!')
+  //       setTimeout(() => {
+  //         setOneUser(null)
+  //         setEditUser(false)
+  //       }, 2000)
+  //     } else {
+  //       handleNotification('Muokkaus epäonnistui!')
+  //       setTimeout(() => {
+  //         setOneUser(null)
+  //         setEditUser(false)
+  //       }, 2000)
+  //     }
+  //   }
+  // }
 
   const handleBackButton = () => {
     setOneUser(null)
@@ -214,7 +257,7 @@ const UserAdmin = () => {
         <UserEdit
           handleBackButton={handleBackButton}
           oneUser={oneUser}
-          updateUser={updateUser}
+          handleUpdateSubmit={handleUpdateSubmit}
         />
         <Notification message={notificationMsg} open={openNotification} />
       </div>
