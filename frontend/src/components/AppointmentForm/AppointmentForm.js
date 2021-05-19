@@ -69,21 +69,53 @@ const AppointmentForm = ({
           validationSchema={appointmentValidationSchema}
           onSubmit={(values) => handleSubmit(values)}
         >
-          <Form>
+          <Form data-testid="form">
             <Box my={2}>
-              <Textfield name="first_name" label="Etunimi" />
+              <Textfield
+                name="first_name"
+                label="Etunimi"
+                inputProps={{
+                  'data-testid': 'firstNameInput',
+                }}
+              />
             </Box>
             <Box mb={2}>
-              <Textfield name="last_name" label="Sukunimi" />
+              <Textfield
+                name="last_name"
+                label="Sukunimi"
+                inputProps={{
+                  'data-testid': 'lastNameInput',
+                }}
+              />
             </Box>
             <Box mb={2}>
-              <Textfield name="email" label="Sähköposti" type="email" />
+              <Textfield
+                name="email"
+                label="Sähköposti"
+                type="email"
+                inputProps={{
+                  'data-testid': 'emailInput',
+                }}
+              />
             </Box>
             <Box mb={2}>
-              <Textfield name="phone" label="Puhelinnumero" />
+              <Textfield
+                name="phone"
+                label="Puhelinnumero"
+                inputProps={{
+                  'data-testid': 'phoneInput',
+                }}
+              />
             </Box>
             <Box mb={2}>
-              <Select name="place" label="Paikka" options={PLACES} />
+              <Select
+                name="place"
+                label="Paikka"
+                options={PLACES}
+                inputProps={{
+                  'data-testid': 'placeInput',
+                }}
+              />
             </Box>
             <Box mb={2}>
               <Textfield
@@ -91,9 +123,12 @@ const AppointmentForm = ({
                 label="Lisätietoja"
                 multiline={true}
                 rows={4}
+                inputProps={{
+                  'data-testid': 'infoInput',
+                }}
               />
             </Box>
-            <Button>Lähetä</Button>
+            <Button data-testid="submit">Lähetä</Button>
           </Form>
         </Formik>
       </CardContent>

@@ -48,21 +48,52 @@ const HairModelForm = ({ handleSubmit }) => {
             validationSchema={hairModelValidationSchema}
             onSubmit={(values) => handleSubmit(values)}
           >
-            <Form>
+            <Form data-testid="form">
               <Box my={2}>
-                <Textfield name="first_name" label="Etunimi" />
+                <Textfield
+                  name="first_name"
+                  label="Etunimi"
+                  inputProps={{
+                    'data-testid': 'firstNameInput',
+                  }}
+                />
               </Box>
               <Box mb={2}>
-                <Textfield name="last_name" label="Sukunimi" />
+                <Textfield
+                  name="last_name"
+                  label="Sukunimi"
+                  inputProps={{
+                    'data-testid': 'lastNameInput',
+                  }}
+                />
               </Box>
               <Box mb={2}>
-                <Textfield name="city" label="Paikkakunta" />
+                <Textfield
+                  name="city"
+                  label="Paikkakunta"
+                  inputProps={{
+                    'data-testid': 'cityInput',
+                  }}
+                />
               </Box>
               <Box mb={2}>
-                <Textfield name="phone" label="Puhelinnumero" />
+                <Textfield
+                  name="phone"
+                  label="Puhelinnumero"
+                  inputProps={{
+                    'data-testid': 'phoneInput',
+                  }}
+                />
               </Box>
               <Box mb={2}>
-                <Textfield name="email" label="Sähköposti" type="email" />
+                <Textfield
+                  name="email"
+                  label="Sähköposti"
+                  type="email"
+                  inputProps={{
+                    'data-testid': 'emailInput',
+                  }}
+                />
               </Box>
               <Box mb={2}>
                 <Textfield
@@ -70,19 +101,28 @@ const HairModelForm = ({ handleSubmit }) => {
                   label="Ikä"
                   type="number"
                   inputProps={{
-                    min: '0',
-                    max: '100',
+                    'data-testid': 'ageInput',
                   }}
                 />
               </Box>
               <Box mb={2}>
-                <Select name="gender" label="Sukupuoli" options={GENDERS} />
+                <Select
+                  name="gender"
+                  label="Sukupuoli"
+                  options={GENDERS}
+                  inputProps={{
+                    'data-testid': 'genderSelect',
+                  }}
+                />
               </Box>
               <Box mb={2}>
                 <Select
                   name="hair_length"
                   label="Hiusten pituus"
                   options={HAIR_LENGTHS}
+                  inputProps={{
+                    'data-testid': 'hairLengthSelect',
+                  }}
                 />
               </Box>
               <Box mb={2}>
@@ -91,6 +131,9 @@ const HairModelForm = ({ handleSubmit }) => {
                   label="Aiemmat käsittelyt"
                   multiline={true}
                   rows={4}
+                  inputProps={{
+                    'data-testid': 'hairProceduresInput',
+                  }}
                 />
               </Box>
               <Box mb={2}>
@@ -100,10 +143,11 @@ const HairModelForm = ({ handleSubmit }) => {
                   label="Kuva"
                   type="file"
                   accept="image/*"
+                  data-testid="imageFileInput"
                 />
               </Box>
               <Box mb={2}>
-                <Button>Lähetä</Button>
+                <Button data-testid="submit">Lähetä</Button>
               </Box>
             </Form>
           </Formik>
