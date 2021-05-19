@@ -35,10 +35,12 @@ describe('<LoginForm />', () => {
       fireEvent.click(submit)
     })
     expect(handleSubmit).toHaveBeenCalled()
-    // TODO
-    // expect(handleSubmit).toHaveBeenCalledWith({
-    //   username: 'Testinen',
-    //   password: 'Testi12345',
-    // })
+    expect(handleSubmit).toHaveBeenCalledWith(
+      {
+        username: 'Testinen',
+        password: 'Testi12345',
+      },
+      expect.anything()
+    )
   })
 })

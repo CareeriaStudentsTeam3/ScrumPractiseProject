@@ -51,9 +51,13 @@ const UserAdmin = () => {
     setRefresh(true)
   }
 
-  const addNewUser = async (newService) => {
+  const handleSubmit = async (values, { resetForm }) => {
+    console.log('values', values)
     try {
-      const response = await userService.create(newService)
+      const newValues = values
+      newValues.groups = [newValues.groups]
+      // values.groups = [values.groups]
+      const response = await userService.create(newValues)
       console.log(response)
       if (
         response.error &&
@@ -67,6 +71,7 @@ const UserAdmin = () => {
       }
       handleNotification('Luodaan käyttäjää...')
       setTimeout(() => {
+        resetForm()
         setCreateUser(false)
         setRefresh(!refresh)
       }, 2000)
@@ -190,7 +195,7 @@ const UserAdmin = () => {
     return (
       <div>
         <UserCreate
-          addNewUser={addNewUser}
+          handleSubmit={handleSubmit}
           handleBackButton={handleBackButton}
         />
         <Notification message={notificationMsg} open={openNotification} />
