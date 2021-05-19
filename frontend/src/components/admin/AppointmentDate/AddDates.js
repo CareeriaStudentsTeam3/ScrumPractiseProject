@@ -151,6 +151,10 @@ const AddDates = ({ setCreateDate, setRefresh, refresh }) => {
               </Box>
               <TextField
                 fullWidth
+                inputProps={{
+                  min: '3',
+                  max: '8',
+                }}
                 variant="outlined"
                 id="max_group_size"
                 name="max_group_size"

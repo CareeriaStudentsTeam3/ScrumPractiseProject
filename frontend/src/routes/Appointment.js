@@ -15,6 +15,10 @@ import AppointmentConfirm from '../components/AppointmentForm/AppointmentConfirm
 import AppointmentError from '../components/AppointmentForm/AppointmentError'
 import HomeButton from '../components/HomeButton/HomeButton'
 
+// Service import
+import appointmentService from '../services/appointment'
+import timespanService from '../services/timespan'
+
 // Service imports
 import serviceService from '../services/service'
 import { Typography } from '@material-ui/core'
@@ -122,6 +126,32 @@ const Appointment = () => {
     ) {
       setTimeId(null)
       setTime(null)
+    }
+  }
+
+  const handleSubmit = async (values) => {
+    // alert(JSON.stringify(values, null, 2))
+    console.log(values)
+    try {
+      setIsLoading(true)
+      const response = await appointmentService.create(values)
+      console.log('response', response)
+      if (response) {
+        const timespan = await timespanService.getOne(values.appointment_date)
+        if (timespan) {
+          const updatedTimespan = {
+            ...timespan,
+            status: 'UNCONFIRMED',
+          }
+          await timespanService.update(values.appointment_date, updatedTimespan)
+        }
+      }
+      setConfirm(response)
+      setIsLoading(false)
+    } catch (err) {
+      console.log('error', err.message)
+      setError(true)
+      setIsLoading(false)
     }
   }
 
@@ -271,8 +301,8 @@ const Appointment = () => {
                 groupSize={groupSize}
                 service={service}
                 date={timeId}
-                setConfirm={setConfirm}
-                setError={setError}
+                isLoading={isLoading}
+                handleSubmit={handleSubmit}
               />
             </Card>
           </Grid>

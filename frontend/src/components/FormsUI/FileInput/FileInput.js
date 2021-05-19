@@ -5,10 +5,8 @@ import { useField, useFormikContext } from 'formik'
 const FileInputWrapper = ({ name, ...otherProps }) => {
   const { setFieldValue } = useFormikContext()
   const [field, meta] = useField(name)
-  console.log(field)
 
   const handleChange = (e) => {
-    console.log(e.currentTarget.files[0])
     setFieldValue(name, e.currentTarget.files[0])
   }
 
