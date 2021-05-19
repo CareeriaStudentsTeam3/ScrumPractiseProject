@@ -5,6 +5,7 @@ import { Redirect } from 'react-router-dom'
 
 // Service imports
 import logoutService from '../services/logout'
+import loginService from '../services/login'
 
 // Component imports
 import LoginForm from '../components/admin/LoginForm/LoginForm'
@@ -21,6 +22,24 @@ const Login = () => {
       window.localStorage.setItem('user', JSON.stringify(userLogin))
     } else {
       null
+    }
+  }
+
+  const handleSubmit = async (values, { setErrors }) => {
+    try {
+      const user = await loginService.logIn({
+        username: values.username,
+        password: values.password,
+      })
+      console.log('user', user)
+      saveLogginInfo(user)
+      setRedirect(true)
+    } catch (error) {
+      setRedirect(false)
+      setErrors({
+        username: 'Väärä käyttäjätunnus tai salasana',
+        password: 'Väärä käyttäjätunnus tai salasana',
+      })
     }
   }
 
@@ -50,7 +69,7 @@ const Login = () => {
   return (
     <Grid container justify="center" alignItems="center">
       {console.log(user)}
-      <LoginForm saveLogginInfo={saveLogginInfo} setRedirect={setRedirect} />
+      <LoginForm handleSubmit={handleSubmit} />
     </Grid>
   )
 }

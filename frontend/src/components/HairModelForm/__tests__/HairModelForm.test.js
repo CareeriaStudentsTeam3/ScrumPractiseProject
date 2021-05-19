@@ -33,6 +33,7 @@ describe('<HairModelForm />', () => {
     expect(hairProceduresInput).toHaveValue('')
     expect(imageFileInput).toBeInTheDocument()
     expect(submit).toBeInTheDocument()
+    expect(submit.textContent).toBe('Lähetä')
   })
 
   it('handleSubmit function gets calles with right values', async () => {
