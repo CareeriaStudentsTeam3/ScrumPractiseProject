@@ -12,6 +12,7 @@ import HairModelList from '../components/admin/HairModel/HairModelList'
 import LogoutButton from '../components/admin/LogoutButton/LogoutButton'
 import AdminButton from '../components/admin/AdminButton/AdminButton'
 import HomeButton from '../components/HomeButton/HomeButton'
+import HomeInfo from '../components/Home/HomeInfo'
 
 // Material UI imports
 import Grid from '@material-ui/core/Grid'
@@ -65,6 +66,7 @@ const HairModelAdmin = () => {
 
   return (
     <div>
+      <HomeInfo />
       <Grid container justify="flex-end">
         <LogoutButton />
         <AdminButton />

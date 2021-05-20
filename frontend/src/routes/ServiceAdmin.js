@@ -10,6 +10,7 @@ import ServiceEdit from '../components/admin/Service/ServiceEdit'
 import LogoutButton from '../components/admin/LogoutButton/LogoutButton'
 import Notification from '../components/Notification/Notification'
 import AdminButton from '../components/admin/AdminButton/AdminButton'
+import HomeInfo from '../components/Home/HomeInfo'
 
 // Service import
 import serviceService from '../services/service'
@@ -220,6 +221,7 @@ const ServiceAdmin = () => {
 
   return (
     <div>
+      <HomeInfo />
       <Grid container justify="flex-end">
         <LogoutButton />
         <AdminButton />

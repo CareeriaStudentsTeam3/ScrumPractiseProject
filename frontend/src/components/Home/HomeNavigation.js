@@ -20,7 +20,7 @@ const HomeNavigation = ({ handleNavigation }) => {
           Kirjaudu ylläpitoon
         </Button>
       </Grid>
-      <Box m="auto" border={5} textAlign="center" borderColor="primary.main" maxWidth='250px' minWidth='250px' height='250px' margin='10px'>
+      <Box m="auto" border={3} textAlign="center" borderColor="primary.main" maxWidth='250px' minWidth='250px' height='250px' margin='10px' padding='5px'>
         <Typography variant="h6" component="p" gutterBottom>
           Varaa aika ryhmälle
         </Typography>
@@ -31,16 +31,15 @@ const HomeNavigation = ({ handleNavigation }) => {
         </Typography>
         <Button
           onClick={() => handleNavigation('appointment')}
-          fullWidth
-          style={{ marginTop: '5px' }}
+          style={{ marginTop: '5px', width: '230px' }}
           size="large"
           variant="contained"
           color="primary"
         >
-          Ajanvaraukseen tästä
+          Ajanvaraukseen
         </Button>
       </Box>
-      <Box m="auto" border={5} textAlign="center" borderColor="primary.main" maxWidth='250px' minWidth='250px' height='250px' margin='10px'>
+      <Box m="auto" border={3} textAlign="center" borderColor="primary.main" maxWidth='250px' minWidth='250px' height='250px' margin='10px' padding='5px'>
         <Typography variant="h6" component="p" gutterBottom>
             Rekisteröidy hiusmalliksi
         </Typography>
@@ -51,16 +50,15 @@ const HomeNavigation = ({ handleNavigation }) => {
         </Typography>
         <Button
           onClick={() => handleNavigation('hairmodel')}
-          fullWidth
-          style={{ marginTop: '5px' }}
+          style={{ marginTop: '5px', width: '230px' }}
           size="large"
           variant="contained"
           color="primary"
         >
-          Rekisteröidy tästä
+          Rekisteröitymiseen
         </Button>
       </Box>
-      <Box m="auto" border={5} textAlign="center" borderColor="primary.main" maxWidth='250px' minWidth='250px' height='250px' margin='10px'>
+      <Box m="auto" border={3} textAlign="center" borderColor="primary.main" maxWidth='250px' minWidth='250px' height='250px' margin='10px' padding='5px'>
         <Typography variant="h6" component="p" gutterBottom>
               Yhteystiedot
         </Typography>

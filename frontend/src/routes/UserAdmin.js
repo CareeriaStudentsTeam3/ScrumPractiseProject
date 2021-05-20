@@ -14,6 +14,7 @@ import UserEdit from '../components/admin/User/UserEdit'
 import Notification from '../components/Notification/Notification'
 import AdminButton from '../components/admin/AdminButton/AdminButton'
 import LogoutButton from '../components/admin/LogoutButton/LogoutButton'
+import HomeInfo from '../components/Home/HomeInfo'
 
 // Material UI imports
 import Grid from '@material-ui/core/Grid'
@@ -236,6 +237,7 @@ const UserAdmin = () => {
   if (user && user.user_group[0] !== 'student') {
     return (
       <div>
+        <HomeInfo />
         <Grid container justify="flex-end">
           <LogoutButton />
           <AdminButton />
