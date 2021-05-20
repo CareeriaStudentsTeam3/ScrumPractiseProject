@@ -12,6 +12,7 @@ import logoutService from '../services/logout'
 import AppointmentList from '../components/admin/Appointment/AppointmentList'
 import AdminButton from '../components/admin/AdminButton/AdminButton'
 import LogoutButton from '../components/admin/LogoutButton/LogoutButton'
+import HomeInfo from '../components/Home/HomeInfo'
 
 // Material UI imports
 import Grid from '@material-ui/core/Grid'
@@ -94,6 +95,7 @@ const AppointmentAdmin = () => {
 
   return (
     <div>
+      <HomeInfo />
       <Grid container justify="flex-end">
         <LogoutButton />
         <AdminButton />
