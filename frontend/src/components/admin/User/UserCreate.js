@@ -86,7 +86,7 @@ const UserCreate = ({ handleBackButton, handleSubmit }) => {
                   inputProps={{ 'data-testid': 'groupsSelect' }}
                 />
                 <Box my={3} display="flex" justifyContent="center">
-                  <FormButton data-testid="submit" type="submit">
+                  <FormButton data-testid="submit">
                     Luo uusi käyttäjä
                   </FormButton>
                 </Box>

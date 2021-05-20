@@ -3,14 +3,14 @@ import { render, fireEvent, waitFor, cleanup } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
 import 'regenerator-runtime/runtime'
 
-import UserCreate from '../UserCreate'
+import UserEdit from '../UserEdit'
 
-describe('<UserCreate />', () => {
+describe('<UserEdit />', () => {
   afterEach(() => {
     cleanup()
   })
-  it('check if UserCreate displays', () => {
-    const { getByTestId } = render(<UserCreate />)
+  it('check if UserEdit displays', () => {
+    const { getByTestId } = render(<UserEdit oneUser={{ id: 1 }} />)
     const form = getByTestId('form')
     const usernameInput = getByTestId('usernameInput')
     const firstNameInput = getByTestId('firstNameInput')
@@ -26,14 +26,17 @@ describe('<UserCreate />', () => {
     expect(lastNameInput).toHaveValue('')
     expect(passwordInput).toHaveValue('')
     expect(passwordAgainInput).toHaveValue('')
-    expect(groupsSelect).toHaveValue('student')
+    expect(groupsSelect).toHaveValue('')
     expect(submit).toBeInTheDocument()
-    expect(submit.textContent).toBe('Luo uusi käyttäjä')
+    expect(submit.textContent).toBe('Muokkaa käyttäjää')
   })
 
   it('handleSubmit function gets calles with right values', async () => {
-    const handleSubmit = jest.fn()
-    const { getByTestId } = render(<UserCreate handleSubmit={handleSubmit} />)
+    const handleUpdateSubmit = jest.fn()
+
+    const { getByTestId } = render(
+      <UserEdit handleUpdateSubmit={handleUpdateSubmit} oneUser={{ id: 1 }} />
+    )
     // const form = getByTestId('form')
     const usernameInput = getByTestId('usernameInput')
     const firstNameInput = getByTestId('firstNameInput')
@@ -43,32 +46,32 @@ describe('<UserCreate />', () => {
     const groupsSelect = getByTestId('groupsSelect')
     const submit = getByTestId('submit')
 
-    fireEvent.change(usernameInput, { target: { value: 'thetestman' } })
-    fireEvent.change(firstNameInput, { target: { value: 'Testi' } })
-    fireEvent.change(lastNameInput, { target: { value: 'Testimies' } })
-    fireEvent.change(passwordInput, {
-      target: { value: 'supersekretpass1234' },
+    await waitFor(() => {
+      fireEvent.change(usernameInput, { target: { value: 'thetestman' } })
+      fireEvent.change(firstNameInput, { target: { value: 'Testi' } })
+      fireEvent.change(lastNameInput, { target: { value: 'Testimies' } })
+      fireEvent.change(passwordInput, {
+        target: { value: 'supersekretpass1234' },
+      })
+      fireEvent.change(passwordAgainInput, {
+        target: { value: 'supersekretpass1234' },
+      })
+      fireEvent.change(groupsSelect, { target: { value: 'teacher' } })
     })
-    fireEvent.change(passwordAgainInput, {
-      target: { value: 'supersekretpass1234' },
-    })
-    fireEvent.change(groupsSelect, { target: { value: 'teacher' } })
 
     await waitFor(() => {
       fireEvent.click(submit)
     })
-    expect(handleSubmit).toHaveBeenCalledTimes(1)
-    expect(handleSubmit).toHaveBeenCalledWith(
-      {
-        username: 'thetestman',
-        first_name: 'Testi',
-        last_name: 'Testimies',
-        password: 'supersekretpass1234',
-        password_again: 'supersekretpass1234',
-        is_active: true,
-        groups: 'teacher',
-      },
-      expect.anything()
-    )
+    expect(handleUpdateSubmit).toHaveBeenCalledTimes(1)
+    expect(handleUpdateSubmit).toHaveBeenCalledWith({
+      id: undefined || 1,
+      username: 'thetestman',
+      first_name: 'Testi',
+      last_name: 'Testimies',
+      password: 'supersekretpass1234',
+      password_again: 'supersekretpass1234',
+      is_active: true,
+      groups: 'teacher',
+    })
   })
 })

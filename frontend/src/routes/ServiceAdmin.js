@@ -43,9 +43,10 @@ const ServiceAdmin = () => {
     }, 2000)
   }
 
-  const addNewService = async (newService) => {
+  const handleSubmit = async (values) => {
+    console.log('values', values)
     try {
-      const response = await serviceService.create(newService)
+      const response = await serviceService.create(values)
       console.log(response)
       if (
         response.error &&
@@ -74,9 +75,10 @@ const ServiceAdmin = () => {
     }
   }
 
-  const updateService = async (updatedService) => {
+  const handleUpdateSubmit = async (values) => {
+    console.log('values', values)
     try {
-      const response = await serviceService.update(service.id, updatedService)
+      const response = await serviceService.update(values.id, values)
       console.log('updateed', response)
       if (
         response.error &&
@@ -188,7 +190,7 @@ const ServiceAdmin = () => {
       <div>
         <ServiceCreate
           handleBackButton={handleBackButton}
-          addNewService={addNewService}
+          handleSubmit={handleSubmit}
         />
         <Notification message={notificationMsg} open={openNotification} />
       </div>
@@ -201,7 +203,7 @@ const ServiceAdmin = () => {
         <ServiceEdit
           handleBackButton={handleBackButton}
           service={service}
-          updateService={updateService}
+          handleUpdateSubmit={handleUpdateSubmit}
         />
         <Notification message={notificationMsg} open={openNotification} />
       </div>
