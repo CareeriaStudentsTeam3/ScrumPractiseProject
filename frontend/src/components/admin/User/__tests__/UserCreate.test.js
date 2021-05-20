@@ -57,7 +57,7 @@ describe('<UserCreate />', () => {
     await waitFor(() => {
       fireEvent.click(submit)
     })
-    expect(handleSubmit).toHaveBeenCalled()
+    expect(handleSubmit).toHaveBeenCalledTimes(1)
     expect(handleSubmit).toHaveBeenCalledWith(
       {
         username: 'thetestman',

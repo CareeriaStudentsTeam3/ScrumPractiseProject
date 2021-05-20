@@ -62,7 +62,7 @@ describe('<UserEdit />', () => {
     await waitFor(() => {
       fireEvent.click(submit)
     })
-    expect(handleUpdateSubmit).toHaveBeenCalled()
+    expect(handleUpdateSubmit).toHaveBeenCalledTimes(1)
     expect(handleUpdateSubmit).toHaveBeenCalledWith({
       id: undefined || 1,
       username: 'thetestman',
