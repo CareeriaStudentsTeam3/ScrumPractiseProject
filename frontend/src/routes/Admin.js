@@ -9,6 +9,7 @@ import logoutService from '../services/logout'
 // Componen imports
 import LogoutButton from '../components/admin/LogoutButton/LogoutButton'
 import HomeButton from '../components/HomeButton/HomeButton'
+import HomeInfo from '../components/Home/HomeInfo'
 
 // Material UI imports
 import Button from '@material-ui/core/Button'
@@ -53,11 +54,7 @@ const Admin = () => {
       justify="center"
       style={{ minHeight: '100vh' }}
     >
-      <Grid m="auto" textalign="center">
-        <Typography variant="h3" color="textPrimary" gutterBottom>
-          CareeriaCare hiusalan palvelut
-        </Typography>
-      </Grid>
+      <HomeInfo />
       <Grid container justify="flex-end">
         <h3 style={{ margin: '10px', marginRight: '50px' }}>
           Käyttäjä: {user ? `${user.username}` : ''}{' '}

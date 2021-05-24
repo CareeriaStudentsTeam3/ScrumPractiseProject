@@ -9,6 +9,7 @@ import loginService from '../services/login'
 
 // Component imports
 import LoginForm from '../components/admin/LoginForm/LoginForm'
+import HomeInfo from '../components/Home/HomeInfo'
 
 // Material UI imports
 import Grid from '@material-ui/core/Grid'
@@ -68,6 +69,7 @@ const Login = () => {
 
   return (
     <Grid container justify="center" alignItems="center">
+      <HomeInfo />
       {console.log(user)}
       <LoginForm handleSubmit={handleSubmit} />
     </Grid>
