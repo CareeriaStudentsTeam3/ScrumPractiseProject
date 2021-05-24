@@ -14,6 +14,7 @@ import AppointmentForm from '../components/AppointmentForm/AppointmentForm'
 import AppointmentConfirm from '../components/AppointmentForm/AppointmentConfirm'
 import AppointmentError from '../components/AppointmentForm/AppointmentError'
 import HomeButton from '../components/HomeButton/HomeButton'
+import HomeInfo from '../components/Home/HomeInfo'
 
 // Service import
 import appointmentService from '../services/appointment'
@@ -21,7 +22,7 @@ import timespanService from '../services/timespan'
 
 // Service imports
 import serviceService from '../services/service'
-import { Typography } from '@material-ui/core'
+
 
 const Appointment = () => {
   const [groupSize, setGroupSize] = useState(null)
@@ -182,11 +183,7 @@ const Appointment = () => {
   if (groupSize === null && service === null) {
     return (
       <>
-        <Box m="auto" textAlign="center">
-          <Typography variant="h3" color="textPrimary" gutterBottom>
-            CareeriaCare hiusalan palvelut
-          </Typography>
-        </Box>
+        <HomeInfo />
         <Grid container spacing={0} alignItems="center" justify="center">
           <Grid item xs={12} md={6}>
             <Card>
@@ -213,11 +210,7 @@ const Appointment = () => {
   if (groupSize !== null && service === null) {
     return (
       <>
-        <Box m="auto" textAlign="center">
-          <Typography variant="h3" color="textPrimary" gutterBottom>
-            CareeriaCare hiusalan palvelut
-          </Typography>
-        </Box>
+        <HomeInfo />
         <Grid container spacing={0} alignItems="center" justify="center">
           <Grid item xs={12} md={6}>
             <Card>
@@ -239,6 +232,9 @@ const Appointment = () => {
             </Card>
           </Grid>
         </Grid>
+        <Box m="auto" textAlign="center" mt={2}>
+          <HomeButton />
+        </Box>
       </>
     )
   }
@@ -246,11 +242,7 @@ const Appointment = () => {
   if (groupSize !== null && service !== null && timeId === null) {
     return (
       <>
-        <Box m="auto" textAlign="center">
-          <Typography variant="h3" color="textPrimary" gutterBottom>
-            CareeriaCare hiusalan palvelut
-          </Typography>
-        </Box>
+        <HomeInfo />
         <Grid container spacing={0} alignItems="center" justify="center">
           <Grid item xs={12} md={6}>
             <Card>
@@ -274,6 +266,9 @@ const Appointment = () => {
             </Card>
           </Grid>
         </Grid>
+        <Box m="auto" textAlign="center" mt={2}>
+          <HomeButton />
+        </Box>
       </>
     )
   }
@@ -281,11 +276,7 @@ const Appointment = () => {
   if (groupSize !== null && service !== null && timeId !== null) {
     return (
       <>
-        <Box m="auto" textAlign="center">
-          <Typography variant="h3" color="textPrimary" gutterBottom>
-            CareeriaCare hiusalan palvelut
-          </Typography>
-        </Box>
+        <HomeInfo />
         <Grid container spacing={0} alignItems="center" justify="center">
           <Grid item xs={12} md={6}>
             <Card>
@@ -307,6 +298,9 @@ const Appointment = () => {
             </Card>
           </Grid>
         </Grid>
+        <Box m="auto" textAlign="center" mt={2}>
+          <HomeButton />
+        </Box>
       </>
     )
   }
