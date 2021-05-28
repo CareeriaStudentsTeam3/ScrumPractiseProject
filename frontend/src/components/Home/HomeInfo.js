@@ -11,7 +11,7 @@ const HomeInfo = () => {
         <img src="/logo.svg" width="100px" height="100px" />
       </Grid>
       <Grid item>
-        <Typography variant="h3" color="textPrimary" gutterBottom>
+        <Typography variant="h3" color="textPrimary" gutterBottom style={{ fontFamily: 'Calibri Light' }}>
           CareeriaCare hiusalan palvelut
         </Typography>
       </Grid>

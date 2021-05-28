@@ -89,7 +89,7 @@ const HairModel = () => {
   return (
     <>
       <HomeInfo />
-      <Grid container spacing={0} alignItems="center" justify="center">
+      <Grid container spacing={0} alignItems="flex-start" justify="center">
         <Grid container item xs={12} md={6}>
           <HairModelInfo />
         </Grid>
