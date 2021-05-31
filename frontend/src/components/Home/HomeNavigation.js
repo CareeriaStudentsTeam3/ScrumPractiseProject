@@ -8,17 +8,14 @@ import Typography from '@material-ui/core/Typography'
 
 const HomeNavigation = ({ handleNavigation }) => {
   return (
-    <Grid container spacing={3} justify="center" alignItems="center">
-      <Grid container spacing={3} justify="flex-start" alignItems="center">
-        <Button
-          onClick={() => handleNavigation('admin')}
-          style={{ maxWidth:'250px', minWidth:'50px', margin: '20px' }}
-          size="small"
-          variant="contained"
-          color="primary"
-        >
-          Kirjaudu ylläpitoon
-        </Button>
+    <Grid container spacing={8} justify="center" alignItems="center">
+      <Grid container spacing={0} xs={11} justify="flex-start" alignItems="center">
+        <Typography variant="body1" component="p" gutterBottom align="center">
+          CareeriaCare hiusalan palvelut tuottaa hiusalan palveluita opiskelijatöinä. Opetussuunnitelmasta riippuen palveluvalikoimaamme kuuluvat muun muassa: Hiusten hemmottelupaketti (15e/hlö, kesto 2-3h),
+          Kampauspaketti (20e/hlö, kesto 2-3h) ja Uusi tyyli-paketti (25e/hlö, kesto 3-4h). Sähköiseen ajanvaraukseen sekä hiusmalliksi rekisteröitymiseen
+          pääset alta. Lisätietoa tarjolla olevien palveluiden sisällöstä löytyy ajanvarauksen yhteydessä tai olemalla yhteydessä meihin. Voit tehdä varaukset
+          myös olemalla yhteyksissä meihin. Meidät tavoittaa alla olevien yhteystietojen kautta.
+        </Typography>
       </Grid>
       <Box m="auto" border={3} textAlign="center" borderColor="primary.main" maxWidth='250px' minWidth='250px' height='250px' margin='10px' padding='5px'>
         <Typography variant="h6" component="p" gutterBottom>
@@ -63,7 +60,7 @@ const HomeNavigation = ({ handleNavigation }) => {
               Yhteystiedot
         </Typography>
         <Typography variant="body1" component="p" gutterBottom>
-            Osoite
+            Osoite:
         </Typography>
         <Typography variant="body2" component="p" gutterBottom>
             Linnankoskenkatu 20, 3. krs,
@@ -72,18 +69,29 @@ const HomeNavigation = ({ handleNavigation }) => {
           06100 Porvoo
         </Typography>
         <Typography variant="body1" component="p" gutterBottom>
-          Puhelin
+          Puhelin:
         </Typography>
         <Typography variant="body2" component="p" gutterBottom>
         0400 360 622
         </Typography>
         <Typography variant="body1" component="p" gutterBottom>
-          Sähköposti
+          Sähköposti:
         </Typography>
         <Typography variant="body2" component="p" gutterBottom>
         CareeriaCare.Pomotalo@careeria.fi
         </Typography>
       </Box>
+      <Grid container spacing={2} justify="center" alignItems="center">
+        <Button
+          onClick={() => handleNavigation('admin')}
+          style={{ maxWidth:'250px', minWidth:'50px', margin: '20px' }}
+          size="small"
+          variant="contained"
+          color="primary"
+        >
+          Kirjaudu ylläpitoon
+        </Button>
+      </Grid>
     </Grid>
   )
 }
