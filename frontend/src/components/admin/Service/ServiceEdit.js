@@ -58,7 +58,11 @@ const ServiceEdit = ({ handleBackButton, service, handleUpdateSubmit }) => {
                   name="max_group_size"
                   label="Maksimi ryhmä koko"
                   type="number"
-                  inputProps={{ 'data-testid': 'maxGroupSizeInput' }}
+                  inputProps={{
+                    'data-testid': 'maxGroupSizeInput',
+                    min: 3,
+                    max: 8,
+                  }}
                 />
                 <Box my={3} display="flex" justifyContent="center">
                   <FormButton data-testid="submit">Muokkaa palvelua</FormButton>
