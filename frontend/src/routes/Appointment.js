@@ -23,7 +23,6 @@ import timespanService from '../services/timespan'
 // Service imports
 import serviceService from '../services/service'
 
-
 const Appointment = () => {
   const [groupSize, setGroupSize] = useState(null)
   const [service, setService] = useState(null)
@@ -46,6 +45,7 @@ const Appointment = () => {
       setServices(response)
       setIsLoading(false)
     } catch (err) {
+      console.log(err.response)
       console.log('error getSerice func', err)
       setError(true)
     }

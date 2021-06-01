@@ -48,9 +48,7 @@ const LoginForm = ({ handleSubmit }) => {
                 inputProps={{ 'data-testid': 'passwordInput' }}
               />
               <Box my={3} display="flex" justifyContent="center">
-                <Button data-testid="submit" type="submit">
-                  Kirjaudu sisään
-                </Button>
+                <Button data-testid="submit">Kirjaudu sisään</Button>
               </Box>
             </Form>
           </Formik>

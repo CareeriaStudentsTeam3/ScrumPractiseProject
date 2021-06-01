@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
 // React-router-dom imports
-import { useParams, Redirect } from 'react-router-dom'
+import { useParams, useHistory, Redirect } from 'react-router-dom'
 
 // Service import
 import appointmentService from '../services/appointment'
@@ -11,14 +11,20 @@ import logoutService from '../services/logout'
 
 // Component import
 import AppointmentUpdate from '../components/admin/Appointment/AppointmentUpdate'
+import Notification from '../components/Notification/Notification'
 
 const AppointmentInfoAdmin = () => {
   const { id } = useParams()
+  let history = useHistory()
 
   const [appointment, setAppointment] = useState([])
   const [services, setServices] = useState([])
   const [dateTimes, setDateTimes] = useState([])
   const [redirect, setRedirect] = useState(false)
+
+  // Notifications
+  const [open, setOpen] = useState(false)
+  const [notificationMsg, setNotificationMsg] = useState(null)
 
   const getAppointment = async (id) => {
     setRedirect(false)
@@ -47,6 +53,74 @@ const AppointmentInfoAdmin = () => {
     setDateTimes(response)
   }
 
+  const handleNotification = (msg) => {
+    setOpen(true)
+    setNotificationMsg(msg)
+  }
+
+  const handleSubmit = async (values, { initialValues }) => {
+    console.log('INITIAL VALUES', initialValues)
+    console.log('FINAL VALUES', values)
+    try {
+      const response = await appointmentService.update(values, values.id)
+      console.log('res', response)
+      if (
+        response.detail === 'You do not have permission to perform this action.'
+      ) {
+        throw new Error('Sinulla ei ole oikeutta tehdä tätä!')
+      }
+      const newTimespan = await timespanService.getOne(values.appointment_date)
+      const oldTimespan = await timespanService.getOne(
+        initialValues.appointment_date
+      )
+
+      if (newTimespan && newTimespan !== oldTimespan) {
+        const updatedTimespan = {
+          ...newTimespan,
+          status: values.confirmed ? 'CONFIRMED' : 'UNCONFIRMED',
+        }
+        await timespanService.update(values.appointment_date, updatedTimespan)
+      }
+      if (oldTimespan && oldTimespan !== newTimespan) {
+        const updatedOldTimespan = {
+          ...oldTimespan,
+          status: 'FREE',
+        }
+        await timespanService.update(
+          initialValues.appointment_date,
+          updatedOldTimespan
+        )
+      }
+      if (values.appointment_date === initialValues.appointment_date) {
+        const updatedTimespan = {
+          ...newTimespan,
+          status: values.confirmed ? 'CONFIRMED' : 'UNCONFIRMED',
+        }
+        await timespanService.update(values.appointment_date, updatedTimespan)
+      }
+      handleNotification('Tallennetaan...')
+      setTimeout(() => {
+        history.push({
+          pathname: '/admin/appointment',
+        })
+      }, 2000)
+    } catch (err) {
+      if (err.message.includes('Sinulla ei ole oikeutta tehdä tätä!')) {
+        handleNotification('Sinulla ei ole oikeutta tehdä tätä!')
+        setTimeout(() => {
+          setRedirect(true)
+        }, 3000)
+      } else {
+        handleNotification('On tapahtunut virhe! Palataan edelliselle sivulle.')
+        setTimeout(() => {
+          history.push({
+            pathname: '/admin/appointment',
+          })
+        }, 3000)
+      }
+    }
+  }
+
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('user')
     if (loggedUserJSON) {
@@ -73,11 +147,16 @@ const AppointmentInfoAdmin = () => {
   }
 
   return (
-    <AppointmentUpdate
-      appointment={appointment}
-      services={services}
-      dateTimes={dateTimes}
-    />
+    <div>
+      <Notification message={notificationMsg} open={open} />
+      <AppointmentUpdate
+        appointment={appointment}
+        services={services}
+        dateTimes={dateTimes}
+        handleSubmit={handleSubmit}
+        handleNotification={handleNotification}
+      />
+    </div>
   )
 }
 
