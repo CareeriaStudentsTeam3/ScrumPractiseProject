@@ -44,9 +44,6 @@ const TimeSelect = ({
 
   useEffect(() => {
     getFreeTimes()
-    // timespanService
-    //   .getFreeTimes(grpSize, duration)
-    //   .then((data) => setTimes(data))
   }, [])
 
   if (isLoading) {

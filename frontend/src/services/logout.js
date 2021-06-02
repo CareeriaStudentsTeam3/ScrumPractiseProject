@@ -1,4 +1,3 @@
-// import axios from 'axios'
 import ownAxios from '../axiosConfig'
 
 const baseUrl = 'http://localhost:8000/api/logout/'

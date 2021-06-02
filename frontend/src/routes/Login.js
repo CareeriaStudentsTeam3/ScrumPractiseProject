@@ -32,7 +32,6 @@ const Login = () => {
         username: values.username,
         password: values.password,
       })
-      console.log('user', user)
       saveLogginInfo(user)
       setRedirect(true)
     } catch (error) {
@@ -49,7 +48,6 @@ const Login = () => {
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
       if (user.login_success === true) {
-        console.log('user', user.username)
         setUser(user.username)
         setRedirect(true)
       }

@@ -69,7 +69,6 @@ export const loginValidationSchema = yup.object({
 })
 
 export const hairModelValidationSchema = yup.object({
-  // TODO: All validations
   first_name: yup
     .string('Anna etunimi')
     .max(30, 'Etunimi saa olla enintään 30 merkkiä pitkä')

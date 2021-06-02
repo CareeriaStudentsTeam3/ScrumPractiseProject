@@ -36,7 +36,6 @@ const HairModelAdmin = () => {
   }
 
   useEffect(() => {
-    // console.log('location', location.id)
     setRefresh(true)
     console.log(user)
   }, [location.id])

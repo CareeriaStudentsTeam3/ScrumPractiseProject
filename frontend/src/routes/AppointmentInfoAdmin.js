@@ -59,8 +59,6 @@ const AppointmentInfoAdmin = () => {
   }
 
   const handleSubmit = async (values, { initialValues }) => {
-    console.log('INITIAL VALUES', initialValues)
-    console.log('FINAL VALUES', values)
     try {
       const response = await appointmentService.update(values, values.id)
       console.log('res', response)

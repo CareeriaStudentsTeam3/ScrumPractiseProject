@@ -45,7 +45,6 @@ const ServiceAdmin = () => {
   }
 
   const handleSubmit = async (values) => {
-    console.log('values', values)
     try {
       const response = await serviceService.create(values)
       console.log(response)
@@ -77,10 +76,8 @@ const ServiceAdmin = () => {
   }
 
   const handleUpdateSubmit = async (values) => {
-    console.log('values', values)
     try {
       const response = await serviceService.update(values.id, values)
-      console.log('updateed', response)
       if (
         response.error &&
         response.status === 403 &&
@@ -160,7 +157,6 @@ const ServiceAdmin = () => {
       return setRedirect(true)
     }
     setServices(response)
-    // setRefresh(!refresh)
   }
 
   useEffect(() => {

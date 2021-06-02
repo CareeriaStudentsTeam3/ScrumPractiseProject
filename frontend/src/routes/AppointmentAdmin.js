@@ -29,7 +29,6 @@ const AppointmentAdmin = () => {
       return setRedirect(true)
     }
     return { time: response }
-    // return `${response.beginning} ${response.end}`
   }
 
   const getAppointments = async () => {
@@ -40,7 +39,6 @@ const AppointmentAdmin = () => {
 
     const newArr = await response.map(async (item) => {
       if (item.appointment_date !== null) {
-        // let datetime = await timespanService.getOne(item.appointment_date)
         let time = await getDateTimes(item.appointment_date)
         return { ...item, time: time }
       } else {

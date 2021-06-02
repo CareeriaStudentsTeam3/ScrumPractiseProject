@@ -22,7 +22,6 @@ import { useHistory } from 'react-router'
 
 const AppointmentList = ({ appointments }) => {
   let history = useHistory()
-  console.log(appointments)
   const [filteredAppointments, setFilteredAppointments] = useState([])
 
   const [page, setPage] = useState(0)
@@ -34,7 +33,6 @@ const AppointmentList = ({ appointments }) => {
     const filteredAppointments = appointments.filter((item) => {
       return item.confirmed !== true
     })
-    console.log('filtered', filteredAppointments)
     setFilteredAppointments(filteredAppointments)
   }
 
@@ -139,7 +137,7 @@ const AppointmentList = ({ appointments }) => {
                           ? `${formatStartDate(
                               item.time.time.beginning
                             )} - ${formatEndDate(item.time.time.end)}`
-                          : 'lol'}
+                          : 'Error'}
                       </TableCell>
                       {item.confirmed ? (
                         <TableCell align="center">Vahvistettu</TableCell>

@@ -54,7 +54,6 @@ const Appointment = () => {
   useEffect(() => {
     if (groupSize !== null) {
       getServices()
-      // serviceService.getFilter(groupSize).then((data) => setServices(data))
     }
   }, [groupSize])
 
@@ -131,8 +130,6 @@ const Appointment = () => {
   }
 
   const handleSubmit = async (values) => {
-    // alert(JSON.stringify(values, null, 2))
-    console.log(values)
     try {
       setIsLoading(true)
       const response = await appointmentService.create(values)
@@ -261,8 +258,6 @@ const Appointment = () => {
                 handleNavClick={handleNavClick}
                 setError={setError}
               />
-              {console.log('time', timeId)}
-              {console.log('everything', groupSize, service, timeId)}
             </Card>
           </Grid>
         </Grid>

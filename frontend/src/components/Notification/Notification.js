@@ -4,8 +4,6 @@ import React from 'react'
 import Snackbar from '@material-ui/core/Snackbar'
 
 const Notification = ({ message, open }) => {
-  console.log('noti', message, open)
-
   if (message === null) {
     return null
   }
