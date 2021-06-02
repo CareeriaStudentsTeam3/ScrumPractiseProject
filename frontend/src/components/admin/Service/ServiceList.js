@@ -24,7 +24,6 @@ const ServiceList = ({
   setService,
   user,
 }) => {
-  console.log('service user', user)
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
 

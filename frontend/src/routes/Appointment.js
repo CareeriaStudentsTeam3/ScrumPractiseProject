@@ -193,7 +193,6 @@ const Appointment = () => {
                 />
               </Box>
               <GroupSizeSelect handleGroupSize={handleGroupSize} />
-              {console.log('group_size', groupSize)}
             </Card>
           </Grid>
         </Grid>
@@ -225,7 +224,6 @@ const Appointment = () => {
                 handleNavClick={handleNavClick}
                 isLoading={isLoading}
               />
-              {console.log('service', service)}
             </Card>
           </Grid>
         </Grid>

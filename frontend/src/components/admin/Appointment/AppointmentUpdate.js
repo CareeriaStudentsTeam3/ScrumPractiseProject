@@ -144,7 +144,6 @@ const AppointmentUpdate = ({
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
       if (user.login_success === true) {
-        console.log('user', user)
         setUser(user)
       }
     }
@@ -296,7 +295,6 @@ const AppointmentUpdate = ({
 
   return (
     <Grid container spacing={0} alignItems="center" justify="center">
-      {console.log(user)}
       <Grid container item xs={12} md={6}>
         <Box display="flex" m="auto">
           <Box>

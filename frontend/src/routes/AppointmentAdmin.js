@@ -47,9 +47,7 @@ const AppointmentAdmin = () => {
     })
 
     Promise.all(newArr).then((result) => {
-      console.log('sorted', result)
       const sorted = result.sort((a, b) => {
-        console.log(a, b)
         if (a.time !== undefined && b.time !== undefined) {
           return (
             new Date(a.time.time.beginning) - new Date(b.time.time.beginning)
@@ -65,7 +63,6 @@ const AppointmentAdmin = () => {
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
       if (user.login_success === true) {
-        console.log('user', user)
         // setUser(user)
         getAppointments()
       }

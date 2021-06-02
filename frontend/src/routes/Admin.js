@@ -28,7 +28,6 @@ const Admin = () => {
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
       if (user.login_success === true) {
-        console.log('user', user)
         setUser(user)
       }
     }
