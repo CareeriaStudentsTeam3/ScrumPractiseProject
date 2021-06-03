@@ -79,6 +79,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'appointment_app.wsgi.application'
 
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.SessionAuthentication",
+    ]
+}
+
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
@@ -106,6 +112,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = "appointments.User"
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
@@ -124,16 +131,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-AUTH_USER_MODEL = "appointments.User"
-
 STATIC_URL = '/static/'
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
-REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework.authentication.SessionAuthentication",
-    ]
-}
+# Cookie settings
+SESSION_COOKIE_AGE = 7200
+CSRF_COOKIE_AGE = 7200
 
