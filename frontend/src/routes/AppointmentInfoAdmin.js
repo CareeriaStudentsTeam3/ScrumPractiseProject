@@ -59,11 +59,8 @@ const AppointmentInfoAdmin = () => {
   }
 
   const handleSubmit = async (values, { initialValues }) => {
-    console.log('INITIAL VALUES', initialValues)
-    console.log('FINAL VALUES', values)
     try {
       const response = await appointmentService.update(values, values.id)
-      console.log('res', response)
       if (
         response.detail === 'You do not have permission to perform this action.'
       ) {
@@ -126,7 +123,6 @@ const AppointmentInfoAdmin = () => {
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
       if (user.login_success === true) {
-        console.log('user', user)
         // setUser(user)
         getAppointment(id)
         getServices()

@@ -29,11 +29,9 @@ const TimeSelect = ({
     try {
       setIsLoading(true)
       const response = await timespanService.getFreeTimes(grpSize, duration)
-      console.log('times', response)
       const filterByStatus = response.filter((time) => {
         return time.status === 'FREE'
       })
-      console.log('filterTimes', filterByStatus)
       setTimes(filterByStatus)
       setIsLoading(false)
     } catch (err) {
@@ -44,9 +42,6 @@ const TimeSelect = ({
 
   useEffect(() => {
     getFreeTimes()
-    // timespanService
-    //   .getFreeTimes(grpSize, duration)
-    //   .then((data) => setTimes(data))
   }, [])
 
   if (isLoading) {

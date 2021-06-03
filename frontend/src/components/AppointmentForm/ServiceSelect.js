@@ -66,13 +66,9 @@ const ServiceSelect = ({
           {services.length === 1
             ? services.map((item) => (
                 <Grid key={item.id} item xs={12}>
-                  <Card border={5} borderColor="primary">
+                  <Card border={5} bordercolor="primary">
                     <CardContent>
-                      <Typography
-                        variant="h5"
-                        color="textPrimary"
-                        gutterBottom
-                      >
+                      <Typography variant="h5" color="textPrimary" gutterBottom>
                         {item.service_name}
                       </Typography>
                       <Typography variant="h5" component="h2"></Typography>
@@ -106,11 +102,7 @@ const ServiceSelect = ({
                 <Grid key={item.id} item xs={6}>
                   <Card>
                     <CardContent>
-                      <Typography
-                        variant="h5"
-                        color="textPrimary"
-                        gutterBottom
-                      >
+                      <Typography variant="h5" color="textPrimary" gutterBottom>
                         {item.service_name}
                       </Typography>
                       <Typography variant="h5" component="h2"></Typography>

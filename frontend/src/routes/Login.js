@@ -15,7 +15,7 @@ import HomeInfo from '../components/Home/HomeInfo'
 import Grid from '@material-ui/core/Grid'
 
 const Login = () => {
-  const [user, setUser] = useState(null)
+  // const [user, setUser] = useState(null)
   const [redirect, setRedirect] = useState(false)
 
   const saveLogginInfo = (userLogin) => {
@@ -32,7 +32,6 @@ const Login = () => {
         username: values.username,
         password: values.password,
       })
-      console.log('user', user)
       saveLogginInfo(user)
       setRedirect(true)
     } catch (error) {
@@ -49,8 +48,7 @@ const Login = () => {
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
       if (user.login_success === true) {
-        console.log('user', user.username)
-        setUser(user.username)
+        // setUser(user.username)
         setRedirect(true)
       }
     }
@@ -70,7 +68,6 @@ const Login = () => {
   return (
     <Grid container justify="center" alignItems="center">
       <HomeInfo />
-      {console.log(user)}
       <LoginForm handleSubmit={handleSubmit} />
     </Grid>
   )

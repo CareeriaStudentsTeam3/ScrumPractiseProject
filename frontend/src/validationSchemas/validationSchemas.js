@@ -13,6 +13,8 @@ const REGEX_PHONE_NUMBER =
 
 const REGEX_NO_SPECIAL_CHAR = '^[A-Za-z\\u0080-\\uFFFF - \\s][^*<>$_&"]*$'
 
+const REGEX_EMAIL = '^[^€]*$'
+
 // List of supported image formats
 const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png']
 
@@ -69,7 +71,6 @@ export const loginValidationSchema = yup.object({
 })
 
 export const hairModelValidationSchema = yup.object({
-  // TODO: All validations
   first_name: yup
     .string('Anna etunimi')
     .max(30, 'Etunimi saa olla enintään 30 merkkiä pitkä')
@@ -81,10 +82,10 @@ export const hairModelValidationSchema = yup.object({
     .matches(REGEX_ONLY_LETTERS_ASCII, 'Käytä pelkkiä kirjaimia')
     .required('Anna sukunimi'),
   city: yup
-    .string('Anna kaupunki')
-    .max(50, 'Kaupunki saa olla enintään 50 merkkiä pitkä')
+    .string('Anna paikkakunta')
+    .max(50, 'Paikkakunta saa olla enintään 50 merkkiä pitkä')
     .matches(REGEX_ONLY_LETTERS_ASCII, 'Käytä pelkkiä kirjaimia')
-    .required('Anna kaupunki'),
+    .required('Anna paikkakunta'),
   phone: yup
     .string('Anna puhelinnumero')
     .max(20, 'Puhelinnumero saa olla enintään 20 merkkiä pitkä')
@@ -93,12 +94,14 @@ export const hairModelValidationSchema = yup.object({
   email: yup
     .string('Anna sähköpostiosoite')
     .max(50, 'Sähköposti saa olla enintään 50 merkkiä pitkä')
+    .matches(REGEX_EMAIL, 'Tarkista sähköposti')
     .email('Tarkista sähköposti')
     .required('Anna sähköposti'),
   age: yup
     .number()
     .positive('Anna positiivinen luku')
     .integer('Anna kokoluku')
+    .min(18, 'Sinun täytyy olla täysi-ikäinen.')
     .required('Anna ikä'),
   gender: yup
     .string('Valitse sukupuoli')

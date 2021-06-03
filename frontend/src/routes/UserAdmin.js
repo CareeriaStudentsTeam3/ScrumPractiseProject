@@ -55,9 +55,6 @@ const UserAdmin = () => {
   const handleSubmit = async (values, { resetForm }) => {
     console.log('values', values)
     try {
-      // const newValues = values
-      // newValues.groups = [newValues.groups]
-      // values.groups = [values.groups]
       const newValues = { ...values, groups: [values.groups] }
       const response = await userService.create(newValues)
       console.log(response)

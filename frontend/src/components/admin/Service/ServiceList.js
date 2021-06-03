@@ -15,7 +15,6 @@ import TablePagination from '@material-ui/core/TablePagination'
 import Paper from '@material-ui/core/Paper'
 import Button from '@material-ui/core/Button'
 import Box from '@material-ui/core/Box'
-// import Typography from '@material-ui/core/Typography'
 
 const ServiceList = ({
   services,
@@ -25,7 +24,6 @@ const ServiceList = ({
   setService,
   user,
 }) => {
-  console.log('service user', user)
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
 

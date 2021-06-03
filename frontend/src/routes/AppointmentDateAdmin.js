@@ -53,7 +53,6 @@ const AppointmentDateAdmin = () => {
       const sortedResponse = response.sort((a, b) => {
         return new Date(a.beginning) - new Date(b.beginning)
       })
-      console.log('sortedResponse', sortedResponse)
       setDates(sortedResponse)
     } catch (error) {
       console.log(error)

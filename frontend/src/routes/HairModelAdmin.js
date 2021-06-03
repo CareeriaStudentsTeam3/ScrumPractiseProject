@@ -20,7 +20,7 @@ import Grid from '@material-ui/core/Grid'
 const HairModelAdmin = () => {
   let location = useLocation()
 
-  const [user, setUser] = useState(null)
+  // const [user, setUser] = useState(null)
   const [redirect, setRedirect] = useState(false)
 
   const [hairModels, setHairModels] = useState([])
@@ -36,9 +36,7 @@ const HairModelAdmin = () => {
   }
 
   useEffect(() => {
-    // console.log('location', location.id)
     setRefresh(true)
-    console.log(user)
   }, [location.id])
 
   useEffect(() => {
@@ -46,7 +44,7 @@ const HairModelAdmin = () => {
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
       if (user.login_success === true) {
-        setUser(user)
+        // setUser(user)
         getHairModels()
         setRedirect(false)
       }

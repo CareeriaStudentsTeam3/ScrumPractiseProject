@@ -13,8 +13,7 @@ const LogoutButton = () => {
   const [redirect, setRedirect] = useState(false)
 
   const handleLogout = async () => {
-    const response = await logoutService.logout()
-    console.log(response)
+    await logoutService.logout()
     window.localStorage.clear()
     setRedirect(true)
   }
@@ -24,7 +23,13 @@ const LogoutButton = () => {
   }
 
   return (
-    <Button onClick={() => handleLogout()} variant="contained" color="primary" size="small" style={{ margin: '10px' }}>
+    <Button
+      onClick={() => handleLogout()}
+      variant="contained"
+      color="primary"
+      size="small"
+      style={{ margin: '10px' }}
+    >
       Kirjaudu ulos
     </Button>
   )

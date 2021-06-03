@@ -61,12 +61,8 @@ const HairdModelInfoAdmin = () => {
       formData.append('image', values.image)
     }
 
-    console.log(values)
-    console.log(formData.get('image'))
-
     try {
       const response = await hairmodelService.update(formData, values.id)
-      console.log('res', response)
       if (
         response.detail === 'You do not have permission to perform this action.'
       ) {
@@ -134,7 +130,6 @@ const HairdModelInfoAdmin = () => {
   }
 
   useEffect(() => {
-    console.log('hairmodel', hairModel)
     const loggedUserJSON = window.localStorage.getItem('user')
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)

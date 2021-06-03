@@ -16,8 +16,6 @@ import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 
 const UserCreate = ({ oneUser, handleBackButton, handleUpdateSubmit }) => {
-  // console.log('user', oneUser)
-
   const INITIAL_FORM_STATE = {
     id: oneUser.id || '',
     username: oneUser.username || '',
